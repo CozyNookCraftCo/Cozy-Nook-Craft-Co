@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preference Sheet — Cozy Nook Craft Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FFFDFA;
+    --paper:#FFF8F1;
+    --blush:#F8D9DE;
+    --rose:#E8A0AE;
+    --rose-deep:#C97A8C;
+    --gold:#D99A72;
+    --gold-light:#E8BB98;
+    --coral:#E8967A;
+    --lavender:#B9A6CC;
+    --mint:#9CAA84;
+    --ink:#3E332F;
+    --ink-soft:#6B5D57;
+    --line: rgba(217,154,114,0.35);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Jost', sans-serif;
+    font-weight:300;
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:500;
+    color:var(--ink);
+  }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  .eyebrow{
+    font-family:'Jost', sans-serif;
+    font-size:12px;
+    letter-spacing:0.32em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:500;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:14px 30px;
+    border:1px solid var(--gold);
+    border-radius:2px;
+    font-size:13px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--ink);
+    background:transparent;
+    transition:all .35s ease;
+    cursor:pointer;
+    position:relative;
+  }
+  .btn:hover{background:var(--gold); color:#fff; border-color:var(--gold);}
+  .btn.solid{background:var(--gold); color:#fff;}
+  .btn.solid:hover{background:var(--gold-light); border-color:var(--gold-light);}
+  .btn-coffee{
+    background:var(--blush); border-color:var(--blush);
+    border-radius:999px; color:var(--ink);
+    justify-content:center; text-align:center;
+    padding:9px 20px; font-size:11px;
+  }
+  .btn-coffee:hover{background:var(--rose); border-color:var(--rose); color:var(--ink);}
+
+  /* ===== Scrolling announcement bar ===== */
+  .announce-bar{
+    overflow:hidden; white-space:nowrap;
+    background:var(--blush); border-bottom:1px solid var(--line);
+    color:var(--ink); font-size:13px; letter-spacing:0.08em; padding:7px 0;
+  }
+  .announce-track{display:flex; width:max-content; animation:announce-scroll 40s linear infinite;}
+  .announce-bar:hover .announce-track{animation-play-state:paused;}
+  .announce-set{display:flex; flex-shrink:0;}
+  .announce-set span{padding:0 48px;}
+  @keyframes announce-scroll{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+  @media (prefers-reduced-motion: reduce){
+    .announce-bar{white-space:normal; text-align:center;}
+    .announce-track{animation:none; width:auto; justify-content:center;}
+    .announce-set[aria-hidden]{display:none;}
+    .announce-set span:not(:first-child){display:none;}
+  }
+
+  /* ===== Header ===== */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,253,249,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 32px;
+    max-width:1180px; margin:0 auto;
+    gap:20px;
+  }
+  .logo-block{line-height:1.1;}
+  .logo{font-family:'Cormorant Garamond', serif; font-size:24px; letter-spacing:0.04em; font-weight:600;}
+  .logo span{color:var(--rose-deep); font-style:italic; font-weight:400;}
+  .logo-accent{color:var(--rose-deep); font-style:italic; font-weight:400;}
+  .tagline{
+    font-family:'Jost', sans-serif; font-size:10px; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--gold); margin-top:2px;
+  }
+  .nav-links{display:flex; gap:38px; font-size:13px; letter-spacing:0.1em; text-transform:uppercase;}
+  .nav-cta-group{display:flex; align-items:center; gap:14px;}
+  .nav-links a{position:relative; padding-bottom:4px;}
+  .nav-links a::after{
+    content:''; position:absolute; left:0; bottom:0; width:0; height:1px;
+    background:var(--gold); transition:width .3s ease;
+  }
+  .nav-links a:hover::after{width:100%;}
+  .nav-links a.active::after{width:100%;}
+  .hamburger{
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:5px;
+    width:30px;
+    height:26px;
+    background:none;
+    border:none;
+    padding:0;
+    cursor:pointer;
+    flex-shrink:0;
+  }
+  .hamburger span{
+    display:block;
+    width:26px;
+    height:2px;
+    background:var(--ink);
+    border-radius:2px;
+    transition:transform .3s ease, opacity .2s ease;
+  }
+  .hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .hamburger.active span:nth-child(2){opacity:0;}
+  .hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  .mobile-nav-panel{
+    display:none;
+    flex-direction:column;
+    max-height:0;
+    overflow:hidden;
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+    transition:max-height .35s ease;
+  }
+  .mobile-nav-panel.open{max-height:640px;}
+  .mobile-nav-panel a{
+    padding:16px 32px;
+    font-size:13px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    border-top:1px solid var(--line);
+  }
+
+  /* ===== Page intro ===== */
+  .page-intro{padding:110px 32px 60px; text-align:center; position:relative; overflow:visible; max-width:1180px; margin:0 auto;}
+  .page-intro .eyebrow{display:block; margin-bottom:16px;}
+  .page-intro h1{font-size:clamp(36px,5vw,58px); margin-bottom:18px;}
+  .page-intro p{max-width:560px; margin:0 auto; color:var(--ink-soft);}
+  .floral-corner-tl{position:absolute; top:-60px; left:-10px; width:220px; z-index:2; opacity:0.95;}
+  .floral-corner-br{position:absolute; bottom:-50px; right:-10px; width:190px; z-index:2;}
+  @media (max-width:860px){
+    .floral-corner-tl{width:150px; top:-30px; left:-30px;}
+    .floral-corner-br{width:130px; bottom:-30px; right:-20px;}
+  }
+
+  /* ===== Section basics ===== */
+  section{padding:70px 0 120px; position:relative;}
+  .placeholder-note{
+    max-width:560px; margin:0 auto; text-align:center;
+    color:var(--ink-soft); padding:50px 32px;
+    border:1px dashed var(--line); border-radius:2px;
+  }
+  .form-embed{
+    max-width:760px; margin:0 auto;
+    background:var(--paper); border:1px solid var(--line);
+    padding:20px; border-radius:2px;
+  }
+  .form-embed iframe{
+    width:100%; height:1400px; border:none; background:#fff;
+  }
+  .form-embed-fallback{
+    text-align:center; margin-top:18px; font-size:13px; color:var(--ink-soft);
+  }
+  .form-embed-fallback a{color:var(--rose-deep); text-decoration:underline;}
+
+  /* ===== Contact / Footer ===== */
+  footer{background:var(--paper); padding:100px 0 40px; position:relative;}
+  .footer-grid{
+    display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:60px;
+    padding-bottom:70px; border-bottom:1px solid var(--line);
+  }
+  footer h2{font-size:clamp(30px,3.6vw,42px); margin-bottom:14px;}
+  footer p{color:var(--ink-soft); max-width:340px; margin-bottom:26px;}
+  footer p a.footer-ask{color:var(--rose-deep); text-decoration:underline; text-underline-offset:3px; transition:color .25s;}
+  footer p a.footer-ask:hover{color:var(--gold);}
+  .foot-col h4{font-size:13px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:20px; color:var(--gold);}
+  .foot-col a{display:block; margin-bottom:12px; color:var(--ink-soft); font-size:15px; transition:color .25s;}
+  .foot-col a:hover{color:var(--rose-deep);}
+  .foot-bottom{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-top:32px; font-size:12px; color:var(--ink-soft); flex-wrap:wrap; gap:14px;
+  }
+  .foot-logo{font-family:'Cormorant Garamond', serif; font-size:20px;}
+
+  @media (max-width: 860px){
+    .footer-grid{grid-template-columns:1fr; gap:36px;}
+    .nav-links{display:none;}
+    .hamburger{display:flex;}
+    .mobile-nav-panel{display:flex;}
+    .nav-cta-group{gap:10px;}
+    .nav-cta-group .btn{padding:12px 18px; font-size:11px;}
+  }
+  @media (max-width:520px){
+    .nav-cta-group{flex-wrap:wrap; justify-content:flex-end;}
+    .wrap, section .wrap{padding-left:22px; padding-right:22px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+  }
+  a:focus-visible, button:focus-visible{outline:2px solid var(--rose-deep); outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="announce-bar">
+    <div class="announce-track">
+      <div class="announce-set"><span>Orders will be completed in 7-10 days as most are handmade!</span><span>Orders will be completed in 7-10 days as most are handmade!</span><span>Orders will be completed in 7-10 days as most are handmade!</span><span>Orders will be completed in 7-10 days as most are handmade!</span><span>Orders will be completed in 7-10 days as most are handmade!</span><span>Orders will be completed in 7-10 days as most are handmade!</span></div>
+      <div class="announce-set" aria-hidden="true"><span>Orders will be completed in 7-10 days as most are handmade!</span><span>Orders will be completed in 7-10 days as most are handmade!</span><span>Orders will be completed in 7-10 days as most are handmade!</span><span>Orders will be completed in 7-10 days as most are handmade!</span><span>Orders will be completed in 7-10 days as most are handmade!</span><span>Orders will be completed in 7-10 days as most are handmade!</span></div>
+    </div>
+  </div>
+  <nav>
+    <a href="index.html" class="logo-block">
+      <div class="logo">Cozy Nook <span>Craft Co.</span></div>
+      <div class="tagline">Ribbon Tied Wishes &amp; Cardstock Dreams</div>
+    </a>
+    <div class="nav-links">
+      <a href="story-shop.html">The Story Shop</a>
+      <a href="preference-sheet.html" class="active">Preference Sheet</a>
+      <a href="index.html#booklist">Book List</a>
+      <a href="index.html#scentlist">Scent List</a>
+      <a href="index.html#custom">Custom Orders</a>
+      <a href="index.html#cozy-bear">Cozy Bears</a>
+      <a href="https://docs.google.com/document/d/1u-9X7yYVMMQmjxPVmYeQ3whbqG_GQVCZvYZgP0ey7cM/edit?usp=sharing" target="_blank" rel="noopener">Book Club</a>
+      <a href="index.html#classes">Classes</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <div class="nav-cta-group">
+      <a href="https://buymeacoffee.com/CozyNookCraftCo" target="_blank" rel="noopener" class="btn btn-coffee">Buy Me A Coffee</a>
+    </div>
+    <button type="button" class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNavPanel">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-nav-panel" id="mobileNavPanel">
+    <a href="story-shop.html">The Story Shop</a>
+    <a href="preference-sheet.html" class="active">Preference Sheet</a>
+    <a href="index.html#booklist">Book List</a>
+    <a href="index.html#scentlist">Scent List</a>
+    <a href="index.html#custom">Custom Orders</a>
+    <a href="index.html#cozy-bear">Cozy Bears</a>
+    <a href="https://docs.google.com/document/d/1u-9X7yYVMMQmjxPVmYeQ3whbqG_GQVCZvYZgP0ey7cM/edit?usp=sharing" target="_blank" rel="noopener">Book Club</a>
+    <a href="index.html#classes">Classes</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</header>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+  <radialGradient id="blushGrad" cx="35%" cy="25%" r="85%">
+    <stop offset="0%" stop-color="#FBE6EA"/>
+    <stop offset="50%" stop-color="#E8A8B8"/>
+    <stop offset="100%" stop-color="#C97A8C"/>
+  </radialGradient>
+  <radialGradient id="blushGradDeep" cx="35%" cy="25%" r="85%">
+    <stop offset="0%" stop-color="#F3C7D1"/>
+    <stop offset="55%" stop-color="#D98FA0"/>
+    <stop offset="100%" stop-color="#B96780"/>
+  </radialGradient>
+  <radialGradient id="peachGrad" cx="35%" cy="25%" r="85%">
+    <stop offset="0%" stop-color="#FCEADD"/>
+    <stop offset="50%" stop-color="#EFC29C"/>
+    <stop offset="100%" stop-color="#D99A72"/>
+  </radialGradient>
+  <radialGradient id="coralGrad" cx="35%" cy="25%" r="85%">
+    <stop offset="0%" stop-color="#FBE2D8"/>
+    <stop offset="50%" stop-color="#E8A688"/>
+    <stop offset="100%" stop-color="#CC7A5C"/>
+  </radialGradient>
+  <radialGradient id="lavenderGrad" cx="35%" cy="25%" r="85%">
+    <stop offset="0%" stop-color="#F0E8F5"/>
+    <stop offset="50%" stop-color="#C9B3DB"/>
+    <stop offset="100%" stop-color="#A98BC2"/>
+  </radialGradient>
+  <radialGradient id="centerGold" cx="40%" cy="35%" r="75%">
+    <stop offset="0%" stop-color="#F5E3BE"/>
+    <stop offset="100%" stop-color="#D9A15E"/>
+  </radialGradient>
+  <linearGradient id="stemGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#C3D0AE"/>
+    <stop offset="100%" stop-color="#9CAA84"/>
+  </linearGradient>
+  <filter id="wc-blur"><feGaussianBlur stdDeviation="1.1"/></filter>
+
+  <g id="petalBlush">
+    <path d="M0,0 C-18,-25 -16,-49 0,-61 C16,-49 18,-25 0,0 Z" fill="url(#blushGrad)"/>
+    <path d="M0,-3 C-12,-24 -10,-43 0,-53 C10,-43 12,-24 0,-3 Z" fill="url(#blushGradDeep)" opacity="0.45"/>
+    <path d="M0,-6 C-9,-22 -8,-38 0,-47 C8,-38 9,-22 0,-6 Z" fill="#fff" opacity="0.22"/>
+  </g>
+  <g id="petalPeach">
+    <path d="M0,0 C-18,-25 -16,-49 0,-61 C16,-49 18,-25 0,0 Z" fill="url(#peachGrad)"/>
+    <path d="M0,-3 C-12,-24 -10,-43 0,-53 C10,-43 12,-24 0,-3 Z" fill="#DB8A56" opacity="0.35"/>
+    <path d="M0,-6 C-9,-22 -8,-38 0,-47 C8,-38 9,-22 0,-6 Z" fill="#fff" opacity="0.22"/>
+  </g>
+  <g id="petalCoral">
+    <path d="M0,0 C-16,-22 -14,-44 0,-55 C14,-44 16,-22 0,0 Z" fill="url(#coralGrad)"/>
+    <path d="M0,-3 C-11,-21 -9,-38 0,-47 C9,-38 11,-21 0,-3 Z" fill="#B96246" opacity="0.35"/>
+    <path d="M0,-5 C-8,-19 -7,-33 0,-41 C7,-33 8,-19 0,-5 Z" fill="#fff" opacity="0.2"/>
+  </g>
+  <g id="petalLavender">
+    <path d="M0,0 C-14,-19 -12,-38 0,-48 C12,-38 14,-19 0,0 Z" fill="url(#lavenderGrad)"/>
+    <path d="M0,-2 C-9,-18 -8,-33 0,-41 C8,-33 9,-18 0,-2 Z" fill="#8F6FAE" opacity="0.3"/>
+    <path d="M0,-4 C-7,-16 -6,-29 0,-36 C6,-29 7,-16 0,-4 Z" fill="#fff" opacity="0.22"/>
+  </g>
+
+  <symbol id="flowerBlush" viewBox="0 0 120 120">
+    <g transform="translate(60,60)" filter="url(#wc-blur)">
+      <use href="#petalBlush" transform="rotate(0)"/>
+      <use href="#petalBlush" transform="rotate(60)"/>
+      <use href="#petalBlush" transform="rotate(120)"/>
+      <use href="#petalBlush" transform="rotate(180)"/>
+      <use href="#petalBlush" transform="rotate(240)"/>
+      <use href="#petalBlush" transform="rotate(300)"/>
+      <use href="#petalBlush" transform="rotate(30) scale(0.55)"/>
+      <use href="#petalBlush" transform="rotate(150) scale(0.55)"/>
+      <use href="#petalBlush" transform="rotate(270) scale(0.55)"/>
+      <circle r="10" fill="url(#centerGold)"/>
+      <circle r="10" fill="none" stroke="#8a6b34" stroke-width="0.6" opacity="0.4"/>
+    </g>
+  </symbol>
+
+  <symbol id="flowerPeach" viewBox="0 0 120 120">
+    <g transform="translate(60,60)" filter="url(#wc-blur)">
+      <use href="#petalPeach" transform="rotate(0)"/>
+      <use href="#petalPeach" transform="rotate(60)"/>
+      <use href="#petalPeach" transform="rotate(120)"/>
+      <use href="#petalPeach" transform="rotate(180)"/>
+      <use href="#petalPeach" transform="rotate(240)"/>
+      <use href="#petalPeach" transform="rotate(300)"/>
+      <use href="#petalPeach" transform="rotate(30) scale(0.55)"/>
+      <use href="#petalPeach" transform="rotate(150) scale(0.55)"/>
+      <use href="#petalPeach" transform="rotate(270) scale(0.55)"/>
+      <circle r="10" fill="url(#centerGold)"/>
+      <circle r="10" fill="none" stroke="#8a6b34" stroke-width="0.6" opacity="0.4"/>
+    </g>
+  </symbol>
+
+  <symbol id="flowerCoral" viewBox="0 0 100 100">
+    <g transform="translate(50,50)" filter="url(#wc-blur)">
+      <use href="#petalCoral" transform="rotate(0)"/>
+      <use href="#petalCoral" transform="rotate(72)"/>
+      <use href="#petalCoral" transform="rotate(144)"/>
+      <use href="#petalCoral" transform="rotate(216)"/>
+      <use href="#petalCoral" transform="rotate(288)"/>
+      <circle r="7" fill="url(#centerGold)"/>
+    </g>
+  </symbol>
+
+  <symbol id="flowerLavender" viewBox="0 0 90 90">
+    <g transform="translate(45,45)" filter="url(#wc-blur)">
+      <use href="#petalLavender" transform="rotate(0)"/>
+      <use href="#petalLavender" transform="rotate(72)"/>
+      <use href="#petalLavender" transform="rotate(144)"/>
+      <use href="#petalLavender" transform="rotate(216)"/>
+      <use href="#petalLavender" transform="rotate(288)"/>
+      <circle r="6" fill="url(#centerGold)"/>
+    </g>
+  </symbol>
+
+  <symbol id="flowerBud" viewBox="0 0 60 90">
+    <g transform="translate(30,70)">
+      <path d="M0,10 C0,-10 0,-30 0,-40" stroke="url(#stemGrad)" stroke-width="2" fill="none"/>
+      <use href="#petalBlush" transform="scale(0.55)"/>
+    </g>
+  </symbol>
+
+  <symbol id="leafSprig" viewBox="0 0 60 100">
+    <path d="M30,100 C30,62 30,30 30,0" stroke="url(#stemGrad)" stroke-width="2.2" fill="none"/>
+    <path d="M30,72 C14,63 7,47 11,31 C24,38 30,52 30,72 Z" fill="#AABC87" opacity="0.9"/>
+    <path d="M30,50 C46,42 53,27 49,11 C37,18 30,33 30,50 Z" fill="#9DB178" opacity="0.9"/>
+  </symbol>
+</defs>
+</svg>
+
+<div class="page-intro">
+  <svg class="floral-corner-tl" viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">
+    <use href="#leafSprig" x="30" y="80" width="60" height="130" transform="rotate(-18 60 145)"/>
+    <use href="#leafSprig" x="150" y="90" width="55" height="110" transform="rotate(24 177 145)"/>
+    <use href="#flowerPeach" x="115" y="0" width="110" height="110"/>
+    <use href="#flowerBlush" x="35" y="35" width="120" height="120"/>
+    <use href="#flowerBlush" x="140" y="90" width="80" height="80"/>
+    <use href="#flowerPeach" x="10" y="120" width="75" height="75"/>
+    <use href="#flowerCoral" x="165" y="15" width="60" height="60"/>
+    <use href="#flowerLavender" x="185" y="115" width="50" height="50"/>
+    <use href="#flowerLavender" x="45" y="8" width="45" height="45"/>
+    <use href="#flowerCoral" x="0" y="80" width="48" height="48"/>
+    <use href="#flowerBud" x="185" y="150" width="45" height="68" transform="rotate(18 207 184)"/>
+    <use href="#flowerBud" x="55" y="150" width="40" height="60" transform="rotate(-14 75 180)"/>
+    <use href="#flowerBud" x="120" y="10" width="30" height="46" transform="rotate(-8 135 33)"/>
+    <use href="#flowerLavender" x="105" y="145" width="34" height="34"/>
+  </svg>
+  <svg class="floral-corner-br" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+    <use href="#leafSprig" x="60" y="70" width="50" height="100" transform="rotate(12 85 120)"/>
+    <use href="#flowerBlush" x="70" y="0" width="100" height="100"/>
+    <use href="#flowerPeach" x="10" y="50" width="80" height="80"/>
+    <use href="#flowerCoral" x="130" y="60" width="55" height="55"/>
+    <use href="#flowerLavender" x="30" y="15" width="42" height="42"/>
+    <use href="#flowerBud" x="120" y="70" width="38" height="58" transform="rotate(-16 139 99)"/>
+  </svg>
+  <span class="eyebrow">Cozy Nook Craft Co.</span>
+  <h1>Preference <span class="logo-accent">Sheet</span></h1>
+  <p>Help us make your custom piece feel unmistakably yours — tell us your favorite colors, styles, and genres below.</p>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="form-embed">
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdTJA2b0kWlpXxGrTha-EtcqjMYy50xNTUCYdH6PT0IW-HVxw/viewform?embedded=true" title="Cozy Nook Craft Co. Preference Sheet">Loading form…</iframe>
+    </div>
+    <p class="form-embed-fallback">Form not loading? <a href="https://docs.google.com/forms/d/e/1FAIpQLSdTJA2b0kWlpXxGrTha-EtcqjMYy50xNTUCYdH6PT0IW-HVxw/viewform" target="_blank" rel="noopener">Open it in a new tab</a>.</p>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h2>Let's make<br>something together.</h2>
+        <p><a class="footer-ask" href="mailto:CozyNookCraftCo@yahoo.com?subject=Question%20from%20the%20Cozy%20Nook%20website">Questions about an order, a class, or a custom piece? Please feel free to ask us!</a> Click below.</p>
+        <a href="mailto:CozyNookCraftCo@yahoo.com?subject=Question%20from%20the%20Cozy%20Nook%20website" class="btn solid">CozyNookCraftCo@yahoo.com</a>
+      </div>
+      <div class="foot-col">
+        <h4>Explore</h4>
+        <a href="story-shop.html">The Story Shop</a>
+        <a href="index.html#custom">Custom Orders</a>
+        <a href="index.html#classes">Classes</a>
+        <a href="index.html#about">Our Story</a>
+      </div>
+      <div class="foot-col">
+        <h4>Visit</h4>
+        <a href="https://www.instagram.com/cozynookcraftco" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.youtube.com/channel/UCeQevfVgwK5xmDMl27iSmYA" target="_blank" rel="noopener">YouTube</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div>
+        <div class="foot-logo">Cozy Nook Craft Co.</div>
+        <div class="tagline" style="margin-top:4px;">Ribbon Tied Wishes &amp; Cardstock Dreams</div>
+      </div>
+      <div>&copy; 2026 Cozy Nook Craft Co. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script id="mobileNavScript">
+(function(){
+  var btn = document.getElementById('hamburgerBtn');
+  var panel = document.getElementById('mobileNavPanel');
+  if(!btn || !panel) return;
+
+  function closeMenu(){
+    panel.classList.remove('open');
+    btn.classList.remove('active');
+    btn.setAttribute('aria-expanded', 'false');
+  }
+  function toggleMenu(){
+    var isOpen = panel.classList.toggle('open');
+    btn.classList.toggle('active', isOpen);
+    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  }
+
+  btn.addEventListener('click', toggleMenu);
+  panel.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click', closeMenu);
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeMenu();
+  });
+  window.addEventListener('resize', function(){
+    if(window.innerWidth > 860) closeMenu();
+  });
+})();
+</script>
+
+</body>
+</html>
