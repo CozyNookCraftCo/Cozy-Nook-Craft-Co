@@ -131,12 +131,12 @@
   /* ===== Book club deadline badge with a soft glow ripple (1.5 inches = 144px), top right below the header ===== */
   .deadline-badge{
     position:fixed; right:20px; top:calc(var(--header-h, 155px) + 15px); z-index:40;
-    width:144px; height:144px; border-radius:50%;
+    width:164px; height:164px; border-radius:50%;
     background:#F9DBC2; color:var(--ink);
     display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
-    padding:12px; box-shadow:0 8px 22px -8px rgba(62,51,47,0.4);
-    font-family:'Jost', sans-serif; font-weight:300; font-size:13px; line-height:1.3;
-    letter-spacing:0.08em; text-transform:none;
+    padding:16px; box-shadow:0 8px 22px -8px rgba(62,51,47,0.4);
+    font-family:'Jost', sans-serif; font-weight:300; font-size:11px; line-height:1.2;
+    letter-spacing:0.03em; text-transform:none;
     text-decoration:none; cursor:pointer;
   }
   .deadline-badge::before, .deadline-badge::after{
@@ -148,10 +148,11 @@
   .deadline-badge:hover, .deadline-badge:focus-visible{background:#F2C29F; color:var(--ink);}
   .deadline-badge:hover::before, .deadline-badge:hover::after,
   .deadline-badge:focus-visible::before, .deadline-badge:focus-visible::after{animation-play-state:paused;}
-  .deadline-cta{display:block; margin-top:6px; font-size:12px; font-weight:300; letter-spacing:0.08em; text-decoration:underline; text-underline-offset:3px;}
+  .deadline-note{display:block; margin-top:5px; font-weight:500;}
+  .deadline-cta{display:block; margin-top:5px; font-size:10.5px; font-weight:300; letter-spacing:0.08em; text-decoration:underline; text-underline-offset:3px;}
   @media (max-width:520px){
-    .deadline-badge{width:124px; height:124px; padding:9px; font-size:11.5px; right:12px;}
-    .deadline-cta{font-size:10.5px; margin-top:4px;}
+    .deadline-badge{width:146px; height:146px; padding:12px; font-size:10px; right:12px;}
+    .deadline-cta{font-size:9.5px; margin-top:3px;}
   }
   /* On phones the hero artwork was wider than the screen, which made the page scroll sideways and pushed fixed items off the edge */
   @media (max-width:860px){ section.hero{overflow-x:clip;} }
@@ -1171,7 +1172,7 @@
 
 <audio id="bgMusic" src="background-music.mp3" loop preload="none"></audio>
 
-<a class="deadline-badge" href="https://docs.google.com/document/d/1u-9X7yYVMMQmjxPVmYeQ3whbqG_GQVCZvYZgP0ey7cM/edit?usp=sharing" target="_blank" rel="noopener" aria-label="November book club information coming soon! Stay tuned!"><span>November book club information coming soon!</span><span class="deadline-cta">Stay tuned!</span></a>
+<a class="deadline-badge" href="https://docs.google.com/document/d/1u-9X7yYVMMQmjxPVmYeQ3whbqG_GQVCZvYZgP0ey7cM/edit?usp=sharing" target="_blank" rel="noopener" aria-label="November book club information coming soon! November book club orders are due in by November 9th! Stay tuned!"><span>November book club information coming soon!</span><span class="deadline-note">November book club orders are due in by November 9th!</span><span class="deadline-cta">Stay tuned!</span></a>
 
 <header>
   <div class="announce-bar">
