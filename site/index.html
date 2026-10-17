@@ -2726,5 +2726,161 @@
   </button>
 </div>
 <script>document.addEventListener('click',function(e){var f=document.getElementById('chatFab');if(f&&!f.contains(e.target)){f.classList.remove('open');var b=f.querySelector('.chat-fab-btn');if(b)b.setAttribute('aria-expanded','false');}});</script>
+<!-- ============================================================
+     Bookish cursor: swaying pastel book stack + story sparkles
+     Cozy Nook Craft Co.
+     Paste this whole block just before </body> in index.html.
+     It turns itself off on phones/tablets and for visitors who
+     have "reduce motion" turned on, so they get a normal cursor.
+     ============================================================ -->
+<style>
+  html.bookish-cursor,
+  html.bookish-cursor * { cursor: none !important; }
+  #bookish-cursor-canvas {
+    position: fixed; top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: 2147483647;
+  }
+</style>
+<script>
+(function () {
+  /* ---------- Easy settings ---------- */
+  var TILT = 15;        // how far the stack sways (0 = none, 30 = a lot)
+  var SIZE = 1.2;       // cursor size (1 = small, 1.5 = bigger)
+  var BOOKS = [         // top to bottom: cover color, outline color
+    { cover: '#F4C0D1', edge: '#993556' },  // pink
+    { cover: '#CECBF6', edge: '#534AB7' },  // lavender
+    { cover: '#9FE1CB', edge: '#0F6E56' },  // mint
+    { cover: '#FAC775', edge: '#854F0B' }   // butter yellow
+  ];
+  var SPARKLES = ['#F4C0D1', '#CECBF6', '#9FE1CB', '#FAC775', '#ED93B1', '#AFA9EC'];
+  /* ----------------------------------- */
+
+  var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!finePointer || reduceMotion) return;
+
+  var canvas = document.createElement('canvas');
+  canvas.id = 'bookish-cursor-canvas';
+  canvas.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(canvas);
+  document.documentElement.classList.add('bookish-cursor');
+  var ctx = canvas.getContext('2d');
+
+  var W, H, dpr;
+  function resize() {
+    dpr = window.devicePixelRatio || 1;
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  var mx = -100, my = -100, pmx = mx, pmy = my;
+  var visible = false, sway = 0, t = 0, parts = [];
+
+  document.addEventListener('mousemove', function (e) {
+    mx = e.clientX; my = e.clientY;
+    if (!visible) { pmx = mx; pmy = my; visible = true; }
+  });
+  document.addEventListener('mouseout', function (e) {
+    if (!e.relatedTarget) visible = false;
+  });
+
+  var LAYOUT = [
+    { x: 0,  y: 0,  w: 18, h: 5 },
+    { x: 2,  y: 5,  w: 16, h: 5 },
+    { x: -1, y: 10, w: 19, h: 5 },
+    { x: 1,  y: 15, w: 18, h: 5 }
+  ];
+
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+
+  function spawn() {
+    var d = Math.hypot(mx - pmx, my - pmy);
+    if (d < 2 && Math.random() < 0.75) return;
+    var n = Math.min(3, 1 + Math.floor(d / 12));
+    for (var i = 0; i < n; i++) {
+      parts.push({
+        x: mx + rnd(-5, 5), y: my + rnd(-5, 5),
+        vx: rnd(-0.8, 0.8), vy: rnd(-0.8, 0.6),
+        life: 1, decay: rnd(0.014, 0.024),
+        c: SPARKLES[Math.floor(Math.random() * SPARKLES.length)],
+        s: rnd(3, 7), ph: rnd(0, 6), dot: Math.random() < 0.35
+      });
+    }
+  }
+
+  function star(x, y, s) {
+    ctx.beginPath();
+    for (var i = 0; i < 8; i++) {
+      var a = i * Math.PI / 4, r = i % 2 ? s * 0.32 : s;
+      ctx.lineTo(x + Math.cos(a) * r, y + Math.sin(a) * r);
+    }
+    ctx.closePath(); ctx.fill();
+  }
+
+  function drawBook(l, b) {
+    ctx.fillStyle = b.cover; ctx.strokeStyle = b.edge;
+    ctx.fillRect(l.x, l.y, l.w, l.h);
+    ctx.fillStyle = '#FFFDF6';                       // cream page edges
+    ctx.fillRect(l.x + l.w - 4, l.y + 1, 3, l.h - 2);
+    ctx.strokeRect(l.x + 0.5, l.y + 0.5, l.w - 1, l.h - 1);
+    ctx.beginPath();                                 // spine line
+    ctx.moveTo(l.x + 3, l.y + 0.5); ctx.lineTo(l.x + 3, l.y + l.h - 0.5);
+    ctx.stroke();
+  }
+
+  function drawStack() {
+    var k = TILT / 15;
+    ctx.save();
+    ctx.translate(mx, my);
+    ctx.scale(SIZE, SIZE);
+    ctx.lineWidth = 1; ctx.lineJoin = 'round';
+    LAYOUT.forEach(function (l, i) {
+      var lean = 3 - i;                               // top books lean most
+      var cx = l.x + l.w / 2, cy = l.y + l.h / 2;
+      ctx.save();
+      ctx.translate(sway * lean * k, 0);
+      ctx.translate(cx, cy);
+      ctx.rotate(sway * 0.05 * k * lean / 3);
+      ctx.translate(-cx, -cy);
+      drawBook(l, BOOKS[i]);
+      ctx.restore();
+    });
+    ctx.restore();
+  }
+
+  function loop() {
+    t++;
+    ctx.clearRect(0, 0, W, H);
+    if (!document.hidden) {
+      var vx = mx - pmx;
+      var target = Math.max(-6, Math.min(6, -vx * 0.4));
+      sway += (target - sway) * 0.12;
+      if (visible) spawn();
+      pmx = mx; pmy = my;
+
+      for (var i = 0; i < parts.length; i++) {
+        var p = parts[i];
+        p.life -= p.decay;
+        p.vx *= 0.96; p.vy *= 0.96; p.vy += 0.01;
+        p.x += p.vx; p.y += p.vy;
+        ctx.globalAlpha = Math.max(0, p.life);
+        ctx.fillStyle = p.c;
+        if (p.dot) { ctx.beginPath(); ctx.arc(p.x, p.y, p.s * 0.3, 0, 7); ctx.fill(); }
+        else star(p.x, p.y, p.s * (0.6 + 0.4 * Math.sin(t * 0.3 + p.ph)));
+      }
+      ctx.globalAlpha = 1;
+      parts = parts.filter(function (p) { return p.life > 0; }).slice(-200);
+      if (visible) drawStack();
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+</script>
 </body>
 </html>
