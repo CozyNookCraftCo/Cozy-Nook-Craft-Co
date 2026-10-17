@@ -1007,6 +1007,11 @@
     .cc-drawer, .cc-overlay{transition:none;}
     .cc-cartbtn.cc-bump{animation:none;}
   }
+
+  /* --- Little flower bundles beside the shop title --- */
+  .head-bundles{position:absolute; left:calc(100% + 10px); top:-20px; width:380px; height:auto; pointer-events:none;}
+  @media (max-width:1100px){ .head-bundles{width:230px; left:calc(100% - 40px);} }
+  @media (max-width:860px){ .head-bundles{display:none;} }
 </style>
 </head>
 <body>
@@ -1071,15 +1076,15 @@
 
   <symbol id="flowerBlush" viewBox="0 0 120 120">
     <g transform="translate(60,60)" filter="url(#wc-blur)">
-      <use href="index.html#petalBlush" transform="rotate(0)"/>
-      <use href="index.html#petalBlush" transform="rotate(60)"/>
-      <use href="index.html#petalBlush" transform="rotate(120)"/>
-      <use href="index.html#petalBlush" transform="rotate(180)"/>
-      <use href="index.html#petalBlush" transform="rotate(240)"/>
-      <use href="index.html#petalBlush" transform="rotate(300)"/>
-      <use href="index.html#petalBlush" transform="rotate(30) scale(0.55)"/>
-      <use href="index.html#petalBlush" transform="rotate(150) scale(0.55)"/>
-      <use href="index.html#petalBlush" transform="rotate(270) scale(0.55)"/>
+      <use href="#petalBlush" transform="rotate(0)"/>
+      <use href="#petalBlush" transform="rotate(60)"/>
+      <use href="#petalBlush" transform="rotate(120)"/>
+      <use href="#petalBlush" transform="rotate(180)"/>
+      <use href="#petalBlush" transform="rotate(240)"/>
+      <use href="#petalBlush" transform="rotate(300)"/>
+      <use href="#petalBlush" transform="rotate(30) scale(0.55)"/>
+      <use href="#petalBlush" transform="rotate(150) scale(0.55)"/>
+      <use href="#petalBlush" transform="rotate(270) scale(0.55)"/>
       <circle r="10" fill="url(#centerGold)"/>
       <circle r="10" fill="none" stroke="#8a6b34" stroke-width="0.6" opacity="0.4"/>
     </g>
@@ -1087,15 +1092,15 @@
 
   <symbol id="flowerPeach" viewBox="0 0 120 120">
     <g transform="translate(60,60)" filter="url(#wc-blur)">
-      <use href="index.html#petalPeach" transform="rotate(0)"/>
-      <use href="index.html#petalPeach" transform="rotate(60)"/>
-      <use href="index.html#petalPeach" transform="rotate(120)"/>
-      <use href="index.html#petalPeach" transform="rotate(180)"/>
-      <use href="index.html#petalPeach" transform="rotate(240)"/>
-      <use href="index.html#petalPeach" transform="rotate(300)"/>
-      <use href="index.html#petalPeach" transform="rotate(30) scale(0.55)"/>
-      <use href="index.html#petalPeach" transform="rotate(150) scale(0.55)"/>
-      <use href="index.html#petalPeach" transform="rotate(270) scale(0.55)"/>
+      <use href="#petalPeach" transform="rotate(0)"/>
+      <use href="#petalPeach" transform="rotate(60)"/>
+      <use href="#petalPeach" transform="rotate(120)"/>
+      <use href="#petalPeach" transform="rotate(180)"/>
+      <use href="#petalPeach" transform="rotate(240)"/>
+      <use href="#petalPeach" transform="rotate(300)"/>
+      <use href="#petalPeach" transform="rotate(30) scale(0.55)"/>
+      <use href="#petalPeach" transform="rotate(150) scale(0.55)"/>
+      <use href="#petalPeach" transform="rotate(270) scale(0.55)"/>
       <circle r="10" fill="url(#centerGold)"/>
       <circle r="10" fill="none" stroke="#8a6b34" stroke-width="0.6" opacity="0.4"/>
     </g>
@@ -1103,22 +1108,22 @@
 
   <symbol id="flowerCoral" viewBox="0 0 100 100">
     <g transform="translate(50,50)" filter="url(#wc-blur)">
-      <use href="index.html#petalCoral" transform="rotate(0)"/>
-      <use href="index.html#petalCoral" transform="rotate(72)"/>
-      <use href="index.html#petalCoral" transform="rotate(144)"/>
-      <use href="index.html#petalCoral" transform="rotate(216)"/>
-      <use href="index.html#petalCoral" transform="rotate(288)"/>
+      <use href="#petalCoral" transform="rotate(0)"/>
+      <use href="#petalCoral" transform="rotate(72)"/>
+      <use href="#petalCoral" transform="rotate(144)"/>
+      <use href="#petalCoral" transform="rotate(216)"/>
+      <use href="#petalCoral" transform="rotate(288)"/>
       <circle r="7" fill="url(#centerGold)"/>
     </g>
   </symbol>
 
   <symbol id="flowerLavender" viewBox="0 0 90 90">
     <g transform="translate(45,45)" filter="url(#wc-blur)">
-      <use href="index.html#petalLavender" transform="rotate(0)"/>
-      <use href="index.html#petalLavender" transform="rotate(72)"/>
-      <use href="index.html#petalLavender" transform="rotate(144)"/>
-      <use href="index.html#petalLavender" transform="rotate(216)"/>
-      <use href="index.html#petalLavender" transform="rotate(288)"/>
+      <use href="#petalLavender" transform="rotate(0)"/>
+      <use href="#petalLavender" transform="rotate(72)"/>
+      <use href="#petalLavender" transform="rotate(144)"/>
+      <use href="#petalLavender" transform="rotate(216)"/>
+      <use href="#petalLavender" transform="rotate(288)"/>
       <circle r="6" fill="url(#centerGold)"/>
     </g>
   </symbol>
@@ -1126,7 +1131,7 @@
   <symbol id="flowerBud" viewBox="0 0 60 90">
     <g transform="translate(30,70)">
       <path d="M0,10 C0,-10 0,-30 0,-40" stroke="url(#stemGrad)" stroke-width="2" fill="none"/>
-      <use href="index.html#petalBlush" transform="scale(0.55)"/>
+      <use href="#petalBlush" transform="scale(0.55)"/>
     </g>
   </symbol>
 
@@ -1142,7 +1147,7 @@
   <div class="newsletter-modal" role="dialog" aria-labelledby="newsletterTitle" aria-modal="true">
     <button type="button" class="newsletter-close" id="newsletterClose" aria-label="Close">&times;</button>
     <svg width="56" height="56" viewBox="0 0 120 120" style="margin:0 auto 6px; display:block;">
-      <use href="index.html#flowerBlush" width="120" height="120"/>
+      <use href="#flowerBlush" width="120" height="120"/>
     </svg>
     <span class="eyebrow" style="display:block; text-align:center;">Join The Nook</span>
     <h3 id="newsletterTitle">Paper notes, sent occasionally.</h3>
@@ -1240,10 +1245,34 @@
     <div class="section-head">
       <span class="eyebrow">Everything In The Shop</span>
       <h2>The Story <span class="logo-accent">Shop</span></h2>
-      <svg class="head-sprig" viewBox="0 0 100 100">
-        <use href="#leafSprig" x="30" y="30" width="30" height="60" transform="rotate(20 45 60)"/>
-        <use href="#flowerCoral" x="35" y="0" width="45" height="45"/>
-        <use href="#flowerLavender" x="0" y="30" width="34" height="34"/>
+      <svg class="head-bundles" viewBox="0 0 380 130" aria-hidden="true" focusable="false">
+        <g transform="translate(0 0) rotate(-10 60 70)">
+          <use href="#leafSprig" x="38" y="40" width="34" height="74" transform="rotate(-18 55 77)"/>
+          <use href="#leafSprig" x="52" y="44" width="30" height="66" transform="rotate(22 67 77)"/>
+          <use href="#flowerBud" x="22" y="18" width="26" height="40" transform="rotate(-24 35 38)"/>
+          <use href="#flowerBud" x="78" y="20" width="24" height="36" transform="rotate(20 90 38)"/>
+          <use href="#flowerPeach" x="30" y="10" width="52" height="52"/>
+          <use href="#flowerCoral" x="66" y="42" width="34" height="34"/>
+          <use href="#flowerLavender" x="16" y="46" width="28" height="28"/>
+        </g>
+        <g transform="translate(130 0) rotate(0 60 70)">
+          <use href="#leafSprig" x="38" y="40" width="34" height="74" transform="rotate(-18 55 77)"/>
+          <use href="#leafSprig" x="52" y="44" width="30" height="66" transform="rotate(22 67 77)"/>
+          <use href="#flowerBud" x="22" y="18" width="26" height="40" transform="rotate(-24 35 38)"/>
+          <use href="#flowerBud" x="78" y="20" width="24" height="36" transform="rotate(20 90 38)"/>
+          <use href="#flowerCoral" x="30" y="10" width="52" height="52"/>
+          <use href="#flowerBlush" x="66" y="42" width="34" height="34"/>
+          <use href="#flowerLavender" x="16" y="46" width="28" height="28"/>
+        </g>
+        <g transform="translate(260 0) rotate(10 60 70)">
+          <use href="#leafSprig" x="38" y="40" width="34" height="74" transform="rotate(-18 55 77)"/>
+          <use href="#leafSprig" x="52" y="44" width="30" height="66" transform="rotate(22 67 77)"/>
+          <use href="#flowerBud" x="22" y="18" width="26" height="40" transform="rotate(-24 35 38)"/>
+          <use href="#flowerBud" x="78" y="20" width="24" height="36" transform="rotate(20 90 38)"/>
+          <use href="#flowerBlush" x="30" y="10" width="52" height="52"/>
+          <use href="#flowerPeach" x="66" y="42" width="34" height="34"/>
+          <use href="#flowerLavender" x="16" y="46" width="28" height="28"/>
+        </g>
       </svg>
     </div>
     <div class="shop-grid">
@@ -1377,7 +1406,7 @@
     <div class="footer-grid">
       <div>
         <svg width="46" height="46" viewBox="0 0 120 120" style="margin-bottom:14px;">
-          <use href="index.html#flowerBlush" width="120" height="120"/>
+          <use href="#flowerBlush" width="120" height="120"/>
         </svg>
         <h2>Let's make<br>something together.</h2>
         <p><a class="footer-ask" href="mailto:CozyNookCraftCo@yahoo.com?subject=Question%20from%20the%20Cozy%20Nook%20website">Questions about an order, a class, or a custom piece? Please feel free to ask us!</a> Click below.</p>
