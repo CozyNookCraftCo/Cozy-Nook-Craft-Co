@@ -1113,6 +1113,14 @@
       text-shadow:0 0 10px rgba(255,253,249,.95), 0 0 22px rgba(255,253,249,.9), 0 0 3px rgba(255,253,249,1);}
     .music-row .music-caption{background:rgba(255,253,249,.88); padding:6px 12px; border-radius:14px; color:var(--rose-deep);}
   }
+
+  /* --- Music button: on the left, under Browse The Shop, clear of the photos --- */
+  .hero-copy .music-row{margin:26px 0 0;}
+  @media (max-width:860px){
+    .hero-copy .music-row{margin:22px 0 0;}
+    .hero-copy .music-row .music-caption{background:none; padding:0; text-shadow:none;}
+    .hero-copy .hero-tagline{margin-top:68px;}
+  }
 </style>
 </head>
 <body>
@@ -1385,16 +1393,16 @@
 
 
   <div class="hero-copy">
+    <h1 class="hero-tagline"><span class="tag-pink">Made By Hand</span><br><span class="tag-gold">Shared With Love</span></h1>
+    <div class="hero-btns">
+      <a href="#shop" class="btn solid">Browse The Shop</a>
+    </div>
     <div class="music-row">
     <button type="button" class="music-toggle" id="musicToggle" aria-label="Play background music" aria-pressed="false">
       <svg id="musicPlayIcon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
       <svg id="musicPauseIcon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
     </button>
     <p class="music-caption">Click here and get Cozy while you browse!</p>
-    </div>
-    <h1 class="hero-tagline"><span class="tag-pink">Made By Hand</span><br><span class="tag-gold">Shared With Love</span></h1>
-    <div class="hero-btns">
-      <a href="#shop" class="btn solid">Browse The Shop</a>
     </div>
     <div class="bookclub-spot">
       <div class="bc-circle">
