@@ -1094,6 +1094,25 @@
     .bc-quote-wrap{padding-right:40px; min-width:0;}
     .bc-sprig{width:46px; height:64px; bottom:-12px;}
   }
+
+  /* --- Cozy photo in the top-right corner, fading into the page --- */
+  html, body{overflow-x:clip;}
+  .hero-corner{position:absolute; top:0; right:min(0px, calc((1180px - 100vw) / 2)); z-index:0;
+    width:min(62vw, 880px); height:auto; pointer-events:none; user-select:none;
+    -webkit-mask-image:linear-gradient(to bottom, #000 62%, transparent 100%);
+            mask-image:linear-gradient(to bottom, #000 62%, transparent 100%);}
+  .hero > *:not(.hero-corner){position:relative; z-index:1;}
+  .hero > .floral-corner-tl{position:absolute; z-index:2;}
+  /* On computers the cozy photo is now the main picture, so the round lamp photo steps aside */
+  @media (min-width:861px){ .hero-visual{visibility:hidden;} }
+  @media (max-width:860px){
+    .hero-corner{right:0; width:74vw;
+      -webkit-mask-image:linear-gradient(to bottom, #000 38%, transparent 92%);
+              mask-image:linear-gradient(to bottom, #000 38%, transparent 92%);}
+    .hero-copy .hero-tagline, .music-row .music-caption{
+      text-shadow:0 0 10px rgba(255,253,249,.95), 0 0 22px rgba(255,253,249,.9), 0 0 3px rgba(255,253,249,1);}
+    .music-row .music-caption{background:rgba(255,253,249,.88); padding:6px 12px; border-radius:14px; color:var(--rose-deep);}
+  }
 </style>
 </head>
 <body>
@@ -1345,6 +1364,7 @@
 </header>
 
 <section class="hero">
+  <img class="hero-corner" src="hero-cozy-corner.webp" srcset="hero-cozy-corner-small.webp 604w, hero-cozy-corner.webp 1209w" sizes="(max-width:860px) 80vw, 62vw" width="1209" height="1024" alt="" aria-hidden="true" fetchpriority="high">
   <!-- watercolor floral bouquet, top-left -->
   <svg class="floral-corner-tl" viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">
     <use href="#leafSprig" x="30" y="80" width="60" height="130" transform="rotate(-18 60 145)"/>
