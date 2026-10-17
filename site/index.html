@@ -1009,6 +1009,74 @@
     .cc-cartbtn.cc-bump{animation:none;}
   }
 </style>
+<style id="homepageRefresh">
+  /* ===== Homepage refresh (Oct 2026) =====
+     Tidier layout, same Cozy Nook look. Everything for this refresh lives
+     in this one block, so it is easy to review or undo. */
+
+  /* --- Slim sale banner (whole banner is the link) --- */
+  a.promo-bar{flex-wrap:nowrap; gap:14px; padding:10px 20px; text-decoration:none; line-height:1.35;}
+  a.promo-bar[hidden]{display:none;}
+  .promo-bar .promo-copy{display:flex; flex-wrap:wrap; justify-content:center; column-gap:6px;}
+  .promo-bar .promo-icon, .promo-bar .promo-arrow{font-size:20px; flex-shrink:0;}
+  .promo-bar .promo-arrow{transition:transform .25s ease;}
+  a.promo-bar:hover .promo-arrow{transform:translateX(3px);}
+  @media (max-width:600px){
+    a.promo-bar{padding:8px 16px; gap:10px; font-size:13px;}
+    .promo-bar .promo-copy{flex-direction:column;}
+    .promo-bar .promo-note{font-size:12px;}
+  }
+
+  /* --- Header: logo left, cart and menu neatly aligned on the right --- */
+  @media (max-width:860px){
+    header nav{padding:14px 18px; gap:12px;}
+    header nav .logo-block{min-width:0;}
+    header nav .nav-cta-group{margin-left:auto; gap:0;}
+    header nav .hamburger{width:44px; height:44px;}
+    .cc-cartbtn{width:44px; height:44px;}
+  }
+
+  /* --- Hero: music button sits above the headline, away from the text --- */
+  .music-row{display:flex; align-items:center; gap:12px; margin:0 0 28px;}
+  .music-row .music-toggle{position:static; width:44px; height:44px; flex-shrink:0;}
+  .music-row .music-toggle svg{width:18px; height:18px;}
+  .music-row .music-caption{position:static; width:auto; max-width:210px; margin:0;
+    text-align:left; font-size:13px; color:var(--gold);}
+  .hero{padding-top:130px;}
+  .floral-corner-tl{width:210px; top:-50px; left:-80px;}
+
+  /* --- Book club circle: its own spot below the Browse the Shop button --- */
+  .bookclub-spot{display:flex; margin-top:36px; padding:20px;}
+  .bookclub-spot .deadline-badge{position:relative; top:auto; right:auto; z-index:1; flex-shrink:0;}
+
+  /* --- Handmade timing note (moved from the top banner) --- */
+  .handmade-note{margin:14px 0 0; font-size:15px; font-style:italic; color:var(--ink-soft);}
+
+  @media (max-width:860px){
+    .hero{padding-top:36px; padding-bottom:72px; gap:0;}
+    .floral-corner-tl{width:130px; top:-30px; left:-36px;}
+    .music-row{margin:0 0 24px 92px;}
+    .hero-copy .hero-tagline{font-size:clamp(40px, 11.5vw, 60px);}
+    .hero-btns{margin-top:28px;}
+    .bookclub-spot{margin-top:22px; padding:16px;}
+    .hero-visual{height:320px; margin-top:24px;}
+    .section-head{margin-bottom:44px;}
+    section{padding-top:84px; padding-bottom:84px;}
+    section.hero{padding-top:36px; padding-bottom:72px;}
+    /* The story section was a little wider than phone screens, causing sideways scrolling */
+    .about-grid{grid-template-columns:minmax(0,1fr);}
+    .about-text{min-width:0;}
+    .stat-row{gap:18px;}
+  }
+
+  /* --- Chat: small round button on phones --- */
+  @media (max-width:600px){
+    .chat-fab-btn{width:56px; height:56px; padding:0; gap:0; justify-content:center; border-radius:50%;}
+    .chat-fab-btn .chat-title, .chat-fab-btn .chat-sub{
+      position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
+    .chat-fab-btn .chat-ico{font-size:24px;}
+  }
+</style>
 </head>
 <body>
 
@@ -1191,21 +1259,38 @@
 
 <audio id="bgMusic" src="background-music.mp3" loop preload="none"></audio>
 
-<a class="deadline-badge" href="https://docs.google.com/document/d/1u-9X7yYVMMQmjxPVmYeQ3whbqG_GQVCZvYZgP0ey7cM/edit?usp=sharing" target="_blank" rel="noopener" aria-label="November book club orders are due in by November 9th! Click here for information"><span class="deadline-note">November book club orders are due in by November 9th!</span><span class="deadline-cta">Click here for information</span></a>
 
 <header>
-  <div class="announce-bar">
-    <div class="announce-track">
-      <div class="announce-set"><span>Orders will be completed in 7-10 days as most are handmade!</span><span>Orders will be completed in 7-10 days as most are handmade!</span><span>Orders will be completed in 7-10 days as most are handmade!</span><span>Orders will be completed in 7-10 days as most are handmade!</span><span>Orders will be completed in 7-10 days as most are handmade!</span><span>Orders will be completed in 7-10 days as most are handmade!</span></div>
-      <div class="announce-set" aria-hidden="true"><span>Orders will be completed in 7-10 days as most are handmade!</span><span>Orders will be completed in 7-10 days as most are handmade!</span><span>Orders will be completed in 7-10 days as most are handmade!</span><span>Orders will be completed in 7-10 days as most are handmade!</span><span>Orders will be completed in 7-10 days as most are handmade!</span><span>Orders will be completed in 7-10 days as most are handmade!</span></div>
-    </div>
-  </div>
-  <div class="promo-bar" id="promoBar" role="region" aria-label="Current sale">
-    <span>🍂 <strong>15% off Anxiety Bookshelves</strong> all October! Discount applied automatically at checkout.</span>
-    <a class="promo-link" href="story-shop.html#anxiety-bookshelf">Shop now →</a>
-    <button type="button" class="promo-close" aria-label="Hide sale banner" onclick="this.parentNode.style.display='none'">×</button>
-  </div>
-  <script>if(Date.now()>=Date.parse('2026-11-01T07:00:00Z')){var p=document.getElementById('promoBar');if(p)p.remove();}</script>
+  <!-- ===== Sale banner =====
+       To change, schedule, or end a sale, edit COZY_PROMOS just below.
+       Each sale shows only between its "start" and "end" (Pacific time).
+       When none is active, the banner hides itself. -->
+  <a class="promo-bar" id="promoBar" hidden></a>
+  <script>
+  var COZY_PROMOS = [
+    {
+      icon:  '🍂',
+      title: '15% off Anxiety Bookshelves',
+      text:  'all October!',
+      note:  'Discount applied automatically at checkout.',
+      link:  'story-shop.html#anxiety-bookshelf',
+      start: '2026-10-01T00:00:00-07:00',
+      end:   '2026-11-01T00:00:00-07:00'
+    }
+  ];
+  (function(){
+    var bar = document.getElementById('promoBar'), now = Date.now();
+    var p = COZY_PROMOS.filter(function(x){ return now >= Date.parse(x.start) && now < Date.parse(x.end); })[0];
+    if(!p || !bar) return;
+    bar.href = p.link;
+    bar.setAttribute('aria-label', p.title + ' ' + p.text + ' ' + p.note);
+    bar.innerHTML = '<span class="promo-icon" aria-hidden="true">' + p.icon + '</span>' +
+      '<span class="promo-copy"><span class="promo-main"><strong>' + p.title + '</strong> ' + p.text + '</span>' +
+      '<span class="promo-note">' + p.note + '</span></span>' +
+      '<span class="promo-arrow" aria-hidden="true">&rarr;</span>';
+    bar.hidden = false;
+  })();
+  </script>
   <nav>
     <a href="index.html" class="logo-block" aria-label="Cozy Nook Craft Co. home">
       <div class="logo">Cozy Nook <span>Craft Co.</span></div>
@@ -1260,16 +1345,21 @@
     <use href="#flowerLavender" x="105" y="145" width="34" height="34"/>
   </svg>
 
-  <button type="button" class="music-toggle" id="musicToggle" aria-label="Play background music" aria-pressed="false">
-    <svg id="musicPlayIcon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-    <svg id="musicPauseIcon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
-  </button>
-  <p class="music-caption">Click here and get Cozy while you browse!</p>
 
   <div class="hero-copy">
+    <div class="music-row">
+    <button type="button" class="music-toggle" id="musicToggle" aria-label="Play background music" aria-pressed="false">
+      <svg id="musicPlayIcon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      <svg id="musicPauseIcon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+    </button>
+    <p class="music-caption">Click here and get Cozy while you browse!</p>
+    </div>
     <h1 class="hero-tagline"><span class="tag-pink">Made By Hand</span><br><span class="tag-gold">Shared With Love</span></h1>
     <div class="hero-btns">
       <a href="#shop" class="btn solid">Browse The Shop</a>
+    </div>
+    <div class="bookclub-spot">
+      <a class="deadline-badge" data-show-until="2026-11-10T00:00:00-08:00" href="https://docs.google.com/document/d/1u-9X7yYVMMQmjxPVmYeQ3whbqG_GQVCZvYZgP0ey7cM/edit?usp=sharing" target="_blank" rel="noopener" aria-label="November book club orders are due in by November 9th! Click here for information"><span class="deadline-note">November book club orders are due in by November 9th!</span><span class="deadline-cta">Click here for information</span></a>
     </div>
   </div>
 
@@ -1288,50 +1378,12 @@
   </div>
 </section>
 
-<section class="about" id="about">
-  <div class="wrap about-grid">
-    <div class="about-text">
-      <div class="eyebrow-row">
-        <span class="eyebrow">Our Story</span>
-        <svg class="eyebrow-florals" viewBox="0 0 170 64" aria-hidden="true">
-          <use href="#leafSprig" x="4" y="14" width="26" height="46" transform="rotate(-62 17 37)"/>
-          <use href="#flowerBlush" x="14" y="4" width="54" height="54"/>
-          <use href="#leafSprig" x="62" y="20" width="24" height="42" transform="rotate(58 74 41)"/>
-          <use href="#flowerCoral" x="62" y="10" width="40" height="40"/>
-          <use href="#flowerLavender" x="98" y="18" width="32" height="32"/>
-          <use href="#flowerPeach" x="122" y="6" width="44" height="44"/>
-          <use href="#flowerBud" x="106" y="30" width="16" height="24" transform="rotate(20 114 42)"/>
-        </svg>
-      </div>
-      <div class="divider"></div>
-      <h2 style="position:relative;">From a spare bedroom to your keepsake box.
-        <svg class="head-sprig" viewBox="0 0 100 100">
-          <use href="#leafSprig" x="30" y="30" width="28" height="56" transform="rotate(16 44 58)"/>
-          <use href="#flowerLavender" x="34" y="0" width="42" height="42"/>
-          <use href="#flowerCoral" x="4" y="34" width="30" height="30"/>
-        </svg>
-      </h2>
-      <p>Cozy Nook Craft Co. began with a single roll of craft paper wrapping. Today it's grown into a little world for book lovers, but the heart of it hasn't changed. Everything is still made, wrapped, and packed by hand.</p>
-      <p>What started with paper has grown into everything a cozy reader could want. Blind Date Books wrapped by genre, so all you know until you tear it open is the mood inside. Folded book art that turns a favorite story into a keepsake. Soy wax melts that smell like your favorite chapters. Crochet pieces, bookish gifts, and boxes made for slow, snuggled-up nights. Every order comes with handcrafted little touches that make opening it feel like a gift.</p>
-      <p>We make each piece with love, for the reader who deserves a cozy moment with something they never saw coming.</p>
-      <div class="stat-row">
-        <div class="stat"><div class="num">6+</div><div class="lbl">Years Crafting</div></div>
-        <div class="stat"><div class="num">1,200</div><div class="lbl">Pieces Made</div></div>
-        <div class="stat"><div class="num">100%</div><div class="lbl">Hand Finished</div></div>
-      </div>
-      <blockquote class="founder-quote">
-        <p>"Each piece is carefully designed and made by hand, turning simple materials into one of a kind treasures. Every creation is truly special and made straight from the heart."</p>
-        <cite>— Sheri Berg, Founder of Cozy Nook Craft Co.</cite>
-      </blockquote>
-    </div>
-  </div>
-</section>
-
 <section id="shop">
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">The Shop</span>
       <h2>My Current <span class="logo-accent">Favorites</span></h2>
+      <p class="handmade-note">Every piece is made by hand, so please allow 7&ndash;10 days for your order to be completed.</p>
       <svg class="head-sprig" viewBox="0 0 100 100">
         <use href="#leafSprig" x="30" y="30" width="30" height="60" transform="rotate(20 45 60)"/>
         <use href="#flowerCoral" x="35" y="0" width="45" height="45"/>
@@ -1465,6 +1517,46 @@
     </div>
   </div>
 </section>
+
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <div class="about-text">
+      <div class="eyebrow-row">
+        <span class="eyebrow">Our Story</span>
+        <svg class="eyebrow-florals" viewBox="0 0 170 64" aria-hidden="true">
+          <use href="#leafSprig" x="4" y="14" width="26" height="46" transform="rotate(-62 17 37)"/>
+          <use href="#flowerBlush" x="14" y="4" width="54" height="54"/>
+          <use href="#leafSprig" x="62" y="20" width="24" height="42" transform="rotate(58 74 41)"/>
+          <use href="#flowerCoral" x="62" y="10" width="40" height="40"/>
+          <use href="#flowerLavender" x="98" y="18" width="32" height="32"/>
+          <use href="#flowerPeach" x="122" y="6" width="44" height="44"/>
+          <use href="#flowerBud" x="106" y="30" width="16" height="24" transform="rotate(20 114 42)"/>
+        </svg>
+      </div>
+      <div class="divider"></div>
+      <h2 style="position:relative;">From a spare bedroom to your keepsake box.
+        <svg class="head-sprig" viewBox="0 0 100 100">
+          <use href="#leafSprig" x="30" y="30" width="28" height="56" transform="rotate(16 44 58)"/>
+          <use href="#flowerLavender" x="34" y="0" width="42" height="42"/>
+          <use href="#flowerCoral" x="4" y="34" width="30" height="30"/>
+        </svg>
+      </h2>
+      <p>Cozy Nook Craft Co. began with a single roll of craft paper wrapping. Today it's grown into a little world for book lovers, but the heart of it hasn't changed. Everything is still made, wrapped, and packed by hand.</p>
+      <p>What started with paper has grown into everything a cozy reader could want. Blind Date Books wrapped by genre, so all you know until you tear it open is the mood inside. Folded book art that turns a favorite story into a keepsake. Soy wax melts that smell like your favorite chapters. Crochet pieces, bookish gifts, and boxes made for slow, snuggled-up nights. Every order comes with handcrafted little touches that make opening it feel like a gift.</p>
+      <p>We make each piece with love, for the reader who deserves a cozy moment with something they never saw coming.</p>
+      <div class="stat-row">
+        <div class="stat"><div class="num">6+</div><div class="lbl">Years Crafting</div></div>
+        <div class="stat"><div class="num">1,200</div><div class="lbl">Pieces Made</div></div>
+        <div class="stat"><div class="num">100%</div><div class="lbl">Hand Finished</div></div>
+      </div>
+      <blockquote class="founder-quote">
+        <p>"Each piece is carefully designed and made by hand, turning simple materials into one of a kind treasures. Every creation is truly special and made straight from the heart."</p>
+        <cite>— Sheri Berg, Founder of Cozy Nook Craft Co.</cite>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
 <!-- ===== Meet the Creator ===== -->
 <style id="meetCreatorStyle">
   #meet-the-creator{padding:96px 0;}
@@ -2584,6 +2676,11 @@
   load();
   render();
 })();
+</script>
+<script>
+document.querySelectorAll('[data-show-until]').forEach(function(el){
+  if(Date.now() >= Date.parse(el.getAttribute('data-show-until'))){ var w = el.closest('.bookclub-spot') || el; w.remove(); }
+});
 </script>
 <script>
 (function(){
