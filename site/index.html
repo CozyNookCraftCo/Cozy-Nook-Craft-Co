@@ -1439,6 +1439,99 @@
   </div>
 </header>
 
+<aside class="cozy-break" id="cozy-break" aria-label="The Cozy Break">
+  <style>
+    .cozy-break{padding:22px 32px 6px; background:var(--cream); position:relative; z-index:5;}
+    .cb-card{max-width:920px; margin:0 auto; display:flex; align-items:center; gap:20px;
+      background:linear-gradient(120deg,#FFF8F1 0%,#FCE9EC 100%); border:1px solid var(--line); border-radius:999px;
+      padding:12px 14px 12px 14px; box-shadow:0 6px 18px rgba(62,51,47,0.06);}
+    .cb-badge{flex:none; display:flex; align-items:center; gap:8px; padding:8px 14px 8px 10px; border-radius:999px;
+      background:var(--cream); border:1px solid var(--line);}
+    .cb-badge svg{width:30px; height:30px;}
+    .cb-badge b{font-family:'Parisienne',cursive; font-weight:400; font-size:21px; color:var(--rose-deep); white-space:nowrap; line-height:1;}
+    .cb-body{flex:1; min-width:0; transition:opacity .45s ease, transform .45s ease;}
+    .cb-body.out{opacity:0; transform:translateY(4px);}
+    .cb-kind{display:block; font-family:'Jost',sans-serif; font-size:10.5px; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); margin-bottom:2px;}
+    .cb-text{margin:0; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:19px; line-height:1.35; color:var(--ink);}
+    .cb-text a{color:var(--rose-deep); text-decoration:underline; text-underline-offset:3px;}
+    .cb-nav{flex:none; display:flex; gap:6px;}
+    .cb-nav button{width:34px; height:34px; border-radius:50%; border:1px solid var(--line); background:var(--cream);
+      color:var(--rose-deep); font-size:16px; line-height:1; cursor:pointer; transition:background .2s;}
+    .cb-nav button:hover{background:#fff;}
+    .cb-nav button:focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
+    @media (max-width:700px){
+      .cozy-break{padding:16px 16px 4px;}
+      .cb-card{flex-wrap:wrap; border-radius:22px; gap:10px 12px; padding:12px 14px;}
+      .cb-body{order:3; flex-basis:100%;}
+      .cb-nav{margin-left:auto;}
+      .cb-text{font-size:18px;}
+    }
+    @media (prefers-reduced-motion: reduce){ .cb-body{transition:none;} }
+  </style>
+  <div class="cb-card">
+    <div class="cb-badge">
+      <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#flowerBlush" width="120" height="120"/></svg>
+      <b>The Cozy Break</b>
+    </div>
+    <div class="cb-body" id="cbBody" aria-live="polite">
+      <span class="cb-kind" id="cbKind">Today's reminder</span>
+      <p class="cb-text" id="cbText">You deserve a little treat and a whole lot of cozy.</p>
+    </div>
+    <div class="cb-nav">
+      <button type="button" id="cbPrev" aria-label="Previous cozy break">&#8249;</button>
+      <button type="button" id="cbNext" aria-label="Next cozy break">&#8250;</button>
+    </div>
+  </div>
+  <script>
+  (function(){
+    // m = months it shows (1-12); leave it off to show all year
+    var ALL=[
+      {k:"Today's reminder", t:"You deserve a little treat and a whole lot of cozy."},
+      {k:"Today's reminder", t:"Rest is productive too. Put the kettle on and read just one more chapter."},
+      {k:"Feel-good note", t:"Somewhere, a stranger is smiling at a gift you made with your own two hands."},
+      {k:"Feel-good note", t:"Slow mornings, warm mugs and soft blankets are a love language."},
+      {k:"Cozy thought", t:"A good book is a little room you can step into any time you need a quiet place."},
+      {k:"Cozy thought", t:"Every handmade thing carries a few hours of someone's heart."},
+      {k:"Cozy thought", t:"The best plans are the ones that include candles and a comfy chair."},
+      {k:"Book recommendation", t:"The House in the Cerulean Sea by TJ Klune: a warm hug of a story about found family and finding where you belong."},
+      {k:"Book recommendation", t:"Legends & Lattes by Travis Baldree: an orc trades her sword for a coffee shop. Low stakes, high cozy."},
+      {k:"Book recommendation", t:"Anne of Green Gables by L.M. Montgomery: the kindred-spirit classic that never stops feeling like home."},
+      {k:"Book recommendation", t:"The Little Paris Bookshop by Nina George: a bookseller prescribes novels to mend hearts from his barge on the Seine."},
+      {k:"Book recommendation", t:"Practical Magic by Alice Hoffman: witchy sisters, family secrets and the perfect autumn evening read.", m:[9,10,11]},
+      {k:"Book club pick", t:'Our November pick is The Pumpkin Pie Book Nook by Harper Graham. Orders are due November 9th. <a href="https://docs.google.com/document/d/1u-9X7yYVMMQmjxPVmYeQ3whbqG_GQVCZvYZgP0ey7cM/edit?usp=sharing" target="_blank" rel="noopener">Join the book club</a>', m:[10,11], until:"2026-11-09"},
+      {k:"Seasonal craft idea", t:"Press a few autumn leaves between the pages of an old book for a week, then tuck them into a clear bookmark sleeve.", m:[9,10,11]},
+      {k:"Seasonal craft idea", t:"Roll thin strips of old book pages into tiny paper roses and gather them in a teacup for a sweet fall centerpiece.", m:[9,10,11]},
+      {k:"Seasonal craft idea", t:"Cut snowflakes from old book pages and hang them in a sunny window. Every one is a little story.", m:[12,1,2]},
+      {k:"Seasonal craft idea", t:"Wrap gifts in old book pages and a twist of twine. Add a sprig of rosemary for the coziest finishing touch.", m:[11,12]},
+      {k:"Seasonal craft idea", t:"Fold a book-page heart garland: cut hearts from old pages and stitch them together with pink thread.", m:[1,2]},
+      {k:"Seasonal craft idea", t:"Press spring flowers inside a heavy book, then glue them onto a blank card for a handmade hello.", m:[3,4,5]},
+      {k:"Seasonal craft idea", t:"Make a beach-read bookmark: a strip of cardstock, a tassel of embroidery floss and a pressed petal.", m:[6,7,8]}
+    ];
+    var now=new Date(), mo=now.getMonth()+1, today=now.toISOString().slice(0,10);
+    var items=ALL.filter(function(x){ return (!x.m || x.m.indexOf(mo)>-1) && (!x.until || today<=x.until); });
+    var day=Math.floor((now - new Date(now.getFullYear(),0,0))/864e5);
+    var i=day % items.length, body=document.getElementById('cbBody'), kind=document.getElementById('cbKind'), text=document.getElementById('cbText');
+    var reduce=window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches, timer=null, paused=false;
+    function show(n, instant){
+      i=(n+items.length)%items.length;
+      function set(){ kind.textContent=items[i].k; text.innerHTML=items[i].t; body.classList.remove('out'); }
+      if(instant || reduce){ set(); return; }
+      body.classList.add('out'); setTimeout(set, 450);
+    }
+    function start(){ stop(); if(!reduce) timer=setInterval(function(){ if(!paused) show(i+1); }, 9000); }
+    function stop(){ if(timer) clearInterval(timer); }
+    document.getElementById('cbNext').addEventListener('click',function(){ show(i+1); start(); });
+    document.getElementById('cbPrev').addEventListener('click',function(){ show(i-1); start(); });
+    var card=document.getElementById('cozy-break');
+    card.addEventListener('mouseenter',function(){ paused=true; });
+    card.addEventListener('mouseleave',function(){ paused=false; });
+    card.addEventListener('focusin',function(){ paused=true; });
+    card.addEventListener('focusout',function(){ paused=false; });
+    show(i, true); start();
+  })();
+  </script>
+</aside>
+
 <section class="hero">
   <img class="hero-corner" src="hero-cozy-corner.webp" srcset="hero-cozy-corner-small.webp 604w, hero-cozy-corner.webp 1209w" sizes="(max-width:860px) 80vw, 62vw" width="1209" height="1024" alt="" aria-hidden="true" fetchpriority="high">
   <!-- watercolor floral bouquet, top-left -->
