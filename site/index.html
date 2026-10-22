@@ -2069,6 +2069,158 @@
   </div>
 </section>
 
+<section class="nook-book" id="nook-book">
+  <style>
+    .nook-book{background:linear-gradient(180deg,var(--cream),#FBEFF1);}
+    .nb-head{max-width:620px; margin:0 auto 56px; text-align:center;}
+    .nb-head h2 .nb-env{font-style:normal;}
+    .nb-head p{color:var(--ink-soft); margin-top:16px;}
+    .nb-book{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); max-width:1040px; margin:0 auto;
+      background:#FFFDF8; border:1px solid var(--line); border-radius:6px 6px 6px 6px;
+      box-shadow:0 18px 40px rgba(62,51,47,0.12), 0 2px 0 #EFE3DA, 0 4px 0 #F6ECE4; position:relative;}
+    .nb-book::before{content:""; position:absolute; top:0; bottom:0; left:50%; width:28px; transform:translateX(-50%);
+      background:linear-gradient(90deg,rgba(62,51,47,0) 0%,rgba(62,51,47,0.08) 45%,rgba(62,51,47,0.12) 50%,rgba(62,51,47,0.08) 55%,rgba(62,51,47,0) 100%); pointer-events:none;}
+    .nb-page{padding:44px 46px 40px;}
+    .nb-write{background-image:repeating-linear-gradient(180deg,transparent 0,transparent 33px,rgba(201,122,140,0.16) 33px,rgba(201,122,140,0.16) 34px);
+      background-position:0 92px; border-right:1px solid rgba(217,154,114,0.18);}
+    .nb-welcome{font-family:'Parisienne',cursive; font-size:34px; color:var(--rose-deep); line-height:1.15; margin:0 0 6px;}
+    .nb-sub{font-size:14px; color:var(--ink-soft); margin:0 0 22px;}
+    .nb-form{display:flex; flex-direction:column; gap:14px;}
+    .nb-label{font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold);}
+    .nb-topics{display:flex; flex-wrap:wrap; gap:8px; border:0; padding:0; margin:0;}
+    .nb-topics legend{margin-bottom:8px;}
+    .nb-topics label{position:relative;}
+    .nb-topics input{position:absolute; opacity:0; width:1px; height:1px;}
+    .nb-topics span{display:inline-block; padding:7px 13px; border-radius:999px; border:1px solid var(--line); background:#fff;
+      font-size:13px; color:var(--ink); cursor:pointer; transition:background .2s, color .2s, border-color .2s;}
+    .nb-topics input:checked + span{background:var(--rose-deep); border-color:var(--rose-deep); color:#fff;}
+    .nb-topics input:focus-visible + span{outline:2px solid var(--gold); outline-offset:2px;}
+    .nb-form input[type=text], .nb-form textarea{width:100%; font:inherit; font-size:15px; color:var(--ink); background:rgba(255,255,255,0.75);
+      border:1px solid var(--line); border-radius:10px; padding:10px 13px;}
+    .nb-form textarea{min-height:120px; resize:vertical; font-family:'Cormorant Garamond',serif; font-size:19px; line-height:1.55;}
+    .nb-form input:focus, .nb-form textarea:focus{outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(217,154,114,0.18);}
+    .nb-count{align-self:flex-end; font-size:12px; color:var(--ink-soft); margin-top:-8px;}
+    .nb-ok{display:flex; gap:9px; align-items:flex-start; font-size:13px; color:var(--ink-soft);}
+    .nb-ok input{margin-top:3px; accent-color:var(--rose-deep);}
+    .nb-form .btn{align-self:flex-start;}
+    .nb-thanks{display:none; text-align:center; padding:40px 10px;}
+    .nb-thanks.show{display:block;}
+    .nb-thanks .nb-welcome{font-size:38px;}
+    .nb-hp{position:absolute; left:-9999px;}
+    .nb-sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
+
+    .nb-board{background:#FDF6EF; position:relative;}
+    .nb-board h3{font-family:'Cormorant Garamond',serif; font-size:26px; margin:0 0 4px;}
+    .nb-board .nb-sub{margin-bottom:24px;}
+    .nb-notes{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; max-height:520px; overflow-y:auto; padding:6px 6px 10px;}
+    .nb-note{position:relative; padding:20px 16px 14px; border-radius:3px; box-shadow:0 6px 14px rgba(62,51,47,0.1);
+      font-family:'Cormorant Garamond',serif; font-size:17px; line-height:1.45; color:var(--ink); overflow-wrap:anywhere;}
+    .nb-note::before{content:""; position:absolute; top:-7px; left:50%; width:44px; height:14px; transform:translateX(-50%) rotate(-3deg);
+      background:rgba(232,187,152,0.6);}
+    .nb-note:nth-child(4n+1){background:#FCE4E8; transform:rotate(-1.6deg);}
+    .nb-note:nth-child(4n+2){background:#FFF1DE; transform:rotate(1.4deg);}
+    .nb-note:nth-child(4n+3){background:#EFE8F6; transform:rotate(1deg);}
+    .nb-note:nth-child(4n+4){background:#EAF0E2; transform:rotate(-1deg);}
+    .nb-note .nb-topic{display:block; font-family:'Jost',sans-serif; font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--rose-deep); margin-bottom:6px;}
+    .nb-note .nb-by{display:block; margin-top:10px; font-family:'Parisienne',cursive; font-size:20px; color:var(--ink-soft); text-align:right;}
+    .nb-empty{grid-column:1/-1; text-align:center; padding:56px 20px; border:1.5px dashed rgba(201,122,140,0.4); border-radius:14px; background:rgba(255,255,255,0.5);}
+    .nb-empty .nb-heart{font-size:30px; color:var(--rose); display:block; margin-bottom:8px;}
+    .nb-empty p{margin:0; font-family:'Cormorant Garamond',serif; font-size:21px; font-style:italic; color:var(--ink-soft);}
+
+    @media (max-width:860px){
+      .nb-book{grid-template-columns:minmax(0,1fr);}
+      .nb-book::before{display:none;}
+      .nb-write{border-right:0; border-bottom:1px solid rgba(217,154,114,0.25);}
+      .nb-page{padding:32px 22px 30px;}
+      .nb-notes{max-height:none;}
+    }
+    @media (max-width:480px){ .nb-notes{grid-template-columns:minmax(0,1fr);} .nb-welcome{font-size:30px;} }
+  </style>
+
+  <div class="wrap">
+    <div class="nb-head">
+      <span class="eyebrow">The Guestbook</span>
+      <h2><span class="nb-env" aria-hidden="true">💌</span> The Nook <span class="logo-accent">Book</span></h2>
+      <p>Pull up a chair and leave a little note about your visit, your favorite pieces, a craft memory, or what you'd love to see next.</p>
+    </div>
+
+    <div class="nb-book">
+      <div class="nb-page nb-write">
+        <div id="nbFormWrap">
+          <p class="nb-welcome">Leave a little love in our nook! ♡</p>
+          <p class="nb-sub">Every note is read by Sheri, and a few favorites get pinned to the board.</p>
+          <form class="nb-form" id="nbForm" name="nook-book" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="nook-book">
+            <div class="nb-hp"><label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></div>
+            <fieldset class="nb-topics">
+              <legend class="nb-label">My note is about</legend>
+              <label><input type="radio" name="topic" value="My visit" checked><span>My visit</span></label>
+              <label><input type="radio" name="topic" value="A favorite piece"><span>A favorite piece</span></label>
+              <label><input type="radio" name="topic" value="A craft memory"><span>A craft memory</span></label>
+              <label><input type="radio" name="topic" value="I'd love to see"><span>I'd love to see…</span></label>
+            </fieldset>
+            <label class="nb-sr" for="nbNote">Your note</label>
+            <textarea id="nbNote" name="note" maxlength="400" placeholder="Dear Cozy Nook…" required></textarea>
+            <span class="nb-count" id="nbCount" aria-live="polite">0 / 400</span>
+            <label class="nb-sr" for="nbName">Sign your name</label>
+            <input type="text" id="nbName" name="name" maxlength="40" placeholder="Sign your name (first name or initials)" autocomplete="given-name" required>
+            <label class="nb-ok"><input type="checkbox" name="ok-to-feature" value="yes" checked> It's okay to pin my note and first name on the Nook Book board.</label>
+            <button type="submit" class="btn solid" id="nbSend">Leave My Note ♡</button>
+          </form>
+        </div>
+        <div class="nb-thanks" id="nbThanks" role="status">
+          <p class="nb-welcome">Thank you, friend! ♡</p>
+          <p class="nb-sub">Your little note is tucked into the Nook Book. It truly makes my day.</p>
+          <button type="button" class="btn" id="nbAgain">Write another note</button>
+        </div>
+      </div>
+
+      <div class="nb-page nb-board">
+        <h3>Notes from the Nook</h3>
+        <p class="nb-sub">Kind words, favorite pieces and sweet craft memories from our visitors.</p>
+        <div class="nb-notes" id="nbNotes">
+          <div class="nb-empty"><span class="nb-heart" aria-hidden="true">♡</span><p>This page is waiting for its very first note. Yours could be the one!</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    var form=document.getElementById('nbForm'), note=document.getElementById('nbNote'), count=document.getElementById('nbCount');
+    var wrap=document.getElementById('nbFormWrap'), thanks=document.getElementById('nbThanks'), send=document.getElementById('nbSend');
+    note.addEventListener('input',function(){ count.textContent=note.value.length+' / 400'; });
+    document.getElementById('nbAgain').addEventListener('click',function(){ thanks.classList.remove('show'); wrap.style.display=''; note.focus(); });
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      if(!note.value.trim() || !document.getElementById('nbName').value.trim()) return;
+      send.disabled=true; send.textContent='Tucking it in…';
+      function done(){ form.reset(); count.textContent='0 / 400'; send.disabled=false; send.textContent='Leave My Note ♡'; wrap.style.display='none'; thanks.classList.add('show'); }
+      fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(form)).toString()})
+        .then(function(r){ if(!r.ok) throw new Error('send failed'); done(); })
+        .catch(function(){
+          send.disabled=false; send.textContent='Leave My Note ♡';
+          var body=encodeURIComponent(note.value.trim()+'\n\n— '+document.getElementById('nbName').value.trim());
+          location.href='mailto:CozyNookCraftCo@yahoo.com?subject='+encodeURIComponent('A note for the Nook Book')+'&body='+body;
+        });
+    });
+    // Pinned notes: only real notes Sheri chooses to feature, kept in nook-notes.json
+    fetch('nook-notes.json',{cache:'no-cache'}).then(function(r){ return r.ok ? r.json() : []; }).then(function(list){
+      if(!Array.isArray(list) || !list.length) return;
+      var box=document.getElementById('nbNotes'); box.innerHTML='';
+      list.forEach(function(n){
+        if(!n || !n.note) return;
+        var d=document.createElement('figure'); d.className='nb-note'; d.style.margin='0';
+        if(n.topic){ var t=document.createElement('span'); t.className='nb-topic'; t.textContent=n.topic; d.appendChild(t); }
+        var q=document.createElement('blockquote'); q.style.margin='0'; q.textContent=n.note; d.appendChild(q);
+        if(n.name){ var b=document.createElement('figcaption'); b.className='nb-by'; b.textContent='♡ '+n.name; d.appendChild(b); }
+        box.appendChild(d);
+      });
+    }).catch(function(){});
+  })();
+  </script>
+</section>
+
 <section class="quote-section">
   <blockquote>"I ordered a custom piece for my sister's baby shower and it was more delicate and thoughtful than anything I could have found ready-made."</blockquote>
   <cite>— A Cozy Nook Customer</cite>
