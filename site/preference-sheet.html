@@ -526,5 +526,250 @@
 })();
 </script>
 
+<!-- ===== Cozy Nook chat box (floats bottom-right on every page) ===== -->
+<style>
+  .cn-chat{
+    --cn-cream:#FFFDFA; --cn-paper:#FFF8F1; --cn-blush:#F8D9DE; --cn-rose:#E8A0AE;
+    --cn-rose-deep:#C97A8C; --cn-gold:#D99A72; --cn-ink:#3E332F; --cn-ink-soft:#6B5D57;
+    --cn-line:rgba(217,154,114,0.35);
+    position:fixed; right:20px; bottom:20px; z-index:250;
+    font-family:'Jost',sans-serif; color:var(--cn-ink);
+  }
+  .cn-chat *{box-sizing:border-box;}
+
+  /* launcher */
+  .cn-launch{display:flex; align-items:center; gap:10px; margin-left:auto;
+    background:var(--cn-rose-deep); color:#fff; border:0; border-radius:999px;
+    padding:12px 20px 12px 14px; box-shadow:0 8px 24px rgba(62,51,47,0.25);
+    cursor:pointer; text-align:left; font:inherit; transition:transform .2s, filter .2s;}
+  .cn-launch:hover{filter:brightness(1.05); transform:translateY(-2px);}
+  .cn-launch:focus-visible{outline:2px solid var(--cn-gold); outline-offset:3px;}
+  .cn-launch-ico{flex:none; display:grid; place-items:center; width:40px; height:40px;
+    border-radius:50%; background:var(--cn-cream); box-shadow:inset 0 0 0 1px rgba(255,255,255,0.6);}
+  .cn-launch-ico svg{width:34px; height:34px; transition:transform .6s ease;}
+  .cn-launch:hover .cn-launch-ico svg{transform:rotate(30deg);}
+  .cn-launch-title{display:block; font-family:'Cormorant Garamond',serif; font-size:19px; font-style:italic; font-weight:600; letter-spacing:0.01em; line-height:1.1;}
+  .cn-launch-sub{display:block; font-size:12px; opacity:0.92;}
+
+  /* little hello bubble */
+  .cn-hello{position:absolute; right:4px; bottom:calc(100% + 12px); width:220px;
+    background:var(--cn-cream); border:1px solid var(--cn-line); border-radius:16px 16px 4px 16px;
+    padding:12px 30px 12px 14px; font-size:14px; line-height:1.4;
+    box-shadow:0 10px 28px rgba(62,51,47,0.18); cursor:pointer;
+    opacity:0; transform:translateY(8px); pointer-events:none; transition:opacity .35s, transform .35s;}
+  .cn-hello.show{opacity:1; transform:none; pointer-events:auto;}
+  .cn-hello-x{position:absolute; top:4px; right:6px; border:0; background:none; color:var(--cn-ink-soft);
+    font-size:18px; line-height:1; padding:4px; cursor:pointer;}
+
+  /* panel */
+  .cn-panel{position:absolute; right:0; bottom:calc(100% + 12px); width:340px;
+    max-height:min(560px, calc(100vh - 120px)); display:flex; flex-direction:column;
+    background:var(--cn-cream); border:1px solid var(--cn-line); border-radius:20px; overflow:hidden;
+    box-shadow:0 16px 40px rgba(62,51,47,0.22);
+    opacity:0; transform:translateY(12px) scale(.98); transform-origin:bottom right;
+    visibility:hidden; transition:opacity .25s, transform .25s, visibility 0s .25s;}
+  .cn-chat.open .cn-panel{opacity:1; transform:none; visibility:visible; transition:opacity .25s, transform .25s;}
+
+  .cn-head{display:flex; align-items:center; gap:12px; padding:14px 14px 14px 16px;
+    background:linear-gradient(135deg,#FBE6EA,var(--cn-blush)); border-bottom:1px solid var(--cn-line);}
+  .cn-florals{flex:none; width:88px; height:60px; margin:-10px -4px -10px -8px;}
+  .cn-head-text{flex:1; min-width:0;}
+  .cn-head-name{font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600; line-height:1.1;}
+  .cn-head-sub{font-size:12px; color:var(--cn-ink-soft);}
+  .cn-close{flex:none; width:32px; height:32px; border:0; border-radius:50%; background:rgba(255,255,255,0.6);
+    color:var(--cn-ink); font-size:20px; line-height:1; cursor:pointer;}
+  .cn-close:hover{background:#fff;}
+  .cn-close:focus-visible{outline:2px solid var(--cn-rose-deep); outline-offset:2px;}
+
+  .cn-body{flex:1; overflow-y:auto; padding:16px; background:var(--cn-paper);
+    display:flex; flex-direction:column; gap:10px;}
+  .cn-msg{max-width:85%; padding:10px 13px; font-size:14px; line-height:1.45; border-radius:16px;
+    white-space:pre-wrap; overflow-wrap:anywhere; animation:cnPop .3s ease-out;}
+  .cn-msg.shop{align-self:flex-start; background:#fff; border:1px solid var(--cn-line); border-bottom-left-radius:4px;}
+  .cn-msg.you{align-self:flex-end; background:var(--cn-rose-deep); color:#fff; border-bottom-right-radius:4px;}
+  @keyframes cnPop{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .cn-form{display:flex; flex-direction:column; gap:8px; padding:12px 16px 14px;
+    background:var(--cn-cream); border-top:1px solid var(--cn-line);}
+  .cn-row{display:flex; gap:8px;}
+  .cn-form input, .cn-form textarea{width:100%; min-width:0; font:inherit; font-size:14px; color:var(--cn-ink);
+    background:#fff; border:1px solid var(--cn-line); border-radius:12px; padding:9px 12px;}
+  .cn-form textarea{resize:none; height:76px;}
+  .cn-form input:focus, .cn-form textarea:focus{outline:none; border-color:var(--cn-gold); box-shadow:0 0 0 3px rgba(217,154,114,0.18);}
+  .cn-send{align-self:flex-end; display:inline-flex; align-items:center; gap:6px; border:0; border-radius:999px;
+    padding:9px 18px; background:var(--cn-rose-deep); color:#fff; font:inherit; font-size:14px; font-weight:500;
+    cursor:pointer; transition:filter .2s;}
+  .cn-send:hover{filter:brightness(1.06);}
+  .cn-send:disabled{opacity:.6; cursor:default;}
+  .cn-send:focus-visible{outline:2px solid var(--cn-gold); outline-offset:2px;}
+  .cn-alt{margin:0; font-size:12px; color:var(--cn-ink-soft); text-align:center;}
+  .cn-alt a{color:var(--cn-rose-deep); text-decoration:underline; text-underline-offset:2px;}
+  .cn-hp{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;}
+  .cn-sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
+
+  @media (max-width:600px){
+    .cn-chat{right:12px; bottom:12px;}
+    .cn-launch{padding:8px 16px 8px 8px; gap:8px;}
+    .cn-launch-ico{width:36px; height:36px;}
+    .cn-launch-ico svg{width:30px; height:30px;}
+    .cn-launch-title{font-size:17px;}
+    .cn-launch-sub{display:none;}
+    .cn-panel{width:calc(100vw - 24px); max-height:calc(100vh - 100px);}
+    .cn-hello{width:200px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .cn-launch, .cn-panel, .cn-hello{transition:none;}
+    .cn-msg{animation:none;}
+  }
+</style>
+
+<div class="cn-chat" id="cnChat">
+  <div class="cn-hello" id="cnHello" role="status">
+    Welcome in, friend! ☕ Grab a cup of something warm. If you have a question, I'm right here.
+    <button type="button" class="cn-hello-x" id="cnHelloX" aria-label="Dismiss">×</button>
+  </div>
+
+  <div class="cn-panel" id="cnPanel" role="dialog" aria-modal="false" aria-labelledby="cnTitle">
+    <div class="cn-head">
+      <svg class="cn-florals" viewBox="0 0 100 68" aria-hidden="true">
+        <use href="#leafSprig" x="2" y="22" width="22" height="38" transform="rotate(-58 13 41)"/>
+        <use href="#flowerBlush" x="8" y="6" width="50" height="50"/>
+        <use href="#leafSprig" x="58" y="26" width="20" height="34" transform="rotate(54 68 43)"/>
+        <use href="#flowerLavender" x="48" y="30" width="30" height="30"/>
+        <use href="#flowerPeach" x="58" y="2" width="40" height="40"/>
+      </svg>
+      <div class="cn-head-text">
+        <div class="cn-head-name" id="cnTitle">Cozy Nook Craft Co.</div>
+        <div class="cn-head-sub">Usually replies within 8 hours</div>
+      </div>
+      <button type="button" class="cn-close" id="cnClose" aria-label="Close chat">×</button>
+    </div>
+
+    <div class="cn-body" id="cnBody" aria-live="polite">
+      <div class="cn-msg shop">Welcome in, friend! ☕ Pull up a chair and get comfy.</div>
+      <div class="cn-msg shop">Wondering about an order, a custom book fold, or the book club? Leave me a little note below and I'll write back to you by email. 💕</div>
+    </div>
+
+    <form class="cn-form" id="cnForm" name="chat" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="chat">
+      <input type="hidden" name="page" id="cnPage" value="">
+      <div class="cn-hp"><label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></div>
+      <div class="cn-row">
+        <label class="cn-sr" for="cnName">Your name</label>
+        <input id="cnName" name="name" type="text" placeholder="Your name" autocomplete="name" required>
+        <label class="cn-sr" for="cnEmail">Your email</label>
+        <input id="cnEmail" name="email" type="email" placeholder="Your email" autocomplete="email" required>
+      </div>
+      <label class="cn-sr" for="cnMessage">Your message</label>
+      <textarea id="cnMessage" name="message" placeholder="Write me a little note…" required></textarea>
+      <button type="submit" class="cn-send" id="cnSend">Send 💌</button>
+      <p class="cn-alt">Prefer DMs? <a href="https://ig.me/m/cozynookcraftco" target="_blank" rel="noopener">Message us on Instagram</a></p>
+    </form>
+  </div>
+
+  <button type="button" class="cn-launch" id="cnLaunch" aria-expanded="false" aria-controls="cnPanel">
+    <span class="cn-launch-ico" aria-hidden="true"><svg viewBox="0 0 120 120"><use href="#flowerBlush" width="120" height="120"/></svg></span>
+    <span class="cn-launch-text"><span class="cn-launch-title">Pull up a cozy chair</span><span class="cn-launch-sub">Let's chat · replies within 8 hours</span></span>
+  </button>
+</div>
+
+<script>
+(function(){
+  var root = document.getElementById('cnChat');
+  if(!root) return;
+  var launch = document.getElementById('cnLaunch');
+  var closeBtn = document.getElementById('cnClose');
+  var hello = document.getElementById('cnHello');
+  var helloX = document.getElementById('cnHelloX');
+  var form = document.getElementById('cnForm');
+  var body = document.getElementById('cnBody');
+  var send = document.getElementById('cnSend');
+  var HELLO_KEY = 'cozyNookChatHelloSeen';
+
+  document.getElementById('cnPage').value = location.pathname || '/';
+
+  function seen(){ try { return sessionStorage.getItem(HELLO_KEY) === '1'; } catch(e){ return false; } }
+  function markSeen(){ try { sessionStorage.setItem(HELLO_KEY, '1'); } catch(e){} }
+  function hideHello(){ hello.classList.remove('show'); markSeen(); }
+
+  function setOpen(open){
+    root.classList.toggle('open', open);
+    launch.setAttribute('aria-expanded', open);
+    if(open){
+      hideHello();
+      setTimeout(function(){ var f = document.getElementById('cnName'); if(f && !f.value) f.focus(); else document.getElementById('cnMessage').focus(); }, 60);
+    }
+  }
+
+  launch.addEventListener('click', function(){ setOpen(!root.classList.contains('open')); });
+  closeBtn.addEventListener('click', function(){ setOpen(false); launch.focus(); });
+  hello.addEventListener('click', function(e){ if(e.target !== helloX) setOpen(true); });
+  helloX.addEventListener('click', function(e){ e.stopPropagation(); hideHello(); });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && root.classList.contains('open')){ setOpen(false); launch.focus(); }
+  });
+  document.addEventListener('click', function(e){
+    if(root.classList.contains('open') && !root.contains(e.target)) setOpen(false);
+  });
+
+  // A friendly hello once per visit, after the visitor has had a look around.
+  if(!seen()){
+    setTimeout(function(){
+      var popup = document.querySelector('.newsletter-overlay.visible, #newsletterOverlay.visible');
+      if(!root.classList.contains('open') && !popup){
+        hello.classList.add('show');
+        setTimeout(hideHello, 9000);
+      }
+    }, 15000);
+  }
+
+  function bubble(text, who){
+    var d = document.createElement('div');
+    d.className = 'cn-msg ' + who;
+    d.textContent = text;
+    body.appendChild(d);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var nameEl = document.getElementById('cnName'), emailEl = document.getElementById('cnEmail'), msgEl = document.getElementById('cnMessage');
+    var name = nameEl.value.trim();
+    var email = emailEl.value.trim();
+    var message = msgEl.value.trim();
+    if(!name || !email || !message) return;
+
+    bubble(message, 'you');
+    send.disabled = true; send.textContent = 'Sending…';
+
+    function done(){
+      var first = name.split(' ')[0];
+      setTimeout(function(){
+        bubble('Thank you, ' + first + '! 💌 Your note is tucked safely in my inbox. I\'ll write back to ' + email + ' soon. Until then, happy reading!', 'shop');
+      }, 400);
+      msgEl.value = '';
+      send.disabled = false; send.textContent = 'Send 💌';
+    }
+    function fallback(){
+      send.disabled = false; send.textContent = 'Send 💌';
+      bubble('Hmm, that didn\'t send. I\'m opening your email app with your message filled in. Just hit send there. 💕', 'shop');
+      var subject = encodeURIComponent('Question from the Cozy Nook website');
+      var text = encodeURIComponent(message + '\n\n— ' + name + ' (' + email + ')');
+      setTimeout(function(){ location.href = 'mailto:CozyNookCraftCo@yahoo.com?subject=' + subject + '&body=' + text; }, 900);
+    }
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(form)).toString()
+    }).then(function(res){
+      if(!res.ok) throw new Error('send failed');
+      done();
+    }).catch(fallback);
+  });
+})();
+</script>
+<!-- ===== /Cozy Nook chat box ===== -->
+
 </body>
 </html>
