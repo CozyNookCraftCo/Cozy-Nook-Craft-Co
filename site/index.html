@@ -2190,7 +2190,7 @@
       font-size:13px; color:var(--ink); cursor:pointer; transition:background .2s, color .2s, border-color .2s;}
     .nb-topics input:checked + span{background:var(--rose-deep); border-color:var(--rose-deep); color:#fff;}
     .nb-topics input:focus-visible + span{outline:2px solid var(--gold); outline-offset:2px;}
-    .nb-form input[type=text], .nb-form textarea{width:100%; font:inherit; font-size:15px; color:var(--ink); background:rgba(255,255,255,0.75);
+    .nb-form input[type=text], .nb-form input[type=email], .nb-form textarea{width:100%; font:inherit; font-size:15px; color:var(--ink); background:rgba(255,255,255,0.75);
       border:1px solid var(--line); border-radius:10px; padding:10px 13px;}
     .nb-form textarea{min-height:120px; resize:vertical; font-family:'Cormorant Garamond',serif; font-size:19px; line-height:1.55;}
     .nb-form input:focus, .nb-form textarea:focus{outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(217,154,114,0.18);}
@@ -2260,6 +2260,9 @@
             <span class="nb-count" id="nbCount" aria-live="polite">0 / 400</span>
             <label class="nb-sr" for="nbName">Sign your name</label>
             <input type="text" id="nbName" name="name" maxlength="40" placeholder="Sign your name (first name or initials)" autocomplete="given-name" required>
+            <label class="nb-sr" for="nbEmail">Your email (optional)</label>
+            <input type="email" id="nbEmail" name="email" maxlength="80" placeholder="Your email (optional, so I can send a thank-you)" autocomplete="email">
+            <span class="nb-private" style="display:block; font-size:12.5px; opacity:.75; margin:-4px 0 6px;">Your email stays private and is never shown on the board.</span>
             <label class="nb-ok"><input type="checkbox" name="ok-to-feature" value="yes" checked> It's okay to pin my note and first name on the Nook Book board.</label>
             <button type="submit" class="btn solid" id="nbSend">Leave My Note ♡</button>
           </form>
