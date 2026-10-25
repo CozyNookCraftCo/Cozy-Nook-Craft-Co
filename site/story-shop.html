@@ -2719,7 +2719,7 @@ document.querySelectorAll('.card').forEach(function(c){
 })();
 </script>
 <!-- ===== /Hanging gold lantern ===== -->
-<!-- ===== Site polish: one-line menu, quieter corners, scroll fade-in, seasonal leaves & snow ===== -->
+<!-- ===== Site polish: one-line menu, quieter corners, scroll fade-in ===== -->
 <style>
   /* One-line menu with a "More" dropdown */
   .nav-links{align-items:center;}
@@ -2753,11 +2753,8 @@ document.querySelectorAll('.card').forEach(function(c){
   html.reveal-on .reveal{opacity:0; transform:translateY(22px); transition:opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1);}
   html.reveal-on .reveal.in{opacity:1; transform:none;}
 
-  /* Seasonal leaves / snow */
-  #cnSeason{position:fixed; inset:0; width:100vw; height:100vh; pointer-events:none; z-index:55;}
   @media (prefers-reduced-motion: reduce){
     html.reveal-on .reveal{opacity:1; transform:none; transition:none;}
-    #cnSeason{display:none;}
     .cn-launch, .cn-launch-text{transition:none;}
   }
 </style>
@@ -2799,46 +2796,6 @@ document.querySelectorAll('.card').forEach(function(c){
     document.documentElement.classList.add('reveal-on');
   }
 
-  /* Seasonal: gentle snow Dec–Jan (by the visitor's own date) */
-  var mo=new Date().getMonth(), kind = (mo===11 || mo===0) ? 'snow' : null;
-  if(!kind || reduce) return;
-  var cv=document.createElement('canvas'); cv.id='cnSeason'; cv.setAttribute('aria-hidden','true'); document.body.appendChild(cv);
-  var ctx=cv.getContext('2d'), W, H, dpr=Math.min(window.devicePixelRatio||1,2), parts=[];
-  var small=window.innerWidth<700, N = kind==='leaves' ? (small?7:13) : (small?22:42);
-  var leafCols=['#E8967A','#D99A72','#E8BB98','#C97A8C','#D9A05B','#B86F52'];
-  function size(){ W=window.innerWidth; H=window.innerHeight; cv.width=W*dpr; cv.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); }
-  function make(top){
-    var p={x:Math.random()*W, y: top ? -30-Math.random()*H*0.3 : Math.random()*H, t:Math.random()*6.28};
-    if(kind==='leaves'){ p.s=9+Math.random()*9; p.vy=.35+Math.random()*.45; p.sw=.6+Math.random()*1.1; p.r=Math.random()*6.28; p.vr=(Math.random()-.5)*.03; p.c=leafCols[(Math.random()*leafCols.length)|0]; p.a=.55+Math.random()*.3; }
-    else { p.s=1.6+Math.random()*2.8; p.vy=.3+Math.random()*.55; p.sw=.3+Math.random()*.6; p.a=.55+Math.random()*.4; }
-    return p;
-  }
-  function leaf(p){
-    ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r); ctx.scale(1, .55+.45*Math.cos(p.t*1.3));
-    ctx.globalAlpha=p.a; ctx.fillStyle=p.c; var s=p.s;
-    ctx.beginPath(); ctx.moveTo(0,-s); ctx.bezierCurveTo(s*.75,-s*.5,s*.6,s*.55,0,s); ctx.bezierCurveTo(-s*.6,s*.55,-s*.75,-s*.5,0,-s); ctx.fill();
-    ctx.strokeStyle='rgba(255,248,240,.55)'; ctx.lineWidth=.8; ctx.beginPath(); ctx.moveTo(0,-s*.8); ctx.lineTo(0,s*1.15); ctx.stroke();
-    ctx.restore();
-  }
-  function flake(p){
-    ctx.globalAlpha=p.a; ctx.fillStyle='#fff'; ctx.shadowColor='rgba(201,122,140,.55)'; ctx.shadowBlur=4;
-    ctx.beginPath(); ctx.arc(p.x,p.y,p.s,0,6.283); ctx.fill(); ctx.shadowBlur=0;
-  }
-  size(); for(var i=0;i<N;i++) parts.push(make(false));
-  window.addEventListener('resize',size);
-  var last=0;
-  function loop(ts){
-    requestAnimationFrame(loop);
-    if(document.hidden || ts-last<30) return; last=ts;
-    ctx.clearRect(0,0,W,H);
-    for(var i=0;i<parts.length;i++){
-      var p=parts[i]; p.t+=.02; p.y+=p.vy; p.x+=Math.sin(p.t)*p.sw*.6;
-      if(kind==='leaves'){ p.r+=p.vr+Math.sin(p.t)*.01; leaf(p); } else flake(p);
-      if(p.y>H+30 || p.x<-40 || p.x>W+40) parts[i]=make(true);
-    }
-    ctx.globalAlpha=1;
-  }
-  requestAnimationFrame(loop);
 })();
 </script>
 <!-- ===== /Site polish ===== -->
