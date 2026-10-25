@@ -2648,13 +2648,13 @@ document.querySelectorAll('.card').forEach(function(c){
   .cn-lantern .ln-glow{transform-box:fill-box; transform-origin:center; animation:lnGlow 2.6s linear infinite;}
   .cn-lantern .ln-flame{transform-box:fill-box; transform-origin:50% 100%; animation:lnFlame 1.9s linear infinite;}
   @keyframes lnSway{0%,100%{transform:rotate(-1.6deg);} 50%{transform:rotate(1.6deg);}}
-  @keyframes lnGlow{0%,100%{opacity:.55; transform:scale(1);} 12%{opacity:.72; transform:scale(1.06);} 24%{opacity:.48; transform:scale(.96);}
-    41%{opacity:.7; transform:scale(1.05);} 57%{opacity:.52; transform:scale(.98);} 73%{opacity:.75; transform:scale(1.07);} 86%{opacity:.5; transform:scale(.97);}}
-  @keyframes lnFlame{0%,100%{transform:scale(1,1); opacity:.85;} 15%{transform:scale(.9,1.12); opacity:1;} 30%{transform:scale(1.06,.9); opacity:.75;}
-    48%{transform:scale(.94,1.08); opacity:.95;} 66%{transform:scale(1.04,.94); opacity:.8;} 82%{transform:scale(.96,1.06); opacity:.92;}}
+  @keyframes lnGlow{0%,100%{opacity:.55; transform:scale(1);} 10%{opacity:.85; transform:scale(1.1);} 21%{opacity:.38; transform:scale(.92);}
+    36%{opacity:.8; transform:scale(1.08);} 49%{opacity:.45; transform:scale(.95);} 63%{opacity:.9; transform:scale(1.12);} 78%{opacity:.4; transform:scale(.93);} 90%{opacity:.7; transform:scale(1.03);}}
+  @keyframes lnFlame{0%,100%{transform:scale(1,1); opacity:.85;} 12%{transform:scale(.84,1.22); opacity:1;} 25%{transform:scale(1.12,.82); opacity:.65;}
+    40%{transform:scale(.88,1.16); opacity:1;} 56%{transform:scale(1.1,.86); opacity:.7;} 72%{transform:scale(.9,1.18); opacity:.95;} 87%{transform:scale(1.06,.9); opacity:.78;}}
   html.night .cn-lantern .ln-glow{animation-name:lnGlowNight;}
-  @keyframes lnGlowNight{0%,100%{opacity:.7; transform:scale(1.05);} 18%{opacity:.88; transform:scale(1.12);} 35%{opacity:.62; transform:scale(1);}
-    55%{opacity:.85; transform:scale(1.1);} 76%{opacity:.66; transform:scale(1.02);}}
+  @keyframes lnGlowNight{0%,100%{opacity:.72; transform:scale(1.05);} 14%{opacity:.98; transform:scale(1.16);} 29%{opacity:.55; transform:scale(.97);}
+    47%{opacity:.95; transform:scale(1.14);} 64%{opacity:.6; transform:scale(1);} 81%{opacity:.9; transform:scale(1.1);}}
   @media (max-width:860px){ .cn-lantern{left:4px; width:44px; height:92px;} }
   @media print{ .cn-lantern{display:none;} }
   @media (prefers-reduced-motion: reduce){ .cn-lantern, .cn-lantern .ln-glow, .cn-lantern .ln-flame{animation:none;} }
