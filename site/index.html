@@ -779,50 +779,6 @@
   }
 
   /* ===== Reviews ===== */
-  .review-section{background:var(--paper);}
-  .review-form{
-    max-width:560px; margin:0 auto;
-    display:flex; flex-direction:column; gap:18px;
-  }
-  .review-toggle-group{text-align:center;}
-  .toggle-label{
-    display:block; font-size:12px; letter-spacing:0.12em; text-transform:uppercase;
-    color:var(--gold); margin-bottom:12px;
-  }
-  .toggle-pair{display:flex; justify-content:center; gap:12px;}
-  .origin-btn{
-    padding:11px 26px; border:1px solid var(--gold); border-radius:20px;
-    background:transparent; font-family:'Jost', sans-serif;
-    font-size:13px; letter-spacing:0.06em; text-transform:uppercase;
-    color:var(--ink); cursor:pointer; transition:all .3s ease;
-  }
-  .origin-btn:hover{background:rgba(184,149,90,0.15);}
-  .origin-btn.selected{background:var(--gold); color:#fff;}
-
-  .photo-drop{
-    display:flex; align-items:center; justify-content:center;
-    flex-direction:column; gap:8px;
-    min-height:180px;
-    border:1.5px dashed var(--gold);
-    background:var(--cream);
-    cursor:pointer; text-align:center; padding:20px;
-    color:var(--ink-soft); font-size:14px;
-    transition:background .3s ease;
-  }
-  .photo-drop:hover{background:var(--blush);}
-  .photo-drop img{max-height:220px; max-width:100%; object-fit:contain;}
-
-  .review-fields{display:flex; gap:14px; flex-wrap:wrap;}
-  .review-fields input{flex:1; min-width:180px;}
-  .review-form input, .review-form textarea{
-    padding:13px 16px; border:1px solid var(--line); background:var(--cream);
-    font-family:'Jost', sans-serif; font-size:14px; color:var(--ink);
-  }
-  .review-form textarea{resize:vertical;}
-  .review-form input:focus, .review-form textarea:focus{outline:1px solid var(--gold); border-color:var(--gold);}
-  .review-form .btn{align-self:center; margin-top:6px;}
-  .review-note{font-size:12.5px; color:var(--ink-soft); text-align:center; margin-top:4px;}
-
   .quote-section{
     background:var(--ink); color:var(--cream); text-align:center;
     padding:110px 32px;
@@ -2092,48 +2048,6 @@
   </div>
 </section>
 
-<section class="review-section" id="reviews">
-  <div class="wrap">
-    <div class="section-head" style="margin-left:auto; margin-right:auto; text-align:center;">
-      <span class="eyebrow">Share Your Cozy Nook</span>
-      <h2>Show us how it turned out</h2>
-      <svg class="head-sprig" viewBox="0 0 100 100">
-        <use href="#leafSprig" x="30" y="30" width="28" height="56" transform="rotate(-20 44 58)"/>
-        <use href="#flowerBlush" x="34" y="0" width="42" height="42"/>
-        <use href="#flowerCoral" x="0" y="34" width="30" height="30"/>
-      </svg>
-      <p style="color:var(--ink-soft); margin-top:16px; max-width:520px; margin-left:auto; margin-right:auto;">Upload a photo of your piece and tell us about it — whether you purchased it or made it yourself at one of our workshops.</p>
-    </div>
-
-    <form id="reviewForm" class="review-form">
-      <div class="review-toggle-group">
-        <span class="toggle-label">This item was</span>
-        <div class="toggle-pair" id="originToggle">
-          <button type="button" class="origin-btn selected" data-origin="Purchased">Purchased</button>
-          <button type="button" class="origin-btn" data-origin="Crafted">Crafted By Me</button>
-        </div>
-      </div>
-
-      <div class="review-photo-upload">
-        <label for="reviewPhoto" class="photo-drop" id="photoDrop">
-          <span id="photoDropText">Click to upload a photo</span>
-          <img id="photoPreview" alt="Preview of uploaded photo" style="display:none;" loading="lazy" decoding="async">
-        </label>
-        <input type="file" id="reviewPhoto" accept="image/*" hidden>
-      </div>
-
-      <div class="review-fields">
-        <input type="text" id="reviewName" placeholder="Your name" required>
-        <input type="text" id="reviewItem" placeholder="Which item or workshop?" required>
-      </div>
-      <textarea id="reviewText" rows="4" placeholder="Tell us about it..." required></textarea>
-
-      <button type="submit" class="btn solid">Submit Review</button>
-      <p class="review-note" id="reviewNote">We'll open an email with your review and photo attached for you to send over.</p>
-    </form>
-  </div>
-</section>
-
 <section class="nook-book" id="nook-book">
   <style>
     .nook-book{background:linear-gradient(180deg,var(--cream),#FBEFF1);}
@@ -2526,74 +2440,6 @@
       btn.setAttribute('aria-label', 'Play background music');
       btn.setAttribute('aria-pressed', 'false');
     }
-  });
-})();
-</script>
-
-<script>
-(function(){
-  var originBtns = document.querySelectorAll('.origin-btn');
-  var selectedOrigin = 'Purchased';
-  originBtns.forEach(function(btn){
-    btn.addEventListener('click', function(){
-      originBtns.forEach(function(b){ b.classList.remove('selected'); });
-      btn.classList.add('selected');
-      selectedOrigin = btn.getAttribute('data-origin');
-    });
-  });
-
-  var photoInput = document.getElementById('reviewPhoto');
-  var photoPreview = document.getElementById('photoPreview');
-  var photoDropText = document.getElementById('photoDropText');
-  var uploadedFileName = null;
-
-  photoInput.addEventListener('change', function(){
-    var file = photoInput.files[0];
-    if(!file) return;
-    uploadedFileName = file.name;
-    var reader = new FileReader();
-    reader.onload = function(e){
-      photoPreview.src = e.target.result;
-      photoPreview.style.display = 'block';
-      photoDropText.style.display = 'none';
-    };
-    reader.readAsDataURL(file);
-  });
-
-  var reviewForm = document.getElementById('reviewForm');
-  var reviewNote = document.getElementById('reviewNote');
-
-  reviewForm.addEventListener('submit', function(e){
-    e.preventDefault();
-    var name = document.getElementById('reviewName').value.trim();
-    var item = document.getElementById('reviewItem').value.trim();
-    var text = document.getElementById('reviewText').value.trim();
-
-    if(!name || !item || !text){
-      reviewNote.textContent = 'Please fill in your name, the item, and your review before submitting.';
-      reviewNote.style.color = '#C97A8C';
-      return;
-    }
-
-    var bodyLines = [
-      'Hi Cozy Nook Craft Co.,',
-      '',
-      "I'd like to share a review:",
-      'Item / Workshop: ' + item,
-      'Type: ' + selectedOrigin,
-      'Review: ' + text,
-      '',
-      'Name: ' + name,
-      uploadedFileName ? ('Photo: ' + uploadedFileName + ' (please attach manually before sending)') : 'Photo: none uploaded'
-    ];
-    var subject = encodeURIComponent('Customer Review — ' + item);
-    var body = encodeURIComponent(bodyLines.join('\n'));
-    window.location.href = 'mailto:CozyNookCraftCo@yahoo.com?subject=' + subject + '&body=' + body;
-
-    reviewNote.style.color = '';
-    reviewNote.textContent = uploadedFileName
-      ? "Opening your email now — don't forget to attach your photo before hitting send!"
-      : 'Opening your email with your review filled in — just hit send!';
   });
 })();
 </script>
