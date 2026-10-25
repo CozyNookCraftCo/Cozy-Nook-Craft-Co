@@ -423,6 +423,13 @@
   }
   .card-body h3{font-size:23px; margin:8px 0 6px;}
   .card-body .price{color:var(--ink-soft); font-size:15px;}
+
+  /* Timed sales: sale markup shows only until data-sale-until passes */
+  .card .sale-on{display:none}
+  .card.on-sale .sale-on{display:revert}
+  .card.on-sale .sale-off{display:none}
+  .card .price s{opacity:.6; margin-right:6px}
+  .card .price .sale-now{color:var(--rose-deep); font-weight:600}
   .bias-list{list-style:none; padding:0; margin:0 0 10px; display:flex; flex-wrap:wrap; gap:6px;}
   .bias-list li{font-size:12px; padding:4px 10px; border-radius:999px; background:#EFE6F7; color:#5B3E7A; border:1px solid #D9C7EA;}
   .card-body .desc{font-size:13px; line-height:1.5; color:var(--ink-soft); margin:0 0 8px;}
@@ -1671,14 +1678,15 @@
           <div class="shopify-slot" onclick="event.stopPropagation()"><div data-shopify-product="9555297992942"></div></div>
         </div>
       </div>
-      <div class="card" data-shopify data-options='[{"label":"Standard","price":"$35.00"}]'>
+      <div class="card" data-shopify data-sale-until="2026-11-01T00:00:00-07:00" data-options='[{"label":"Standard","price":"$35.00"}]' data-sale-options='[{"label":"Standard","price":"$20.00"}]'>
         <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
           <img src="blind-date-with-a-book-pick-a-genre.jpg" alt="Wrapped and sealed blind date book decorated with dried florals, ribbon, and a wax seal, tied with a genre label" loading="lazy" decoding="async">
         </div></div></div>
         <div class="card-body">
+          <span class="promo-tag sale-on">ON SALE THROUGH OCT 31</span>
           <span class="cat">Blind Date Books</span>
           <h3>Pick A Genre, Not A Cover</h3>
-          <p class="price">$35.00</p>
+          <p class="price"><span class="sale-on"><s>$35.00</s><span class="sale-now">$20.00</span></span><span class="sale-off">$35.00</span></p>
       <p class="card-tap-hint">Tap for sizes &amp; bundles</p>
           <div class="shopify-slot" onclick="event.stopPropagation()"><div data-shopify-product="9148697084142"></div></div>
         </div>
@@ -2339,6 +2347,22 @@
 })();
 </script>
 
+<script>
+/* Timed sales: switch cards on/off by date (Pacific time) and use sale prices in option pickers */
+(function(){
+  var now = Date.now();
+  document.querySelectorAll('[data-sale-until]').forEach(function(card){
+    var end = Date.parse(card.getAttribute('data-sale-until'));
+    if (!isNaN(end) && now < end) {
+      card.classList.add('on-sale');
+      var s = card.getAttribute('data-sale-options');
+      if (s) card.setAttribute('data-options', s);
+    } else if (card.hasAttribute('data-hide-after')) {
+      card.querySelectorAll('.sale-on').forEach(function(el){ el.remove(); });
+    }
+  });
+})();
+</script>
 <script>
 (function(){
   var overlay = document.getElementById('productModalOverlay');

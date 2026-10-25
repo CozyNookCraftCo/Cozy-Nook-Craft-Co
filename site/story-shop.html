@@ -424,6 +424,13 @@
   }
   .card-body h3{font-size:23px; margin:8px 0 6px;}
   .card-body .price{color:var(--ink-soft); font-size:15px;}
+
+  /* Timed sales: sale markup shows only until data-sale-until passes */
+  .card .sale-on{display:none}
+  .card.on-sale .sale-on{display:revert}
+  .card.on-sale .sale-off{display:none}
+  .card .price s{opacity:.6; margin-right:6px}
+  .card .price .sale-now{color:var(--rose-deep); font-weight:600}
   .bias-list{list-style:none; padding:0; margin:0 0 10px; display:flex; flex-wrap:wrap; gap:6px;}
   .bias-list li{font-size:12px; padding:4px 10px; border-radius:999px; background:#EFE6F7; color:#5B3E7A; border:1px solid #D9C7EA;}
   .card-body .desc{font-size:13px; line-height:1.5; color:var(--ink-soft); margin:0 0 8px;}
@@ -1347,17 +1354,17 @@
       </svg>
     </div>
     <div class="shop-grid">
-      <div class="card" id="anxiety-bookshelf" data-no-popup data-shopify data-options='[{"label":"Random Selection of Books","price":"$25.00"},{"label":"Pick Your Own Books","price":"$30.00"}]'>
+      <div class="card" id="anxiety-bookshelf" data-sale-until="2026-11-01T00:00:00-07:00" data-hide-after data-no-popup data-shopify data-options='[{"label":"Random Selection of Books","price":"$25.00"},{"label":"Pick Your Own Books","price":"$30.00"}]'>
         <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
           <img src="anxiety-bookshelf-mini-books.jpg" alt="Anxiety Bookshelf: a small lit wooden cabinet filled with tiny books" loading="lazy" decoding="async">
         </div></div></div>
         <div class="card-body">
-          <span class="promo-tag">15% OFF THROUGH OCT 31</span>
+          <span class="promo-tag sale-on">15% OFF THROUGH OCT 31</span>
           <span class="cat">Anxiety Bookshelves</span>
           <h3>Anxiety Bookshelf</h3>
           <p class="desc">A tiny shelf full of mini books to slide out, flip and tuck back in. Perfect for fidgety fingers and calm-down corners.</p>
           <p class="desc"><b>Random Selection of Books:</b> $25, a surprise mix of mini books.<br><b>Pick Your Own Books:</b> $30, you choose the titles!</p>
-          <p class="desc">15% off is applied automatically at checkout through Oct 31.</p>
+          <p class="desc sale-on">15% off is applied automatically at checkout through Oct 31.</p>
           <p class="price">$25.00 – $30.00</p>
           <div class="shopify-slot" onclick="event.stopPropagation()"><p class="shopify-label">Random Selection of Books</p><div data-shopify-product="9522853085422"></div><p class="shopify-label">Pick Your Own Books</p><div data-shopify-product="9522853282030"></div></div>
         </div>
@@ -1529,6 +1536,22 @@
 })();
 </script>
 
+<script>
+/* Timed sales: switch cards on/off by date (Pacific time) and use sale prices in option pickers */
+(function(){
+  var now = Date.now();
+  document.querySelectorAll('[data-sale-until]').forEach(function(card){
+    var end = Date.parse(card.getAttribute('data-sale-until'));
+    if (!isNaN(end) && now < end) {
+      card.classList.add('on-sale');
+      var s = card.getAttribute('data-sale-options');
+      if (s) card.setAttribute('data-options', s);
+    } else if (card.hasAttribute('data-hide-after')) {
+      card.querySelectorAll('.sale-on').forEach(function(el){ el.remove(); });
+    }
+  });
+})();
+</script>
 <script>
 (function(){
   var overlay = document.getElementById('productModalOverlay');
