@@ -1085,20 +1085,20 @@
     width:min(62vw, 880px); aspect-ratio:1209/1024; pointer-events:none;
     -webkit-mask-image:linear-gradient(to bottom, #000 62%, transparent 100%);
             mask-image:linear-gradient(to bottom, #000 62%, transparent 100%);}
-  .hero-glow i, .hero-glow b{position:absolute; width:calc(var(--s) * 1.7); height:calc(var(--s) * 1.7); margin:calc(var(--s) * -0.85) 0 0 calc(var(--s) * -0.85);
+  .hero-glow i, .hero-glow b{position:absolute; width:calc(var(--s) * 1.35); height:calc(var(--s) * 1.35); margin:calc(var(--s) * -0.675) 0 0 calc(var(--s) * -0.675);
     border-radius:50%; mix-blend-mode:screen; will-change:opacity, transform;}
-  .hero-glow i{background:radial-gradient(circle, #fff 0, rgba(255,246,210,1) 10%, rgba(255,214,150,.75) 26%, rgba(255,190,120,0) 68%);
-    opacity:0; animation:heroTwinkle calc(var(--d) * 0.6) ease-in-out infinite;}
-  .hero-glow b{background:radial-gradient(circle, rgba(255,236,185,.85) 0, rgba(255,196,115,.4) 38%, rgba(255,170,90,0) 70%);
-    animation:heroFlicker 1.6s linear infinite;}
-  .hero-glow b + b{animation-duration:1.3s; animation-delay:-.6s;}
-  @keyframes heroTwinkle{0%,100%{opacity:0; transform:scale(.45);} 40%{opacity:1; transform:scale(1.25);} 55%{opacity:.75; transform:scale(1);} 70%{opacity:.15; transform:scale(.6);}}
-  @keyframes heroFlicker{0%,100%{opacity:.7; transform:scale(1);} 9%{opacity:1; transform:scale(1.12);} 17%{opacity:.45; transform:scale(.9);} 29%{opacity:.95; transform:scale(1.08);} 41%{opacity:.55; transform:scale(.94);} 58%{opacity:1; transform:scale(1.14);} 69%{opacity:.4; transform:scale(.88);} 83%{opacity:.85; transform:scale(1.04);}}
+  .hero-glow i{background:radial-gradient(circle, rgba(255,252,235,.95) 0, rgba(255,240,200,.85) 12%, rgba(255,214,150,.6) 26%, rgba(255,190,120,0) 68%);
+    opacity:.08; animation:heroTwinkle calc(var(--d) * 0.85) ease-in-out infinite;}
+  .hero-glow b{background:radial-gradient(circle, rgba(255,232,178,.72) 0, rgba(255,196,115,.32) 38%, rgba(255,170,90,0) 70%);
+    animation:heroFlicker 2.2s linear infinite;}
+  .hero-glow b + b{animation-duration:1.8s; animation-delay:-.8s;}
+  @keyframes heroTwinkle{0%,100%{opacity:.08; transform:scale(.6);} 42%{opacity:.85; transform:scale(1.12);} 58%{opacity:.6; transform:scale(1);} 74%{opacity:.2; transform:scale(.72);}}
+  @keyframes heroFlicker{0%,100%{opacity:.72; transform:scale(1);} 9%{opacity:.95; transform:scale(1.08);} 17%{opacity:.55; transform:scale(.93);} 29%{opacity:.9; transform:scale(1.05);} 41%{opacity:.62; transform:scale(.96);} 58%{opacity:.95; transform:scale(1.09);} 69%{opacity:.52; transform:scale(.92);} 83%{opacity:.82; transform:scale(1.03);}}
   @media (max-width:860px){
     .hero > .hero-glow{right:0; width:74vw;
       -webkit-mask-image:linear-gradient(to bottom, #000 38%, transparent 92%);
               mask-image:linear-gradient(to bottom, #000 38%, transparent 92%);}
-    .hero-glow i{--s:22px;}
+    .hero-glow i{--s:20px;}
   }
   @media (prefers-reduced-motion: reduce){ .hero-glow i, .hero-glow b{animation:none; opacity:.5;} }
   /* On computers the cozy photo is now the main picture, so the round lamp photo steps aside */
