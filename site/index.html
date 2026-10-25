@@ -897,9 +897,9 @@
   }
   .newsletter-dismiss:hover{color:var(--ink);}
 
-  /* ===== My Current Favorites: 4 across, compact ===== */
-  #shop .shop-grid{gap:24px;}
-  #shop .shop-grid .card{width:calc((100% - 72px) / 4); max-width:none;}
+  /* ===== My Current Favorites: 3 across ===== */
+  #shop .shop-grid{gap:28px;}
+  #shop .shop-grid .card{width:calc((100% - 56px) / 3); max-width:none;}
   #shop .card-stamp{padding:12px 12px 0;}
   #shop .card-stamp .card-img{padding:8px;}
   #shop .stamp-denom{font-size:15px; right:7px; bottom:3px;}
@@ -909,7 +909,6 @@
   #shop .card-body .desc{font-size:12.5px;}
   #shop .card-body .price{font-size:14px;}
   #shop .shopify-slot{margin-top:12px; padding-top:12px;}
-  @media (max-width:1100px){ #shop .shop-grid .card{width:calc((100% - 48px) / 3);} }
   @media (max-width:860px){ #shop .shop-grid{gap:18px;} #shop .shop-grid .card{width:calc((100% - 18px) / 2);} }
   @media (max-width:560px){ #shop .shop-grid .card{width:100%; max-width:340px;} }
 </style>
@@ -3867,7 +3866,7 @@ document.querySelectorAll('.card').forEach(function(c){
     });
     /* stagger cards in the same row */
     document.querySelectorAll('.shop-grid').forEach(function(g){
-      g.querySelectorAll('.card').forEach(function(c,i){ c.style.transitionDelay=((i%4)*0.1)+'s'; });
+      g.querySelectorAll('.card').forEach(function(c,i){ c.style.transitionDelay=((i%3)*0.12)+'s'; });
     });
     document.documentElement.classList.add('reveal-on');
   }
