@@ -934,6 +934,7 @@
     color:var(--ink-soft); cursor:pointer;
   }
   .newsletter-dismiss:hover{color:var(--ink);}
+  .handmade-note{margin:14px 0 0; font-size:15px; font-style:italic; color:var(--ink-soft);}
 </style>
 <style id="cartStyles">
   /* ===== Cart: card controls ===== */
@@ -1291,16 +1292,21 @@
       <span class="logo-home">(click here to return home)</span>
     </a>
     <div class="nav-links">
-      <a href="story-shop.html">The Story Shop</a>
-      <a href="preference-sheet.html">Preference Sheet</a>
-      <a href="index.html#booklist">Book List</a>
-      <a href="index.html#scentlist">Scent List</a>
+      <a href="story-shop.html">Story Shop</a>
       <a href="index.html#custom">Custom Orders</a>
       <a href="index.html#cozy-bear">Cozy Bears</a>
       <a href="https://docs.google.com/document/d/1u-9X7yYVMMQmjxPVmYeQ3whbqG_GQVCZvYZgP0ey7cM/edit?usp=sharing" target="_blank" rel="noopener">Book Club</a>
       <a href="index.html#classes">Classes</a>
-      <a href="index.html#nook-book">Nook Book</a>
       <a href="index.html#contact">Contact</a>
+      <div class="nav-more">
+        <button type="button" class="nav-more-btn" aria-expanded="false" aria-haspopup="true">More <span aria-hidden="true">&#9662;</span></button>
+        <div class="nav-more-menu">
+          <a href="index.html#booklist">Book List</a>
+          <a href="index.html#scentlist">Scent List</a>
+          <a href="preference-sheet.html">Preference Sheet</a>
+          <a href="index.html#nook-book">Nook Book</a>
+        </div>
+      </div>
     </div>
     <div class="nav-cta-group">
     </div>
@@ -1327,6 +1333,7 @@
     <div class="section-head">
       <span class="eyebrow">Everything In The Shop</span>
       <h1>The Story <span class="logo-accent">Shop</span></h1>
+      <p class="handmade-note">Bookish treasures, cozy wear and little gifts, each one made by hand in my cozy nook. Please allow 7&ndash;10 days for your order to be completed.</p>
       <svg class="head-bundles" viewBox="0 0 130 130" aria-hidden="true" focusable="false">
         <g transform="translate(0 0) rotate(10 60 70)">
           <use href="#leafSprig" x="38" y="40" width="34" height="74" transform="rotate(-18 55 77)"/>
@@ -2712,5 +2719,128 @@ document.querySelectorAll('.card').forEach(function(c){
 })();
 </script>
 <!-- ===== /Hanging gold lantern ===== -->
+<!-- ===== Site polish: one-line menu, quieter corners, scroll fade-in, seasonal leaves & snow ===== -->
+<style>
+  /* One-line menu with a "More" dropdown */
+  .nav-links{align-items:center;}
+  .nav-links > a, .nav-more-btn{white-space:nowrap;}
+  .nav-more{position:relative;}
+  .nav-more-btn{background:none; border:0; padding:0 0 4px; margin:0; font:inherit; letter-spacing:inherit; text-transform:inherit; color:inherit; cursor:pointer;}
+  .nav-more-btn span{font-size:.8em; margin-left:2px; display:inline-block; transition:transform .25s ease;}
+  .nav-more-btn:focus-visible{outline:2px solid var(--gold); outline-offset:3px; border-radius:4px;}
+  .nav-more-menu{position:absolute; right:-14px; top:calc(100% + 10px); min-width:190px; display:flex; flex-direction:column; gap:2px;
+    background:var(--cream, #FFFDFA); border:1px solid var(--line); border-radius:16px; padding:10px; box-shadow:0 14px 34px -12px rgba(62,51,47,.35);
+    opacity:0; visibility:hidden; transform:translateY(-6px); transition:opacity .2s, transform .2s, visibility 0s .2s; z-index:70;}
+  .nav-more::before{content:""; position:absolute; left:-10px; right:-10px; top:100%; height:14px;}
+  .nav-more:hover .nav-more-menu, .nav-more:focus-within .nav-more-menu, .nav-more.open .nav-more-menu{opacity:1; visibility:visible; transform:none; transition:opacity .2s, transform .2s;}
+  .nav-more:hover .nav-more-btn span, .nav-more.open .nav-more-btn span{transform:rotate(180deg);}
+  .nav-more-menu a{display:block; padding:9px 12px; border-radius:10px; white-space:nowrap;}
+  .nav-more-menu a::after{display:none;}
+  .nav-more-menu a:hover, .nav-more-menu a:focus-visible, .nav-more-menu a.active{background:var(--blush); color:var(--rose-deep); outline:none;}
+  @media (min-width:861px) and (max-width:1240px){ header nav .nav-links{gap:18px;} }
+
+  /* Quieter corners: chat bubble shows just its flower until hovered (opens fully for a few seconds on arrival) */
+  .cn-launch{padding:8px; gap:0; transition:transform .2s, filter .2s, padding .35s ease, gap .35s ease;}
+  .cn-launch-text{display:block; max-width:0; opacity:0; overflow:hidden; white-space:nowrap; transition:max-width .4s ease, opacity .3s ease;}
+  .cn-launch:hover, .cn-launch:focus-visible, html.cn-intro .cn-launch{padding:12px 20px 12px 14px; gap:10px;}
+  .cn-launch:hover .cn-launch-text, .cn-launch:focus-visible .cn-launch-text, html.cn-intro .cn-launch-text{max-width:260px; opacity:1;}
+  @media (max-width:600px){
+    .wb-tag{display:none;}
+    .cn-launch:hover, .cn-launch:focus-visible, html.cn-intro .cn-launch{padding:8px 16px 8px 8px; gap:8px;}
+  }
+
+  /* Soft fade-in while scrolling (only once the script is running, so nothing is ever hidden without it) */
+  html.reveal-on .reveal{opacity:0; transform:translateY(22px); transition:opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1);}
+  html.reveal-on .reveal.in{opacity:1; transform:none;}
+
+  /* Seasonal leaves / snow */
+  #cnSeason{position:fixed; inset:0; width:100vw; height:100vh; pointer-events:none; z-index:55;}
+  @media (prefers-reduced-motion: reduce){
+    html.reveal-on .reveal{opacity:1; transform:none; transition:none;}
+    #cnSeason{display:none;}
+    .cn-launch, .cn-launch-text{transition:none;}
+  }
+</style>
+<script>
+(function(){
+  /* More menu: tap/click to open on touch screens, Escape or outside click to close */
+  document.querySelectorAll('.nav-more').forEach(function(m){
+    var b=m.querySelector('.nav-more-btn');
+    function set(o){ m.classList.toggle('open',o); b.setAttribute('aria-expanded',o); }
+    b.addEventListener('click',function(e){ e.stopPropagation(); set(!m.classList.contains('open')); });
+    document.addEventListener('click',function(e){ if(!m.contains(e.target)) set(false); });
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape' && m.classList.contains('open')){ set(false); b.focus(); } });
+  });
+
+  /* Chat bubble introduces itself for 6 seconds, then tucks away to just the flower */
+  if(document.getElementById('cnLaunch')){
+    var de=document.documentElement; de.classList.add('cn-intro');
+    setTimeout(function(){ de.classList.remove('cn-intro'); },6000);
+  }
+
+  /* Fade-in on scroll */
+  var reduce=window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if('IntersectionObserver' in window && !reduce){
+    var els=document.querySelectorAll('.section-head, .shop-grid .card, section .wrap > :not(.section-head):not(.shop-grid), .sprig-divider');
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    },{rootMargin:'0px 0px -8% 0px', threshold:0.06});
+    var vh=window.innerHeight;
+    els.forEach(function(el){
+      if(el.closest('.hero')) return;
+      var r=el.getBoundingClientRect();
+      el.classList.add('reveal');
+      if(r.top < vh) el.classList.add('in'); else io.observe(el);
+    });
+    /* stagger cards in the same row */
+    document.querySelectorAll('.shop-grid').forEach(function(g){
+      g.querySelectorAll('.card').forEach(function(c,i){ c.style.transitionDelay=((i%3)*0.12)+'s'; });
+    });
+    document.documentElement.classList.add('reveal-on');
+  }
+
+  /* Seasonal: falling leaves Sep–Nov, gentle snow Dec–Jan (by the visitor's own date) */
+  var mo=new Date().getMonth(), kind = (mo>=8 && mo<=10) ? 'leaves' : (mo===11 || mo===0) ? 'snow' : null;
+  if(!kind || reduce) return;
+  var cv=document.createElement('canvas'); cv.id='cnSeason'; cv.setAttribute('aria-hidden','true'); document.body.appendChild(cv);
+  var ctx=cv.getContext('2d'), W, H, dpr=Math.min(window.devicePixelRatio||1,2), parts=[];
+  var small=window.innerWidth<700, N = kind==='leaves' ? (small?7:13) : (small?22:42);
+  var leafCols=['#E8967A','#D99A72','#E8BB98','#C97A8C','#D9A05B','#B86F52'];
+  function size(){ W=window.innerWidth; H=window.innerHeight; cv.width=W*dpr; cv.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); }
+  function make(top){
+    var p={x:Math.random()*W, y: top ? -30-Math.random()*H*0.3 : Math.random()*H, t:Math.random()*6.28};
+    if(kind==='leaves'){ p.s=9+Math.random()*9; p.vy=.35+Math.random()*.45; p.sw=.6+Math.random()*1.1; p.r=Math.random()*6.28; p.vr=(Math.random()-.5)*.03; p.c=leafCols[(Math.random()*leafCols.length)|0]; p.a=.55+Math.random()*.3; }
+    else { p.s=1.6+Math.random()*2.8; p.vy=.3+Math.random()*.55; p.sw=.3+Math.random()*.6; p.a=.55+Math.random()*.4; }
+    return p;
+  }
+  function leaf(p){
+    ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r); ctx.scale(1, .55+.45*Math.cos(p.t*1.3));
+    ctx.globalAlpha=p.a; ctx.fillStyle=p.c; var s=p.s;
+    ctx.beginPath(); ctx.moveTo(0,-s); ctx.bezierCurveTo(s*.75,-s*.5,s*.6,s*.55,0,s); ctx.bezierCurveTo(-s*.6,s*.55,-s*.75,-s*.5,0,-s); ctx.fill();
+    ctx.strokeStyle='rgba(255,248,240,.55)'; ctx.lineWidth=.8; ctx.beginPath(); ctx.moveTo(0,-s*.8); ctx.lineTo(0,s*1.15); ctx.stroke();
+    ctx.restore();
+  }
+  function flake(p){
+    ctx.globalAlpha=p.a; ctx.fillStyle='#fff'; ctx.shadowColor='rgba(201,122,140,.55)'; ctx.shadowBlur=4;
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.s,0,6.283); ctx.fill(); ctx.shadowBlur=0;
+  }
+  size(); for(var i=0;i<N;i++) parts.push(make(false));
+  window.addEventListener('resize',size);
+  var last=0;
+  function loop(ts){
+    requestAnimationFrame(loop);
+    if(document.hidden || ts-last<30) return; last=ts;
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<parts.length;i++){
+      var p=parts[i]; p.t+=.02; p.y+=p.vy; p.x+=Math.sin(p.t)*p.sw*.6;
+      if(kind==='leaves'){ p.r+=p.vr+Math.sin(p.t)*.01; leaf(p); } else flake(p);
+      if(p.y>H+30 || p.x<-40 || p.x>W+40) parts[i]=make(true);
+    }
+    ctx.globalAlpha=1;
+  }
+  requestAnimationFrame(loop);
+})();
+</script>
+<!-- ===== /Site polish ===== -->
 </body>
 </html>
