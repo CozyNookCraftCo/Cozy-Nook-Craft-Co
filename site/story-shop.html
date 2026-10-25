@@ -2642,7 +2642,7 @@ document.querySelectorAll('.card').forEach(function(c){
 </script>
 <!-- ===== Hanging gold lantern: top-left, hangs just under the menu bar and stays put while scrolling ===== -->
 <style>
-  .cn-lantern{position:fixed; left:18px; top:var(--ln-top, 110px); width:54px; height:112px; z-index:60; pointer-events:none;
+  .cn-lantern{position:fixed; left:14px; top:var(--ln-top, 110px); width:76px; height:158px; z-index:60; pointer-events:none;
     transform-origin:50% 0; animation:lnSway 7s ease-in-out infinite;}
   .cn-lantern svg{display:block; width:100%; height:100%; overflow:visible;}
   .cn-lantern .ln-glow{transform-box:fill-box; transform-origin:center; animation:lnGlow 2.6s linear infinite;}
@@ -2655,7 +2655,7 @@ document.querySelectorAll('.card').forEach(function(c){
   html.night .cn-lantern .ln-glow{animation-name:lnGlowNight;}
   @keyframes lnGlowNight{0%,100%{opacity:.7; transform:scale(1.05);} 18%{opacity:.88; transform:scale(1.12);} 35%{opacity:.62; transform:scale(1);}
     55%{opacity:.85; transform:scale(1.1);} 76%{opacity:.66; transform:scale(1.02);}}
-  @media (max-width:860px){ .cn-lantern{left:6px; width:32px; height:67px;} }
+  @media (max-width:860px){ .cn-lantern{left:4px; width:44px; height:92px;} }
   @media print{ .cn-lantern{display:none;} }
   @media (prefers-reduced-motion: reduce){ .cn-lantern, .cn-lantern .ln-glow, .cn-lantern .ln-flame{animation:none;} }
 </style>
