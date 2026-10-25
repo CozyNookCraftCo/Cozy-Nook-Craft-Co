@@ -392,6 +392,14 @@
   }
   .card-img img{width:100%; height:100%; object-fit:cover; transition:transform .6s ease;}
   .card:hover .card-img img{transform:scale(1.06);}
+
+  /* ===== Postage stamp thumbnails ===== */
+  .card-stamp{padding:18px 18px 0; filter:drop-shadow(0 3px 5px rgba(62,51,47,0.18));}
+  .card-stamp .card-img{background:#fff; padding:11px; overflow:visible;
+    -webkit-mask:linear-gradient(#000 0 0) content-box, radial-gradient(5.5px at 50% 50%, #0000 96%, #000) -8px -8px / 16px 16px;
+            mask:linear-gradient(#000 0 0) content-box, radial-gradient(5.5px at 50% 50%, #0000 96%, #000) -8px -8px / 16px 16px;}
+  .stamp-photo{position:relative; width:100%; height:100%; overflow:hidden; background:var(--blush); outline:1px solid rgba(62,51,47,0.08);}
+  .stamp-denom{position:absolute; right:9px; bottom:4px; z-index:1; pointer-events:none; font-family:'Cormorant Garamond',serif; font-weight:600; font-size:18px; color:#fff; text-shadow:0 1px 3px rgba(62,51,47,0.55);}
   .card-body{padding:22px 22px 26px;}
   /* Multi-photo card gallery (swipe or tap arrows) */
   .card-gallery .cg-track{display:flex; width:100%; height:100%; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory; scroll-behavior:smooth; scrollbar-width:none; -webkit-overflow-scrolling:touch;}
@@ -1317,9 +1325,9 @@
     </div>
     <div class="shop-grid">
       <div class="card" id="anxiety-bookshelf" data-no-popup data-shopify data-options='[{"label":"Random Selection of Books","price":"$25.00"},{"label":"Pick Your Own Books","price":"$30.00"}]'>
-        <div class="card-img">
+        <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
           <img src="anxiety-bookshelf-mini-books.jpg" alt="Anxiety Bookshelf: a small lit wooden cabinet filled with tiny books" loading="lazy" decoding="async">
-        </div>
+        </div></div></div>
         <div class="card-body">
           <span class="promo-tag">15% OFF THROUGH OCT 31</span>
           <span class="cat">Anxiety Bookshelves</span>
@@ -1332,9 +1340,9 @@
         </div>
       </div>
       <div class="card" data-shopify data-options='[{"label":"Standard","price":"$35.00"}]'>
-        <div class="card-img">
+        <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
           <img src="blind-date-with-a-book-pick-a-genre.jpg" alt="Wrapped and sealed blind date book decorated with dried florals, ribbon, and a wax seal, tied with a genre label" loading="lazy" decoding="async">
-        </div>
+        </div></div></div>
         <div class="card-body">
           <span class="cat">Blind Date Books</span>
           <h3>Pick A Genre, Not A Cover</h3>
@@ -1344,9 +1352,9 @@
         </div>
       </div>
       <div class="card" data-no-popup data-shopify data-options='[{"label":"Hardcover","price":"$35.00"}]'>
-        <div class="card-img">
+        <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
           <img src="book-page-flower-vase-keepsake.jpg" alt="Bouquet of orange flowers arranged in a vase made from rolled book pages, cozy candlelit scene" loading="lazy" decoding="async">
-        </div>
+        </div></div></div>
         <div class="card-body">
           <span class="cat">Make your favorite books into beautiful hand folded and designed keepsakes.</span>
           <h3>An End To A Beautiful Story</h3>
@@ -1356,9 +1364,9 @@
         </div>
       </div>
       <div class="card" data-no-popup data-shopify data-options='[]'>
-        <div class="card-img">
+        <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
           <img src="custom-folded-book-art-bouquet.jpg" alt="Folded book art bouquet with peach and cream flowers rising from an open book" loading="lazy" decoding="async">
-        </div>
+        </div></div></div>
         <div class="card-body">
           <span class="cat">Folded Book Art</span>
           <h3>Custom Folded Book Art</h3>
@@ -1367,9 +1375,9 @@
         </div>
       </div>
       <div class="card" data-shopify data-options='[{"label":"8 oz Bag","price":"$10.00"}]'>
-        <div class="card-img">
+        <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
           <img src="bookish-scented-wax-melts.jpg" alt="Heart-shaped wax melts in a bowl, pastel colors, cozy candlelit scene" loading="lazy" decoding="async">
-        </div>
+        </div></div></div>
         <div class="card-body">
           <span class="cat">Wax Melts With A Bookish Themed Scent</span>
           <h3>Scented Stories</h3>
@@ -1379,7 +1387,7 @@
         </div>
       </div>
       <div class="card" data-no-popup data-shopify data-options='[{"label":"Standard","price":"$20.00"},{"label":"With Florals","price":"$25.00"}]'>
-        <div class="card-img card-gallery" data-gallery>
+        <div class="card-stamp"><div class="card-img card-gallery" data-gallery><div class="stamp-photo">
           <div class="cg-track">
             <img src="storybook-spin-florals.jpg" alt="Vinyl record bowl with wavy edges customized with pink peony florals and greenery, styled with books and candles" loading="lazy" decoding="async">
             <img src="storybook-spin-bowl.jpg" alt="Reshaped vinyl record bowl with wavy ruffled edges and the Imperial Records label showing, styled with books and a crocheted doily" loading="lazy">
@@ -1388,7 +1396,7 @@
           <button type="button" class="cg-nav cg-prev" aria-label="Previous photo">&#8249;</button>
           <button type="button" class="cg-nav cg-next" aria-label="Next photo">&#8250;</button>
           <div class="cg-dots"></div>
-        </div>
+        </div></div></div>
         <div class="card-body">
           <span class="cat">Melted Vinyl Record Bowl</span>
           <h3>The Storybook Spin</h3>
@@ -1399,9 +1407,9 @@
         </div>
       </div>
       <div class="card" data-no-popup data-shopify data-options='[{"label":"Book Lovers Box","price":"$125.00","qty":true},{"label":"Serenity and Self-Care Bundle","price":"$145.00","qty":true}]'>
-        <div class="card-img">
+        <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
           <img src="cozy-bookish-bundle-gift-box.jpg" alt="Gift box filled with a notebook, reading list pad, sticker sheet, candle, cocoa, cozy socks, glass jar, and snacks, tied with a pink flower and heart" loading="lazy" decoding="async">
-        </div>
+        </div></div></div>
         <div class="card-body">
           <h3>Cozy Bookish Bundles</h3>
           <p class="desc">Image shown is for visual purposes only. Please see the <a href="https://docs.google.com/spreadsheets/d/11KQ7-OzWR0rbvwtdMOeZl92N2kxANRchWQ6gmuvSqAQ/edit?usp=sharing" target="_blank" rel="noopener" onclick="event.stopPropagation()">Bundle Sheet</a> for what's included in each bundle.</p>
@@ -1410,9 +1418,9 @@
         </div>
       </div>
       <div class="card" data-no-popup data-shopify data-options='[{"label":"Book Club Of The Month","price":"$55.00","qty":true},{"label":"Book Club Of The Month Plus","price":"$85.00","qty":true}]'>
-        <div class="card-img">
+        <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
           <img src="book-club-of-the-month.jpg" alt="Illustration of a stack of five colorful books tied with twine and a leafy sprig, with Book Club written in pink script below" loading="lazy" decoding="async">
-        </div>
+        </div></div></div>
         <div class="card-body">
           <h3>Book Club Of The Month</h3>
           <p class="desc"><a href="https://docs.google.com/document/d/1u-9X7yYVMMQmjxPVmYeQ3whbqG_GQVCZvYZgP0ey7cM/edit?usp=sharing" target="_blank" rel="noopener" onclick="event.stopPropagation()">Book Club Bundles</a></p>
@@ -1421,9 +1429,9 @@
         </div>
       </div>
       <div class="card" data-no-popup data-shopify data-options='[]'>
-        <div class="card-img">
+        <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
           <img src="https://cdn.shopify.com/s/files/1/0794/4070/7822/files/BookishSweatshirts.jpg?v=1789867741" alt="Cozy bookish sweatshirts from Cozy Nook Craft Co." loading="lazy">
-        </div>
+        </div></div></div>
         <div class="card-body">
           <span class="cat">Cozy Wear</span>
           <h3>Cozy Sweatshirt</h3>
@@ -1433,9 +1441,9 @@
         </div>
       </div>
       <div class="card" data-no-popup data-shopify data-options='[]'>
-        <div class="card-img">
+        <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
           <img src="https://cdn.shopify.com/s/files/1/0794/4070/7822/files/BookishTee.jpg?v=1789867689" alt="Cozy bookish tee shirt from Cozy Nook Craft Co." loading="lazy">
-        </div>
+        </div></div></div>
         <div class="card-body">
           <span class="cat">Cozy Wear</span>
           <h3>Cozy Tee Shirt</h3>
@@ -1445,9 +1453,9 @@
         </div>
       </div>
       <div class="card" data-no-popup data-shopify data-options='[{"label":"Floral Vent Clip","price":"$10.00"}]'>
-        <div class="card-img">
+        <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
           <img src="floral-car-vent-clips.jpg" alt="Fabric flower vent clips in teal, dark purple, magenta, gray, pink, lavender, orange, blue, and yellow, arranged among vintage books, a candle lantern, and a Just One More Chapter mug" loading="lazy" decoding="async">
-        </div>
+        </div></div></div>
         <div class="card-body">
           <span class="cat">Car Vent Clips</span>
           <h3>Floral Vent Clips</h3>
@@ -2637,5 +2645,14 @@
 </script>
 <!-- ===== /Cozy Nook chat box ===== -->
 
+<script>
+/* Postage stamp thumbnails: show the price in the stamp's corner, like a real stamp's value */
+document.querySelectorAll('.card').forEach(function(c){
+  var p=c.querySelector('.price'), ph=c.querySelector('.stamp-photo'); if(!p||!ph) return;
+  var m=p.textContent.match(/\$\d+(?:\.\d{2})?/g); if(!m||m.length!==1) return;
+  var s=document.createElement('span'); s.className='stamp-denom'; s.setAttribute('aria-hidden','true');
+  s.textContent=m[0].replace(/\.00$/,''); ph.appendChild(s);
+});
+</script>
 </body>
 </html>

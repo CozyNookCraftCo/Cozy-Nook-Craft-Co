@@ -391,6 +391,14 @@
   }
   .card-img img{width:100%; height:100%; object-fit:cover; transition:transform .6s ease;}
   .card:hover .card-img img{transform:scale(1.06);}
+
+  /* ===== Postage stamp thumbnails ===== */
+  .card-stamp{padding:18px 18px 0; filter:drop-shadow(0 3px 5px rgba(62,51,47,0.18));}
+  .card-stamp .card-img{background:#fff; padding:11px; overflow:visible;
+    -webkit-mask:linear-gradient(#000 0 0) content-box, radial-gradient(5.5px at 50% 50%, #0000 96%, #000) -8px -8px / 16px 16px;
+            mask:linear-gradient(#000 0 0) content-box, radial-gradient(5.5px at 50% 50%, #0000 96%, #000) -8px -8px / 16px 16px;}
+  .stamp-photo{position:relative; width:100%; height:100%; overflow:hidden; background:var(--blush); outline:1px solid rgba(62,51,47,0.08);}
+  .stamp-denom{position:absolute; right:9px; bottom:4px; z-index:1; pointer-events:none; font-family:'Cormorant Garamond',serif; font-weight:600; font-size:18px; color:#fff; text-shadow:0 1px 3px rgba(62,51,47,0.55);}
   .card-body{padding:22px 22px 26px;}
   /* Multi-photo card gallery (swipe or tap arrows) */
   .card-gallery .cg-track{display:flex; width:100%; height:100%; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory; scroll-behavior:smooth; scrollbar-width:none; -webkit-overflow-scrolling:touch;}
@@ -1618,9 +1626,9 @@
     </div>
     <div class="shop-grid">
       <div class="card" data-no-popup data-shopify data-options='[{"label":"$25","price":"$25.00"},{"label":"$50","price":"$50.00"},{"label":"$75","price":"$75.00"},{"label":"$100","price":"$100.00"}]'>
-        <div class="card-img">
+        <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
           <img src="gift-card.jpg" alt="A little gift of cozy: pink Cozy Nook gift card with a copper bow, in $25, $50, $75 and $100" loading="lazy" decoding="async">
-        </div>
+        </div></div></div>
         <div class="card-body">
           <span class="cat">Gift Cards</span>
           <h3>A Little Gift of Cozy</h3>
@@ -1630,9 +1638,9 @@
         </div>
       </div>
       <div class="card" data-no-popup data-shopify data-options='[{"label":"Halloween Notebook","price":"$10.00"}]'>
-        <div class="card-img">
+        <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
           <img src="halloween-composition-notebook.jpg" alt="Halloween altered composition notebook covered in a black and orange harlequin pattern of grinning pumpkins, skulls, and black cats, with a Trick or Treat bat label" loading="lazy" decoding="async">
-        </div>
+        </div></div></div>
         <div class="card-body">
           <span class="cat">Altered Composition Notebooks</span>
           <h3>Trick or Treat Notebook</h3>
@@ -1642,9 +1650,9 @@
         </div>
       </div>
       <div class="card" data-no-popup data-shopify data-options='[{"label":"Cozy Phone Holder","price":"$15.00"}]'>
-        <div class="card-img">
+        <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
           <img src="cozy-phone-holder.jpg" alt="Handmade wooden phone holder with wavy edges, covered in a soft wildflower print, with a gold bar holding a phone upright beside books, a candle, and a Just One More Chapter mug" loading="lazy" decoding="async">
-        </div>
+        </div></div></div>
         <div class="card-body">
           <span class="cat">Handmade Phone Stand</span>
           <h3>Cozy Phone Holder</h3>
@@ -1654,9 +1662,9 @@
         </div>
       </div>
       <div class="card" data-no-popup data-shopify data-options='[{"label":"RM","price":"$35.00"},{"label":"Jin","price":"$35.00"},{"label":"Suga","price":"$35.00"},{"label":"J-Hope","price":"$35.00"},{"label":"Jimin","price":"$35.00"},{"label":"V","price":"$35.00"},{"label":"Jungkook","price":"$35.00"}]'>
-        <div class="card-img">
+        <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
           <img src="bts-inspired-bdwab.jpg" alt="Illustrated BTS-inspired sticker with seven chibi-style members, purple hearts, and the words BTS Forever" style="object-fit:contain; background:#fff;" loading="lazy" decoding="async">
-        </div>
+        </div></div></div>
         <div class="card-body">
           <span class="cat">Blind Date Books</span>
           <h3>BTS Inspired BDWAB</h3>
@@ -1668,9 +1676,9 @@
         </div>
       </div>
       <div class="card" data-no-popup data-shopify data-options='[{"label":"Ursula (The Little Mermaid)","price":"$35.00"},{"label":"Maleficent (Sleeping Beauty)","price":"$35.00"},{"label":"Gaston (Beauty and the Beast)","price":"$35.00"},{"label":"Captain Hook (Peter Pan)","price":"$35.00"},{"label":"Jafar (Aladdin)","price":"$35.00"},{"label":"Queen of Hearts (Alice in Wonderland)","price":"$35.00"},{"label":"Hades (Hercules)","price":"$35.00"}]'>
-        <div class="card-img">
+        <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
           <img src="unbirthday-twisted-tale-villain-book-club.jpg" alt="Unbirthday: A Twisted Tale book cover" style="object-fit:contain; background:#070000;" loading="lazy" decoding="async">
-        </div>
+        </div></div></div>
         <div class="card-body">
           <span class="cat">Book Get Together</span>
           <h3>Villain Re-Telling Get Together!</h3>
@@ -1681,9 +1689,9 @@
         </div>
       </div>
       <div class="card" data-shopify data-options='[{"label":"Standard","price":"$35.00"}]'>
-        <div class="card-img">
+        <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
           <img src="blind-date-with-a-book-pick-a-genre.jpg" alt="Wrapped and sealed blind date book decorated with dried florals, ribbon, and a wax seal, tied with a genre label" loading="lazy" decoding="async">
-        </div>
+        </div></div></div>
         <div class="card-body">
           <span class="cat">Blind Date Books</span>
           <h3>Pick A Genre, Not A Cover</h3>
@@ -1693,9 +1701,9 @@
         </div>
       </div>
       <div class="card" data-no-popup data-shopify data-options='[{"label":"Hardcover","price":"$35.00"}]'>
-        <div class="card-img">
+        <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
           <img src="book-page-flower-vase-keepsake.jpg" alt="Bouquet of orange flowers arranged in a vase made from rolled book pages, cozy candlelit scene" loading="lazy" decoding="async">
-        </div>
+        </div></div></div>
         <div class="card-body">
           <span class="cat">Make your favorite books into beautiful hand folded and designed keepsakes.</span>
           <h3>An End To A Beautiful Story</h3>
@@ -1705,9 +1713,9 @@
         </div>
       </div>
       <div class="card" data-no-popup data-shopify data-options='[]'>
-        <div class="card-img">
+        <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
           <img src="custom-folded-book-art-bouquet.jpg" alt="Folded book art bouquet with peach and cream flowers rising from an open book" loading="lazy" decoding="async">
-        </div>
+        </div></div></div>
         <div class="card-body">
           <span class="cat">Folded Book Art</span>
           <h3>Custom Folded Book Art</h3>
@@ -1716,9 +1724,9 @@
         </div>
       </div>
       <div class="card" data-shopify data-options='[{"label":"8 oz Bag","price":"$10.00"}]'>
-        <div class="card-img">
+        <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
           <img src="bookish-scented-wax-melts.jpg" alt="Heart-shaped wax melts in a bowl, pastel colors, cozy candlelit scene" loading="lazy" decoding="async">
-        </div>
+        </div></div></div>
         <div class="card-body">
           <span class="cat">Wax Melts With A Bookish Themed Scent</span>
           <h3>Scented Stories</h3>
@@ -1728,7 +1736,7 @@
         </div>
       </div>
       <div class="card" data-no-popup data-shopify data-options='[{"label":"Standard","price":"$20.00"},{"label":"With Florals","price":"$25.00"}]'>
-        <div class="card-img card-gallery" data-gallery>
+        <div class="card-stamp"><div class="card-img card-gallery" data-gallery><div class="stamp-photo">
           <div class="cg-track">
             <img src="storybook-spin-florals.jpg" alt="Vinyl record bowl with wavy edges customized with pink peony florals and greenery, styled with books and candles" loading="lazy" decoding="async">
             <img src="storybook-spin-bowl.jpg" alt="Reshaped vinyl record bowl with wavy ruffled edges and the Imperial Records label showing, styled with books and a crocheted doily" loading="lazy">
@@ -1737,7 +1745,7 @@
           <button type="button" class="cg-nav cg-prev" aria-label="Previous photo">&#8249;</button>
           <button type="button" class="cg-nav cg-next" aria-label="Next photo">&#8250;</button>
           <div class="cg-dots"></div>
-        </div>
+        </div></div></div>
         <div class="card-body">
           <span class="cat">Melted Vinyl Record Bowl</span>
           <h3>The Storybook Spin</h3>
@@ -1748,9 +1756,9 @@
         </div>
       </div>
       <div class="card" data-no-popup data-shopify data-options='[]'>
-        <div class="card-img">
+        <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
           <img src="https://cdn.shopify.com/s/files/1/0794/4070/7822/files/BookishSweatshirts.jpg?v=1789867741" alt="Cozy bookish sweatshirts from Cozy Nook Craft Co." loading="lazy">
-        </div>
+        </div></div></div>
         <div class="card-body">
           <span class="cat">Cozy Wear</span>
           <h3>Cozy Sweatshirt</h3>
@@ -3820,5 +3828,14 @@ document.querySelectorAll('[data-show-until]').forEach(function(el){
 </script>
 <!-- ===== /Cozy Nook chat box ===== -->
 
+<script>
+/* Postage stamp thumbnails: show the price in the stamp's corner, like a real stamp's value */
+document.querySelectorAll('.card').forEach(function(c){
+  var p=c.querySelector('.price'), ph=c.querySelector('.stamp-photo'); if(!p||!ph) return;
+  var m=p.textContent.match(/\$\d+(?:\.\d{2})?/g); if(!m||m.length!==1) return;
+  var s=document.createElement('span'); s.className='stamp-denom'; s.setAttribute('aria-hidden','true');
+  s.textContent=m[0].replace(/\.00$/,''); ph.appendChild(s);
+});
+</script>
 </body>
 </html>
