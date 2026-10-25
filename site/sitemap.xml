@@ -2,14 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://cozynookcraftco.com/</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-10-24</lastmod>
     <priority>1.0</priority>
     <image:image><image:loc>https://cozynookcraftco.com/hero-cozy-corner.webp</image:loc></image:image>
     <image:image><image:loc>https://cozynookcraftco.com/crochet-floral-candle-cozy.jpg</image:loc></image:image>
     <image:image><image:loc>https://cozynookcraftco.com/gift-card.jpg</image:loc></image:image>
-    <image:image><image:loc>https://cozynookcraftco.com/halloween-composition-notebook.jpg</image:loc></image:image>
     <image:image><image:loc>https://cozynookcraftco.com/cozy-phone-holder.jpg</image:loc></image:image>
-    <image:image><image:loc>https://cozynookcraftco.com/bts-inspired-bdwab.jpg</image:loc></image:image>
     <image:image><image:loc>https://cozynookcraftco.com/unbirthday-twisted-tale-villain-book-club.jpg</image:loc></image:image>
     <image:image><image:loc>https://cozynookcraftco.com/blind-date-with-a-book-pick-a-genre.jpg</image:loc></image:image>
     <image:image><image:loc>https://cozynookcraftco.com/book-page-flower-vase-keepsake.jpg</image:loc></image:image>
@@ -24,7 +22,7 @@
   </url>
   <url>
     <loc>https://cozynookcraftco.com/story-shop.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-10-24</lastmod>
     <priority>0.9</priority>
     <image:image><image:loc>https://cozynookcraftco.com/anxiety-bookshelf-mini-books.jpg</image:loc></image:image>
     <image:image><image:loc>https://cozynookcraftco.com/blind-date-with-a-book-pick-a-genre.jpg</image:loc></image:image>
@@ -37,6 +35,8 @@
     <image:image><image:loc>https://cozynookcraftco.com/cozy-bookish-bundle-gift-box.jpg</image:loc></image:image>
     <image:image><image:loc>https://cozynookcraftco.com/book-club-of-the-month.jpg</image:loc></image:image>
     <image:image><image:loc>https://cozynookcraftco.com/floral-car-vent-clips.jpg</image:loc></image:image>
+    <image:image><image:loc>https://cozynookcraftco.com/bts-inspired-bdwab.jpg</image:loc></image:image>
+    <image:image><image:loc>https://cozynookcraftco.com/halloween-composition-notebook.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://cozynookcraftco.com/preference-sheet.html</loc>
