@@ -1134,8 +1134,8 @@
     document.documentElement.classList.add('reveal-on');
   }
 
-  /* Seasonal: falling leaves Sep–Nov, gentle snow Dec–Jan (by the visitor's own date) */
-  var mo=new Date().getMonth(), kind = (mo>=8 && mo<=10) ? 'leaves' : (mo===11 || mo===0) ? 'snow' : null;
+  /* Seasonal: gentle snow Dec–Jan (by the visitor's own date) */
+  var mo=new Date().getMonth(), kind = (mo===11 || mo===0) ? 'snow' : null;
   if(!kind || reduce) return;
   var cv=document.createElement('canvas'); cv.id='cnSeason'; cv.setAttribute('aria-hidden','true'); document.body.appendChild(cv);
   var ctx=cv.getContext('2d'), W, H, dpr=Math.min(window.devicePixelRatio||1,2), parts=[];
