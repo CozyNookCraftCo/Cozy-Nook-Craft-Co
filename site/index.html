@@ -3440,8 +3440,10 @@ document.querySelectorAll('[data-show-until]').forEach(function(el){
     padding:20px 20px 18px; opacity:0; visibility:hidden; transform:translateY(10px) scale(.98); transform-origin:bottom left;
     transition:opacity .25s, transform .25s, visibility 0s .25s;}
   .wb.open .wb-card{opacity:1; visibility:visible; transform:none; transition:opacity .25s, transform .25s;}
+  .wb-mute{position:absolute; top:10px; right:46px; width:30px; height:30px; border:0; border-radius:50%; background:var(--wb-blush); color:var(--wb-ink); font-size:14px; line-height:1; cursor:pointer;}
+  .wb-mute:focus-visible, .wb-close:focus-visible{outline:2px solid var(--wb-gold); outline-offset:2px;}
   .wb-close{position:absolute; top:10px; right:10px; width:30px; height:30px; border:0; border-radius:50%; background:var(--wb-blush); color:var(--wb-ink); font-size:18px; line-height:1; cursor:pointer;}
-  .wb-title{margin:0 30px 2px 0; font-family:'Parisienne',cursive; font-weight:400; font-size:30px; color:var(--wb-rose); line-height:1.1;}
+  .wb-title{margin:0 66px 2px 0; font-family:'Parisienne',cursive; font-weight:400; font-size:30px; color:var(--wb-rose); line-height:1.1;}
   .wb-sub{margin:0 0 14px; font-size:13.5px; color:var(--wb-soft); line-height:1.45;}
   .wb-form{display:flex; flex-direction:column; gap:10px;}
   .wb-kinds{display:flex; flex-wrap:wrap; gap:6px; border:0; padding:0; margin:0;}
@@ -3475,7 +3477,9 @@ document.querySelectorAll('[data-show-until]').forEach(function(el){
 
 <div class="wb" id="wbBox">
   <div class="wb-card" id="wbCard" role="dialog" aria-labelledby="wbTitle">
+    <button type="button" class="wb-mute" id="wbMute" aria-pressed="false" aria-label="Mute greeting">🔊</button>
     <button type="button" class="wb-close" id="wbClose" aria-label="Close wish card">×</button>
+    <audio id="wbVoice" src="/wish-greeting-bella.mp3" preload="none"></audio>
     <div id="wbFormWrap">
       <p class="wb-title" id="wbTitle">Wish Upon a Craft ✨</p>
       <p class="wb-sub">Dreaming of a new wax melt scent, a craft supply, a bookish goodie or a seasonal collection? Drop your wish in the mailbox.</p>
@@ -3532,7 +3536,24 @@ document.querySelectorAll('[data-show-until]').forEach(function(el){
   var launch=document.getElementById('wbLaunch'), card=document.getElementById('wbCard'), form=document.getElementById('wbForm');
   var wrap=document.getElementById('wbFormWrap'), done=document.getElementById('wbDone'), send=document.getElementById('wbSend'), wish=document.getElementById('wbWish');
   document.getElementById('wbPage').value=location.pathname||'/';
-  function setOpen(o){ root.classList.toggle('open',o); launch.setAttribute('aria-expanded',o); if(o) setTimeout(function(){ (done.classList.contains('show')?document.getElementById('wbAgain'):wish).focus(); },60); }
+  /* Bella's greeting: plays each time the box opens; mute choice is remembered */
+  var voice=document.getElementById('wbVoice'), muteBtn=document.getElementById('wbMute'), muted=false;
+  try{ muted=localStorage.getItem('wbMuted')==='1'; }catch(e){}
+  function paintMute(){ muteBtn.textContent=muted?'🔇':'🔊'; muteBtn.setAttribute('aria-pressed',muted); muteBtn.setAttribute('aria-label',muted?'Unmute greeting':'Mute greeting'); }
+  paintMute();
+  muteBtn.addEventListener('click',function(){
+    muted=!muted; paintMute();
+    try{ localStorage.setItem('wbMuted',muted?'1':'0'); }catch(e){}
+    if(muted){ voice.pause(); } else { voice.currentTime=0; var p=voice.play(); if(p&&p.catch) p.catch(function(){}); }
+  });
+  function greet(){
+    if(muted||done.classList.contains('show')) return;
+    var bg=document.querySelector('audio:not(#wbVoice)'), vol=bg?bg.volume:null;
+    if(bg&&!bg.paused) bg.volume=Math.min(vol,0.25);
+    voice.currentTime=0; var p=voice.play(); if(p&&p.catch) p.catch(function(){});
+    voice.onended=voice.onpause=function(){ if(bg&&vol!==null) bg.volume=vol; };
+  }
+  function setOpen(o){ root.classList.toggle('open',o); launch.setAttribute('aria-expanded',o); if(o) greet(); else voice.pause(); if(o) setTimeout(function(){ (done.classList.contains('show')?document.getElementById('wbAgain'):wish).focus(); },60); }
   launch.addEventListener('click',function(){ setOpen(!root.classList.contains('open')); });
   document.getElementById('wbClose').addEventListener('click',function(){ setOpen(false); launch.focus(); });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape' && root.classList.contains('open')){ setOpen(false); launch.focus(); } });
