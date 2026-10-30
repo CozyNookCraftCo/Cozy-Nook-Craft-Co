@@ -2151,6 +2151,18 @@
       border:1px solid var(--line); border-radius:10px; padding:10px 13px;}
     .nb-form textarea{min-height:120px; resize:vertical; font-family:'Cormorant Garamond',serif; font-size:19px; line-height:1.55;}
     .nb-form input:focus, .nb-form textarea:focus{outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(217,154,114,0.18);}
+    .nb-photo{display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
+    .nb-photo-btn{display:inline-flex; align-items:center; gap:7px; padding:8px 14px; border-radius:999px; border:1px dashed var(--rose); background:#fff;
+      font-size:13.5px; color:var(--rose-deep); cursor:pointer; transition:background .2s;}
+    .nb-photo-btn:hover{background:#FCE4E8;}
+    .nb-photo input[type=file]{position:absolute; opacity:0; width:1px; height:1px;}
+    .nb-photo input[type=file]:focus-visible + .nb-photo-btn{outline:2px solid var(--gold); outline-offset:2px;}
+    .nb-thumb{display:none; align-items:center; gap:8px; font-size:12.5px; color:var(--ink-soft);}
+    .nb-thumb.show{display:inline-flex;}
+    .nb-thumb img{width:54px; height:54px; object-fit:cover; border-radius:8px; border:2px solid #fff; box-shadow:0 2px 8px rgba(62,51,47,0.15);}
+    .nb-thumb button{border:0; background:none; color:var(--rose-deep); font-size:12.5px; text-decoration:underline; cursor:pointer; padding:0;}
+    .nb-photo-msg{flex-basis:100%; font-size:12.5px; color:var(--rose-deep); min-height:0; margin:0;}
+    .nb-note img.nb-pic{display:block; width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:2px; margin-bottom:10px; border:5px solid #fff; box-shadow:0 2px 6px rgba(62,51,47,0.12);}
     .nb-count{align-self:flex-end; font-size:12px; color:var(--ink-soft); margin-top:-8px;}
     .nb-ok{display:flex; gap:9px; align-items:flex-start; font-size:13px; color:var(--ink-soft);}
     .nb-ok input{margin-top:3px; accent-color:var(--rose-deep);}
@@ -2202,7 +2214,7 @@
         <div id="nbFormWrap">
           <p class="nb-welcome">Leave a little love in our nook! ♡</p>
           <p class="nb-sub">Every note is read by Sheri, and a few favorites get pinned to the board.</p>
-          <form class="nb-form" id="nbForm" name="nook-book" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <form class="nb-form" id="nbForm" name="nook-book" method="POST" enctype="multipart/form-data" data-netlify="true" netlify-honeypot="bot-field">
             <input type="hidden" name="form-name" value="nook-book">
             <div class="nb-hp"><label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></div>
             <fieldset class="nb-topics">
@@ -2217,6 +2229,11 @@
             <span class="nb-count" id="nbCount" aria-live="polite">0 / 400</span>
             <label class="nb-sr" for="nbName">Sign your name</label>
             <input type="text" id="nbName" name="name" maxlength="40" placeholder="Sign your name (first name or initials)" autocomplete="given-name" required>
+            <div class="nb-photo">
+              <label style="position:relative;"><input type="file" id="nbPhoto" name="photo" accept="image/*"><span class="nb-photo-btn">📷 Add a photo (optional)</span></label>
+              <span class="nb-thumb" id="nbThumb"><img id="nbThumbImg" alt="Your photo"><button type="button" id="nbPhotoRemove">Remove</button></span>
+              <p class="nb-photo-msg" id="nbPhotoMsg" aria-live="polite"></p>
+            </div>
             <label class="nb-sr" for="nbEmail">Your email (optional)</label>
             <input type="email" id="nbEmail" name="email" maxlength="80" placeholder="Your email (optional, so I can send a thank-you)" autocomplete="email">
             <span class="nb-private" style="display:block; font-size:12.5px; opacity:.75; margin:-4px 0 6px;">Your email stays private and is never shown on the board.</span>
@@ -2247,12 +2264,42 @@
     var wrap=document.getElementById('nbFormWrap'), thanks=document.getElementById('nbThanks'), send=document.getElementById('nbSend');
     note.addEventListener('input',function(){ count.textContent=note.value.length+' / 400'; });
     document.getElementById('nbAgain').addEventListener('click',function(){ thanks.classList.remove('show'); wrap.style.display=''; note.focus(); });
+    var photo=document.getElementById('nbPhoto'), thumb=document.getElementById('nbThumb'), thumbImg=document.getElementById('nbThumbImg'), pmsg=document.getElementById('nbPhotoMsg');
+    var readyPhoto=null, MAX=7.5*1024*1024;
+    function clearPhoto(){ photo.value=''; readyPhoto=null; thumb.classList.remove('show'); thumbImg.removeAttribute('src'); pmsg.textContent=''; }
+    document.getElementById('nbPhotoRemove').addEventListener('click',clearPhoto);
+    // Shrink big phone photos so they upload quickly and stay under Netlify's 8 MB limit
+    function shrink(file){
+      return new Promise(function(res){
+        var url=URL.createObjectURL(file), img=new Image();
+        img.onload=function(){
+          var m=1600, w=img.naturalWidth, h=img.naturalHeight, k=Math.min(1, m/Math.max(w,h));
+          var c=document.createElement('canvas'); c.width=Math.round(w*k); c.height=Math.round(h*k);
+          c.getContext('2d').drawImage(img,0,0,c.width,c.height); URL.revokeObjectURL(url);
+          c.toBlob(function(b){ res(b ? new File([b], (file.name||'photo').replace(/\.[^.]+$/,'')+'.jpg', {type:'image/jpeg'}) : file); }, 'image/jpeg', 0.85);
+        };
+        img.onerror=function(){ URL.revokeObjectURL(url); res(file); };
+        img.src=url;
+      });
+    }
+    photo.addEventListener('change',function(){
+      var f=photo.files && photo.files[0]; pmsg.textContent=''; readyPhoto=null;
+      if(!f){ clearPhoto(); return; }
+      if(f.type && f.type.indexOf('image/')!==0){ clearPhoto(); pmsg.textContent='Please choose a photo file.'; return; }
+      pmsg.textContent='Getting your photo ready…';
+      shrink(f).then(function(out){
+        if(out.size>MAX){ clearPhoto(); pmsg.textContent='That photo is a little too big. Please try a smaller one.'; return; }
+        readyPhoto=out; pmsg.textContent=''; thumbImg.src=URL.createObjectURL(out); thumb.classList.add('show');
+      });
+    });
     form.addEventListener('submit',function(e){
       e.preventDefault();
       if(!note.value.trim() || !document.getElementById('nbName').value.trim()) return;
       send.disabled=true; send.textContent='Tucking it in…';
-      function done(){ form.reset(); count.textContent='0 / 400'; send.disabled=false; send.textContent='Leave My Note ♡'; wrap.style.display='none'; thanks.classList.add('show'); }
-      fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(form)).toString()})
+      function done(){ clearPhoto(); form.reset(); count.textContent='0 / 400'; send.disabled=false; send.textContent='Leave My Note ♡'; wrap.style.display='none'; thanks.classList.add('show'); }
+      var fd=new FormData(form);
+      if(readyPhoto){ fd.set('photo', readyPhoto, readyPhoto.name); } else { fd.delete('photo'); }
+      fetch('/',{method:'POST',body:fd})
         .then(function(r){ if(!r.ok) throw new Error('send failed'); done(); })
         .catch(function(){
           send.disabled=false; send.textContent='Leave My Note ♡';
@@ -2267,6 +2314,7 @@
       list.forEach(function(n){
         if(!n || !n.note) return;
         var d=document.createElement('figure'); d.className='nb-note'; d.style.margin='0';
+        if(n.photo){ var im=document.createElement('img'); im.className='nb-pic'; im.src=n.photo; im.alt=n.name ? 'Photo from '+n.name : 'Photo from a visitor'; im.loading='lazy'; d.appendChild(im); }
         if(n.topic){ var t=document.createElement('span'); t.className='nb-topic'; t.textContent=n.topic; d.appendChild(t); }
         var q=document.createElement('blockquote'); q.style.margin='0'; q.textContent=n.note; d.appendChild(q);
         if(n.name){ var b=document.createElement('figcaption'); b.className='nb-by'; b.textContent='♡ '+n.name; d.appendChild(b); }
