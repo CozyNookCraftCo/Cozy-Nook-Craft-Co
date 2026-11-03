@@ -3770,7 +3770,7 @@ document.querySelectorAll('.card').forEach(function(c){
   s.textContent=m[0].replace(/\.00$/,''); ph.appendChild(s);
 });
 </script>
-<!-- ===== Hanging gold lantern: top-left, hangs just under the menu bar and stays put while scrolling ===== -->
+<!-- ===== Hanging deep purple lantern: top-left, hangs just under the menu bar and stays put while scrolling ===== -->
 <style>
   .cn-lantern{position:fixed; left:14px; top:var(--ln-top, 110px); width:76px; height:158px; z-index:60; pointer-events:none;
     transform-origin:50% 0; animation:lnSway 5.6s ease-in-out infinite;}
@@ -3793,7 +3793,7 @@ document.querySelectorAll('.card').forEach(function(c){
   <svg viewBox="0 0 60 125" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="lnGold" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0" stop-color="#B98F6B"/><stop offset=".45" stop-color="#E8BB98"/><stop offset="1" stop-color="#C08A64"/>
+        <stop offset="0" stop-color="#3A1A55"/><stop offset=".45" stop-color="#6B3A93"/><stop offset="1" stop-color="#42205F"/>
       </linearGradient>
       <radialGradient id="lnHalo" cx=".5" cy=".5" r=".5">
         <stop offset="0" stop-color="#FFE3AE" stop-opacity=".95"/><stop offset=".45" stop-color="#FFC98A" stop-opacity=".45"/><stop offset="1" stop-color="#FFC98A" stop-opacity="0"/>
@@ -3806,13 +3806,13 @@ document.querySelectorAll('.card').forEach(function(c){
       </linearGradient>
     </defs>
     <!-- chain -->
-    <line x1="30" y1="0" x2="30" y2="20" stroke="#C9A27E" stroke-width="1.4" stroke-dasharray="3 2"/>
+    <line x1="30" y1="0" x2="30" y2="20" stroke="#4B2470" stroke-width="1.4" stroke-dasharray="3 2"/>
     <circle cx="30" cy="23.5" r="3.2" fill="none" stroke="url(#lnGold)" stroke-width="1.8"/>
     <!-- glow behind -->
     <circle class="ln-glow" cx="30" cy="70" r="30" fill="url(#lnHalo)"/>
     <!-- roof -->
     <path d="M30 27 L45 42 H15 Z" fill="url(#lnGold)"/>
-    <circle cx="30" cy="27.5" r="1.6" fill="#E8BB98"/>
+    <circle cx="30" cy="27.5" r="1.6" fill="#7A4AA3"/>
     <rect x="13" y="41" width="34" height="5" rx="2" fill="url(#lnGold)"/>
     <!-- glass body -->
     <rect x="17" y="46" width="26" height="42" fill="url(#lnGlass)"/>
@@ -3828,7 +3828,7 @@ document.querySelectorAll('.card').forEach(function(c){
     <!-- base -->
     <rect x="13" y="88" width="34" height="5" rx="2" fill="url(#lnGold)"/>
     <path d="M19 93 H41 L37 98 H23 Z" fill="url(#lnGold)"/>
-    <circle cx="30" cy="100.5" r="1.8" fill="#C9A27E"/>
+    <circle cx="30" cy="100.5" r="1.8" fill="#4B2470"/>
   </svg>
 </div>
 <script>
