@@ -3782,18 +3782,18 @@ document.querySelectorAll('.card').forEach(function(c){
   s.textContent=m[0].replace(/\.00$/,''); ph.appendChild(s);
 });
 </script>
-<!-- ===== Hanging deep purple lantern: top-left, hangs just under the menu bar and stays put while scrolling ===== -->
+<!-- ===== Hanging copper lantern: top-left, hangs just under the menu bar and stays put while scrolling ===== -->
 <style>
   .cn-lantern{position:fixed; left:14px; top:var(--ln-top, 110px); width:76px; height:158px; z-index:60; pointer-events:none;
-    transform-origin:50% 0; animation:lnSway 5.6s ease-in-out infinite;}
+    transform-origin:50% 0; animation:lnSway 4.2s ease-in-out infinite;}
   .cn-lantern svg{display:block; width:100%; height:100%; overflow:visible;}
-  .cn-lantern .ln-glow{transform-box:fill-box; transform-origin:center; animation:lnGlow 2.6s linear infinite;}
-  .cn-lantern .ln-flame{transform-box:fill-box; transform-origin:50% 100%; animation:lnFlame 1.9s linear infinite;}
+  .cn-lantern .ln-glow{transform-box:fill-box; transform-origin:center; animation:lnGlow 1.8s linear infinite;}
+  .cn-lantern .ln-flame{transform-box:fill-box; transform-origin:50% 100%; animation:lnFlame 1.3s linear infinite;}
   @keyframes lnSway{0%,100%{transform:rotate(-1.6deg);} 50%{transform:rotate(1.6deg);}}
-  @keyframes lnGlow{0%,100%{opacity:.55; transform:scale(1);} 10%{opacity:.85; transform:scale(1.1);} 21%{opacity:.38; transform:scale(.92);}
-    36%{opacity:.8; transform:scale(1.08);} 49%{opacity:.45; transform:scale(.95);} 63%{opacity:.9; transform:scale(1.12);} 78%{opacity:.4; transform:scale(.93);} 90%{opacity:.7; transform:scale(1.03);}}
-  @keyframes lnFlame{0%,100%{transform:scale(1,1); opacity:.85;} 12%{transform:scale(.84,1.22); opacity:1;} 25%{transform:scale(1.12,.82); opacity:.65;}
-    40%{transform:scale(.88,1.16); opacity:1;} 56%{transform:scale(1.1,.86); opacity:.7;} 72%{transform:scale(.9,1.18); opacity:.95;} 87%{transform:scale(1.06,.9); opacity:.78;}}
+  @keyframes lnGlow{0%,100%{opacity:.5; transform:scale(1);} 8%{opacity:1; transform:scale(1.2);} 17%{opacity:.2; transform:scale(.84);}
+    29%{opacity:.95; transform:scale(1.16);} 38%{opacity:.3; transform:scale(.88);} 52%{opacity:1; transform:scale(1.22);} 61%{opacity:.18; transform:scale(.82);} 74%{opacity:.9; transform:scale(1.12);} 86%{opacity:.28; transform:scale(.87);}}
+  @keyframes lnFlame{0%,100%{transform:scale(1,1); opacity:.85;} 10%{transform:scale(.74,1.36); opacity:1;} 21%{transform:scale(1.2,.7); opacity:.45;}
+    34%{transform:scale(.78,1.3); opacity:1;} 48%{transform:scale(1.18,.74); opacity:.5;} 62%{transform:scale(.8,1.34) skewX(-4deg); opacity:1;} 77%{transform:scale(1.14,.76) skewX(3deg); opacity:.55;} 90%{transform:scale(.86,1.2); opacity:.95;}}
   html.night .cn-lantern .ln-glow{animation-name:lnGlowNight;}
   @keyframes lnGlowNight{0%,100%{opacity:.72; transform:scale(1.05);} 14%{opacity:.98; transform:scale(1.16);} 29%{opacity:.55; transform:scale(.97);}
     47%{opacity:.95; transform:scale(1.14);} 64%{opacity:.6; transform:scale(1);} 81%{opacity:.9; transform:scale(1.1);}}
@@ -3805,7 +3805,7 @@ document.querySelectorAll('.card').forEach(function(c){
   <svg viewBox="0 0 60 125" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="lnGold" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0" stop-color="#3A1A55"/><stop offset=".45" stop-color="#6B3A93"/><stop offset="1" stop-color="#42205F"/>
+        <stop offset="0" stop-color="#B98F6B"/><stop offset=".45" stop-color="#E8BB98"/><stop offset="1" stop-color="#C08A64"/>
       </linearGradient>
       <radialGradient id="lnHalo" cx=".5" cy=".5" r=".5">
         <stop offset="0" stop-color="#FFE3AE" stop-opacity=".95"/><stop offset=".45" stop-color="#FFC98A" stop-opacity=".45"/><stop offset="1" stop-color="#FFC98A" stop-opacity="0"/>
@@ -3818,13 +3818,13 @@ document.querySelectorAll('.card').forEach(function(c){
       </linearGradient>
     </defs>
     <!-- chain -->
-    <line x1="30" y1="0" x2="30" y2="20" stroke="#4B2470" stroke-width="1.4" stroke-dasharray="3 2"/>
+    <line x1="30" y1="0" x2="30" y2="20" stroke="#C9A27E" stroke-width="1.4" stroke-dasharray="3 2"/>
     <circle cx="30" cy="23.5" r="3.2" fill="none" stroke="url(#lnGold)" stroke-width="1.8"/>
     <!-- glow behind -->
     <circle class="ln-glow" cx="30" cy="70" r="30" fill="url(#lnHalo)"/>
     <!-- roof -->
     <path d="M30 27 L45 42 H15 Z" fill="url(#lnGold)"/>
-    <circle cx="30" cy="27.5" r="1.6" fill="#7A4AA3"/>
+    <circle cx="30" cy="27.5" r="1.6" fill="#E8BB98"/>
     <rect x="13" y="41" width="34" height="5" rx="2" fill="url(#lnGold)"/>
     <!-- glass body -->
     <rect x="17" y="46" width="26" height="42" fill="url(#lnGlass)"/>
@@ -3840,7 +3840,7 @@ document.querySelectorAll('.card').forEach(function(c){
     <!-- base -->
     <rect x="13" y="88" width="34" height="5" rx="2" fill="url(#lnGold)"/>
     <path d="M19 93 H41 L37 98 H23 Z" fill="url(#lnGold)"/>
-    <circle cx="30" cy="100.5" r="1.8" fill="#4B2470"/>
+    <circle cx="30" cy="100.5" r="1.8" fill="#C9A27E"/>
   </svg>
 </div>
 <script>
@@ -3853,7 +3853,7 @@ document.querySelectorAll('.card').forEach(function(c){
   window.addEventListener('load',place);
 })();
 </script>
-<!-- ===== /Hanging gold lantern ===== -->
+<!-- ===== /Hanging copper lantern ===== -->
 <!-- ===== Site polish: one-line menu, quieter corners, scroll fade-in ===== -->
 <style>
   /* One-line menu with a "More" dropdown */
