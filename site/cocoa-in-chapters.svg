@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1050" role="img" aria-label="Cocoa in Chapters bundle illustration">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="38%" r="75%">
+      <stop offset="0" stop-color="#FFF8F1"/>
+      <stop offset="1" stop-color="#F8D9DE"/>
+    </radialGradient>
+    <linearGradient id="cocoa" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8A5A44"/>
+      <stop offset="1" stop-color="#6B4232"/>
+    </linearGradient>
+    <linearGradient id="mug" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#E8A0AE"/>
+      <stop offset=".55" stop-color="#F3BCC6"/>
+      <stop offset="1" stop-color="#C97A8C"/>
+    </linearGradient>
+    <radialGradient id="orn" cx="38%" cy="35%" r="70%">
+      <stop offset="0" stop-color="#F0D3BC"/>
+      <stop offset=".6" stop-color="#D99A72"/>
+      <stop offset="1" stop-color="#B9784F"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1000" height="1050" fill="url(#bg)"/>
+
+  <!-- fairy lights -->
+  <path d="M-20 120 Q250 230 500 150 T1020 140" fill="none" stroke="#6B5D57" stroke-opacity=".35" stroke-width="3"/>
+  <g fill="#E8BB98">
+    <circle cx="90" cy="168" r="12"/><circle cx="230" cy="200" r="12" fill="#F8D9DE"/>
+    <circle cx="370" cy="188" r="12"/><circle cx="520" cy="146" r="12" fill="#B9A6CC"/>
+    <circle cx="660" cy="122" r="12"/><circle cx="800" cy="128" r="12" fill="#F8D9DE"/>
+    <circle cx="940" cy="144" r="12" fill="#9CAA84"/>
+  </g>
+
+  <!-- table shadow -->
+  <ellipse cx="500" cy="905" rx="420" ry="48" fill="#3E332F" opacity=".12"/>
+
+  <!-- book stack -->
+  <rect x="150" y="770" width="560" height="110" rx="10" fill="#B9A6CC"/>
+  <rect x="150" y="770" width="560" height="20" rx="8" fill="#FFFDFA" opacity=".55"/>
+  <rect x="660" y="770" width="50" height="110" fill="#9C88B2"/>
+  <rect x="190" y="676" width="500" height="96" rx="10" fill="#9CAA84"/>
+  <rect x="190" y="676" width="500" height="18" rx="8" fill="#FFFDFA" opacity=".55"/>
+  <rect x="640" y="676" width="50" height="96" fill="#84936D"/>
+  <rect x="230" y="720" width="160" height="10" rx="5" fill="#FFFDFA" opacity=".7"/>
+
+  <!-- wrapped blind date book -->
+  <g transform="rotate(-6 520 560)">
+    <rect x="300" y="500" width="440" height="180" rx="12" fill="#E8C9A8"/>
+    <path d="M300 520 L740 600 M300 580 L740 660 M330 680 L740 520" stroke="#D99A72" stroke-opacity=".25" stroke-width="10"/>
+    <rect x="490" y="500" width="34" height="180" fill="#E8A0AE"/>
+    <rect x="300" y="574" width="440" height="30" fill="#E8A0AE"/>
+    <circle cx="507" cy="589" r="34" fill="#C97A8C"/>
+    <path d="M507 606 C490 592 486 582 494 574 C500 569 507 574 507 579 C507 574 514 569 520 574 C528 582 524 592 507 606Z" fill="#F8D9DE"/>
+    <rect x="590" y="618" width="120" height="44" rx="6" fill="#FFFDFA" transform="rotate(4 650 640)"/>
+    <text x="650" y="648" text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-size="22" fill="#6B5D57" transform="rotate(4 650 640)">Read me</text>
+  </g>
+
+  <!-- steam -->
+  <g fill="none" stroke="#FFFDFA" stroke-width="12" stroke-linecap="round" opacity=".9">
+    <path d="M440 300 C410 260 470 230 440 180"/>
+    <path d="M510 290 C480 240 545 215 510 150"/>
+    <path d="M580 300 C550 260 610 230 580 185"/>
+  </g>
+
+  <!-- mug -->
+  <path d="M700 380 C800 380 800 520 700 520" fill="none" stroke="#C97A8C" stroke-width="34"/>
+  <path d="M360 330 L720 330 L700 560 Q695 600 655 600 L425 600 Q385 600 380 560 Z" fill="url(#mug)"/>
+  <ellipse cx="540" cy="330" rx="180" ry="38" fill="#C97A8C"/>
+  <ellipse cx="540" cy="334" rx="160" ry="28" fill="url(#cocoa)"/>
+  <!-- marshmallows -->
+  <rect x="470" y="314" width="38" height="30" rx="8" fill="#FFFDFA" transform="rotate(-12 489 329)"/>
+  <rect x="528" y="318" width="38" height="30" rx="8" fill="#FFF8F1" transform="rotate(10 547 333)"/>
+  <rect x="580" y="310" width="34" height="28" rx="8" fill="#FFFDFA" transform="rotate(-4 597 324)"/>
+  <!-- heart on mug -->
+  <path d="M540 500 C500 468 492 444 510 428 C524 416 540 426 540 438 C540 426 556 416 570 428 C588 444 580 468 540 500Z" fill="#FFFDFA" opacity=".85"/>
+
+  <!-- ornament -->
+  <path d="M845 420 L845 560" stroke="#6B5D57" stroke-opacity=".5" stroke-width="3"/>
+  <rect x="826" y="554" width="38" height="26" rx="4" fill="#E8BB98"/>
+  <circle cx="845" cy="640" r="70" fill="url(#orn)"/>
+  <path d="M780 625 Q845 650 910 625" fill="none" stroke="#FFFDFA" stroke-width="7" opacity=".75"/>
+  <path d="M782 660 Q845 685 908 660" fill="none" stroke="#FFFDFA" stroke-width="7" opacity=".55"/>
+
+  <!-- small candle -->
+  <rect x="80" y="610" width="96" height="120" rx="12" fill="#FFFDFA"/>
+  <rect x="80" y="660" width="96" height="34" fill="#F8D9DE"/>
+  <path d="M128 610 L128 588" stroke="#3E332F" stroke-width="4"/>
+  <path d="M128 540 C112 566 116 586 128 590 C140 586 144 566 128 540Z" fill="#E8967A"/>
+  <path d="M128 560 C121 574 123 584 128 586 C133 584 135 574 128 560Z" fill="#E8BB98"/>
+</svg>
