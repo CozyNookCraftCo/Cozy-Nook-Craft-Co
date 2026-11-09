@@ -139,7 +139,7 @@ export async function allCustomers() {
   const s = store();
   const [o, a] = await Promise.all([s.list({ prefix: "orders/" }), s.list({ prefix: "adj/" })]);
   const emails = new Set<string>();
-  for (const b of [...o.blobs, ...a.blobs]) if (!b.key.includes("%")) emails.add(dk(b.key.split("/")[1]));
+  for (const b of [...o.blobs, ...a.blobs]) if (!/[%@]/.test(b.key)) emails.add(dk(b.key.split("/")[1]));
   const settings = await getSettings();
   const rows = await Promise.all([...emails].map(async email => {
     const [orders, adjs] = await Promise.all([ordersFor(email), adjsFor(email)]);
@@ -238,7 +238,8 @@ export async function syncSince(isoDate: string) {
 export async function cleanupLegacyKeys() {
   const s = store();
   const { blobs } = await s.list({ prefix: "orders/" });
-  const old = blobs.filter((b: any) => b.key.includes("%"));
+  // Old keys held the raw or percent-encoded email ("@" / "%40"); new keys use "_40".
+  const old = blobs.filter((b: any) => /[%@]/.test(b.key));
   await Promise.all(old.map((b: any) => s.delete(b.key)));
   return old.length;
 }
