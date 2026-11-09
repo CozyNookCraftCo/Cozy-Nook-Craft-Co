@@ -4,7 +4,7 @@
 //   * Every full $20 of product subtotal (after discounts, before tax and
 //     shipping) earns one heart. Spending adds up across orders, so a $6 order
 //     and a $4 order together earn a heart.
-//   * Ten hearts fill a card = one free altered composition notebook + pen.
+//   * Ten hearts fill a card = one free gift.
 //   * Only orders placed on/after the program start date count (editable in
 //     the admin page).
 //   * Sheri can add/remove hearts, log spending that didn't go through
@@ -22,7 +22,7 @@ import { getStore } from "@netlify/blobs";
 
 export const DOLLARS_PER_HEART = 20;
 export const HEARTS_PER_CARD = 10;
-export const REWARD = "a free altered composition notebook + pen";
+export const REWARD = "a free gift";
 const DEFAULT_START = "2026-11-09";
 const COUNTED_STATUSES = new Set(["PAID", "PARTIALLY_REFUNDED", "PARTIALLY_PAID", "REFUNDED"]);
 

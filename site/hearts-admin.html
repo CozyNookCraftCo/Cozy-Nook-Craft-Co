@@ -104,7 +104,7 @@
         <div class="quick">
           <button class="small" data-q="hearts:1">+1 heart</button>
           <button class="small ghost" data-q="hearts:-1">&minus;1 heart</button>
-          <button class="small" data-q="redeem:1">&#127873; Gave notebook + pen</button>
+          <button class="small" data-q="redeem:1">&#127873; Gave free gift</button>
         </div>
         <form id="adjForm" style="margin-top:8px">
           <div class="row">
@@ -240,8 +240,8 @@
   document.querySelectorAll('[data-q]').forEach(function(b){
     b.addEventListener('click', function(){
       var p = b.getAttribute('data-q').split(':');
-      if (p[0] === 'redeem' && !confirm('Mark one free notebook + pen as given? This takes 10 hearts off the card.')) return;
-      adjust(p[0], Number(p[1]), p[0] === 'redeem' ? 'Notebook + pen given' : '');
+      if (p[0] === 'redeem' && !confirm('Mark one free gift as given? This takes 10 hearts off the card.')) return;
+      adjust(p[0], Number(p[1]), p[0] === 'redeem' ? 'Free gift given' : '');
     });
   });
   $('adjForm').addEventListener('submit', function(e){
