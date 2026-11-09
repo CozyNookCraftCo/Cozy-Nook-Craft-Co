@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /hearts-admin.html
 
 Sitemap: https://cozynookcraftco.com/sitemap.xml

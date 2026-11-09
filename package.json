@@ -1,0 +1,11 @@
+{
+  "name": "cozy-nook-craft-co",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@netlify/blobs": "^11.1.8"
+  },
+  "devDependencies": {
+    "@netlify/functions": "^6.1.1"
+  }
+}

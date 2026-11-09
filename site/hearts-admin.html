@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Cozy Hearts Admin</title>
+<link rel="icon" href="favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--blush:#F8D9DE;--cream:#FFFDFA;--paper:#FFF8F1;--gold:#D99A72;--ink:#3E332F;--ink-soft:#6B5D57;--rose:#E8A0AE;--rose-deep:#C97A8C;--line:#EADFD6;--mint:#9CAA84}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 'Jost',sans-serif}
+  header{display:flex;justify-content:space-between;align-items:center;padding:16px 22px;border-bottom:1px solid var(--line);background:var(--cream);position:sticky;top:0;z-index:2}
+  h1{font:600 24px 'Cormorant Garamond',serif;margin:0}
+  h1 span{color:var(--rose-deep)}
+  h2{font:600 22px 'Cormorant Garamond',serif;margin:0 0 10px}
+  main{max-width:1100px;margin:0 auto;padding:20px}
+  .panel{background:var(--cream);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:18px}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
+  label{display:block;font-size:12px;font-weight:500;color:var(--ink-soft);margin-bottom:4px;letter-spacing:.03em}
+  input,select{padding:10px 12px;border:1px solid var(--line);border-radius:10px;font:inherit;background:#fff;color:var(--ink);min-width:0}
+  button{background:var(--rose-deep);color:#fff;border:0;border-radius:999px;padding:10px 18px;font:500 14px 'Jost',sans-serif;cursor:pointer}
+  button.ghost{background:#fff;color:var(--rose-deep);border:1px solid var(--rose)}
+  button.small{padding:5px 12px;font-size:13px}
+  button:disabled{opacity:.6;cursor:wait}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:12px;color:var(--ink-soft);font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+  tr.click{cursor:pointer} tr.click:hover{background:#FDF1F3}
+  .hearts{color:var(--rose-deep);letter-spacing:1px;white-space:nowrap}
+  .hearts i{color:#E6D6CC;font-style:normal}
+  .pill{display:inline-block;background:var(--blush);color:#8E4A5A;border-radius:999px;padding:1px 9px;font-size:12px;font-weight:600}
+  .pill.gift{background:#E5EBDB;color:#4D5B39}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .muted{color:var(--ink-soft);font-size:13px}
+  .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none}
+  .toast.show{opacity:1}
+  .err{color:#A6404F}
+  .big{font:600 34px 'Cormorant Garamond',serif;line-height:1}
+  .stats{display:flex;gap:22px;flex-wrap:wrap;margin:6px 0 14px}
+  .quick button{margin:0 6px 6px 0}
+  #login{max-width:380px;margin:12vh auto}
+  @media (max-width:800px){.grid{grid-template-columns:1fr}}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+
+<div id="login" class="panel">
+  <h2>Cozy Hearts admin</h2>
+  <form id="loginForm">
+    <label for="pw">Admin password</label>
+    <input id="pw" type="password" autocomplete="current-password" style="width:100%" required>
+    <p><button type="submit">Open</button></p>
+    <p class="err" id="loginErr"></p>
+  </form>
+</div>
+
+<div id="app" hidden>
+<header>
+  <h1>Cozy Hearts <span>&hearts;</span> admin</h1>
+  <div class="row">
+    <button class="ghost small" id="syncBtn" title="Pull every Shopify order since the start date">Sync Shopify orders</button>
+    <button class="ghost small" id="logout">Lock</button>
+  </div>
+</header>
+<main>
+  <div class="panel">
+    <div class="row" style="justify-content:space-between">
+      <form class="row" id="findForm">
+        <div><label for="findEmail">Open a customer (or add a new one) by email</label>
+          <input id="findEmail" type="email" placeholder="customer@email.com" style="width:300px" required></div>
+        <button type="submit">Open card</button>
+      </form>
+      <form class="row" id="settingsForm">
+        <div><label for="startDate">Count orders placed on or after</label>
+          <input id="startDate" type="date" required></div>
+        <button type="submit" class="ghost">Save date</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="panel" id="detail" hidden>
+    <div class="row" style="justify-content:space-between;align-items:start">
+      <div>
+        <h2 id="dName"></h2>
+        <div class="muted" id="dEmail"></div>
+      </div>
+      <button class="ghost small" id="closeDetail">Close</button>
+    </div>
+    <div class="stats">
+      <div><div class="big" id="dOnCard"></div><div class="muted">on card now</div></div>
+      <div><div class="big" id="dReady"></div><div class="muted">rewards ready</div></div>
+      <div><div class="big" id="dSpend"></div><div class="muted">counted spend</div></div>
+      <div><div class="big" id="dRedeemed"></div><div class="muted">rewards given</div></div>
+    </div>
+    <div class="hearts" id="dHearts" style="font-size:26px;margin-bottom:10px"></div>
+    <p class="err" id="dSyncErr"></p>
+
+    <div class="grid">
+      <div>
+        <h2>Edit punches</h2>
+        <div class="quick">
+          <button class="small" data-q="hearts:1">+1 heart</button>
+          <button class="small ghost" data-q="hearts:-1">&minus;1 heart</button>
+          <button class="small" data-q="redeem:1">&#127873; Gave notebook + pen</button>
+        </div>
+        <form id="adjForm" style="margin-top:8px">
+          <div class="row">
+            <div><label for="adjKind">Type</label>
+              <select id="adjKind">
+                <option value="hearts">Add / remove hearts</option>
+                <option value="spend">Log a purchase outside Shopify ($)</option>
+                <option value="redeem">Reward given (cards)</option>
+              </select></div>
+            <div><label for="adjAmt">Amount (use &minus; to remove)</label>
+              <input id="adjAmt" type="number" step="any" required style="width:120px" placeholder="2"></div>
+          </div>
+          <div style="margin-top:8px"><label for="adjNote">Note (only you see this)</label>
+            <input id="adjNote" type="text" style="width:100%" placeholder="e.g. TikTok LIVE 11/14, paid by Venmo"></div>
+          <p><button type="submit">Save edit</button></p>
+        </form>
+        <h2 style="margin-top:14px">Card code</h2>
+        <p class="muted">For customers with no Shopify order number (e.g. paid cash at a LIVE). They enter this code instead of an order number to see their card.</p>
+        <div class="row"><strong id="dCode" style="font-size:18px;letter-spacing:.05em"></strong><button class="ghost small" id="codeBtn">Make a new code</button></div>
+      </div>
+      <div>
+        <h2>History</h2>
+        <table><thead><tr><th>Date</th><th>What</th><th></th></tr></thead><tbody id="dHistory"></tbody></table>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="row" style="justify-content:space-between"><h2>All punch cards</h2><input id="filter" type="search" placeholder="Search name or email"></div>
+    <table>
+      <thead><tr><th>Customer</th><th>Card</th><th>Rewards ready</th><th>Counted spend</th></tr></thead>
+      <tbody id="list"><tr><td colspan="4" class="muted">Loading…</td></tr></tbody>
+    </table>
+  </div>
+</main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  var KEY = '', current = null, customers = [];
+  var $ = function(id){ return document.getElementById(id); };
+  function toast(t){ var e = $('toast'); e.textContent = t; e.classList.add('show'); clearTimeout(e._t); e._t = setTimeout(function(){ e.classList.remove('show'); }, 2600); }
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function money(n){ return '$' + Number(n).toFixed(2); }
+  function heartsRow(n){ var s = ''; for (var i = 0; i < 10; i++) s += i < n ? '♥' : '<i>♥</i>'; return s; }
+
+  function api(action, data){
+    data = data || {}; data.action = action;
+    return fetch('/api/hearts-admin', {method:'POST', headers:{'content-type':'application/json','x-admin-key':KEY}, body: JSON.stringify(data)})
+      .then(function(r){ return r.json().then(function(j){ if (!r.ok) { var e = new Error(j.error || ('Error ' + r.status)); e.status = r.status; throw e; } return j; }); });
+  }
+
+  // ---- login ----
+  try { KEY = sessionStorage.getItem('chKey') || ''; } catch(e) {}
+  function unlock(){
+    return api('ping').then(function(j){
+      try { sessionStorage.setItem('chKey', KEY); } catch(e) {}
+      $('login').hidden = true; $('app').hidden = false;
+      $('startDate').value = j.settings.startDate;
+      loadList();
+    });
+  }
+  $('loginForm').addEventListener('submit', function(e){
+    e.preventDefault(); KEY = $('pw').value; $('loginErr').textContent = '';
+    unlock().catch(function(err){ $('loginErr').textContent = err.message; });
+  });
+  if (KEY) unlock().catch(function(){ KEY = ''; });
+  $('logout').onclick = function(){ try { sessionStorage.removeItem('chKey'); } catch(e) {} location.reload(); };
+
+  // ---- list ----
+  function loadList(){
+    return api('list').then(function(j){ customers = j.customers; renderList(); })
+      .catch(function(e){ $('list').innerHTML = '<tr><td colspan="4" class="err">' + esc(e.message) + '</td></tr>'; });
+  }
+  function renderList(){
+    var q = $('filter').value.trim().toLowerCase();
+    var rows = customers.filter(function(c){ return !q || (c.email + ' ' + c.name).toLowerCase().indexOf(q) >= 0; });
+    $('list').innerHTML = rows.length ? rows.map(function(c){
+      return '<tr class="click" data-email="' + esc(c.email) + '"><td><strong>' + esc(c.name || '—') + '</strong><br><span class="muted">' + esc(c.email) + '</span></td>' +
+        '<td><span class="hearts">' + heartsRow(c.onCard) + '</span> <span class="muted">' + c.onCard + '/10</span></td>' +
+        '<td>' + (c.rewardsReady ? '<span class="pill gift">🎁 ' + c.rewardsReady + ' ready</span>' : '<span class="muted">—</span>') + '</td>' +
+        '<td>' + money(c.spend) + '</td></tr>';
+    }).join('') : '<tr><td colspan="4" class="muted">No cards yet. They appear after the first order since your start date, or when you open a customer above.</td></tr>';
+  }
+  $('filter').addEventListener('input', renderList);
+  $('list').addEventListener('click', function(e){ var tr = e.target.closest('tr[data-email]'); if (tr) openCustomer(tr.getAttribute('data-email')); });
+
+  // ---- detail ----
+  function openCustomer(email){
+    current = email;
+    return api('customer', {email: email}).then(function(d){
+      var c = d.card, name = (d.orders.find(function(o){ return o.customerName; }) || {}).customerName;
+      $('detail').hidden = false;
+      $('dName').textContent = name || email;
+      $('dEmail').textContent = email;
+      $('dOnCard').textContent = c.onCard + '/10';
+      $('dReady').textContent = c.rewardsReady;
+      $('dSpend').textContent = money(c.spend);
+      $('dRedeemed').textContent = c.rewardsRedeemed;
+      $('dHearts').innerHTML = heartsRow(c.onCard) + (c.extraHearts ? ' <span class="pill">+' + c.extraHearts + ' toward next card</span>' : '');
+      $('dSyncErr').textContent = d.syncError ? 'Couldn’t refresh from Shopify: ' + d.syncError : '';
+      $('dCode').textContent = d.code || 'none yet';
+      var start = Date.parse(d.settings.startDate + 'T08:00:00Z');
+      var hist = [];
+      d.orders.forEach(function(o){
+        var counts = !o.cancelled && Date.parse(o.createdAt) >= start && ['PAID','PARTIALLY_REFUNDED','PARTIALLY_PAID','REFUNDED'].indexOf(o.status) >= 0;
+        hist.push({at: o.createdAt, html: 'Order ' + esc(o.name) + ' · ' + money(o.subtotal) + ' subtotal' + (counts ? '' : ' <span class="muted">(not counted: ' + (o.cancelled ? 'cancelled' : (Date.parse(o.createdAt) < start ? 'before start date' : o.status.toLowerCase())) + ')</span>'), id: null});
+      });
+      d.adjs.forEach(function(a){
+        var what = a.kind === 'hearts' ? (a.amount > 0 ? '+' : '') + a.amount + ' heart' + (Math.abs(a.amount) === 1 ? '' : 's')
+          : a.kind === 'spend' ? 'Logged purchase ' + money(a.amount)
+          : '🎁 Reward given' + (a.amount !== 1 ? ' ×' + a.amount : '');
+        hist.push({at: a.at, html: '<strong>' + what + '</strong>' + (a.note ? '<br><span class="muted">' + esc(a.note) + '</span>' : ''), id: a.id});
+      });
+      hist.sort(function(x, y){ return y.at.localeCompare(x.at); });
+      $('dHistory').innerHTML = hist.length ? hist.map(function(h){
+        return '<tr><td class="muted">' + new Date(h.at).toLocaleDateString() + '</td><td>' + h.html + '</td><td>' +
+          (h.id ? '<button class="ghost small" data-undo="' + esc(h.id) + '">Undo</button>' : '') + '</td></tr>';
+      }).join('') : '<tr><td colspan="3" class="muted">No orders or edits yet.</td></tr>';
+      $('detail').scrollIntoView({behavior: 'smooth', block: 'start'});
+    }).catch(function(e){ toast(e.message); });
+  }
+  $('findForm').addEventListener('submit', function(e){ e.preventDefault(); openCustomer($('findEmail').value.trim().toLowerCase()); });
+  $('closeDetail').onclick = function(){ $('detail').hidden = true; current = null; };
+
+  function adjust(kind, amount, note){
+    if (!current) return;
+    return api('adjust', {email: current, kind: kind, amount: amount, note: note || ''})
+      .then(function(){ toast('Saved ♥'); return Promise.all([openCustomer(current), loadList()]); })
+      .catch(function(e){ toast(e.message); });
+  }
+  document.querySelectorAll('[data-q]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var p = b.getAttribute('data-q').split(':');
+      if (p[0] === 'redeem' && !confirm('Mark one free notebook + pen as given? This takes 10 hearts off the card.')) return;
+      adjust(p[0], Number(p[1]), p[0] === 'redeem' ? 'Notebook + pen given' : '');
+    });
+  });
+  $('adjForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    adjust($('adjKind').value, Number($('adjAmt').value), $('adjNote').value).then(function(){ $('adjAmt').value = ''; $('adjNote').value = ''; });
+  });
+  $('dHistory').addEventListener('click', function(e){
+    var id = e.target.getAttribute && e.target.getAttribute('data-undo');
+    if (!id || !confirm('Undo this edit?')) return;
+    api('undo', {email: current, id: id}).then(function(){ toast('Undone'); openCustomer(current); loadList(); }).catch(function(err){ toast(err.message); });
+  });
+  $('codeBtn').onclick = function(){
+    if (!current) return;
+    api('code', {email: current}).then(function(j){ $('dCode').textContent = j.code; toast('New code made. The old one stops working.'); }).catch(function(e){ toast(e.message); });
+  };
+
+  // ---- settings / sync ----
+  $('settingsForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    api('settings', {startDate: $('startDate').value}).then(function(){ toast('Start date saved'); loadList(); if (current) openCustomer(current); }).catch(function(e){ toast(e.message); });
+  });
+  $('syncBtn').onclick = function(){
+    var b = this; b.disabled = true; b.textContent = 'Syncing…';
+    api('sync').then(function(j){ toast('Synced ' + j.synced + ' orders'); return loadList(); })
+      .catch(function(e){ toast(e.message); })
+      .then(function(){ b.disabled = false; b.textContent = 'Sync Shopify orders'; });
+  };
+})();
+</script>
+</body>
+</html>
