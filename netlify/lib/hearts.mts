@@ -1,7 +1,7 @@
 // Cozy Hearts loyalty program: shared logic.
 //
 // Rules
-//   * Every full $10 of product subtotal (after discounts, before tax and
+//   * Every full $20 of product subtotal (after discounts, before tax and
 //     shipping) earns one heart. Spending adds up across orders, so a $6 order
 //     and a $4 order together earn a heart.
 //   * Ten hearts fill a card = one free altered composition notebook + pen.
@@ -20,7 +20,7 @@
 
 import { getStore } from "@netlify/blobs";
 
-export const DOLLARS_PER_HEART = 10;
+export const DOLLARS_PER_HEART = 20;
 export const HEARTS_PER_CARD = 10;
 export const REWARD = "a free altered composition notebook + pen";
 const DEFAULT_START = "2026-11-09";
