@@ -40,7 +40,10 @@ export type Settings = { startDate: string };
 // ---------- helpers ----------
 export const normEmail = (e: unknown) => String(e ?? "").trim().toLowerCase();
 export const isEmail = (e: string) => /^[^\s@/]+@[^\s@/]+\.[^\s@/]+$/.test(e);
-const ek = (email: string) => encodeURIComponent(normEmail(email));
+// Blob keys only use [a-z0-9.-]; everything else (e.g. "@", "_", "+") becomes _hh.
+// (Percent-encoding broke prefix listing in Netlify Blobs.)
+const ek = (email: string) => normEmail(email).replace(/[^a-z0-9.-]/g, c => "_" + c.charCodeAt(0).toString(16).padStart(2, "0"));
+const dk = (key: string) => key.replace(/_([0-9a-f]{2})/g, (_, h) => String.fromCharCode(parseInt(h, 16)));
 const money = (n: number) => Math.round(n * 100) / 100;
 
 let storeOverride: any = null;
@@ -136,7 +139,7 @@ export async function allCustomers() {
   const s = store();
   const [o, a] = await Promise.all([s.list({ prefix: "orders/" }), s.list({ prefix: "adj/" })]);
   const emails = new Set<string>();
-  for (const b of [...o.blobs, ...a.blobs]) emails.add(decodeURIComponent(b.key.split("/")[1]));
+  for (const b of [...o.blobs, ...a.blobs]) if (!b.key.includes("%")) emails.add(dk(b.key.split("/")[1]));
   const settings = await getSettings();
   const rows = await Promise.all([...emails].map(async email => {
     const [orders, adjs] = await Promise.all([ordersFor(email), adjsFor(email)]);
@@ -230,6 +233,14 @@ export async function syncCustomer(email: string) {
 // Pull every order updated since a date (scheduled + admin "sync now").
 export async function syncSince(isoDate: string) {
   return saveOrders(await fetchOrders(`updated_at:>='${isoDate}'`));
+}
+// Remove records saved with the old percent-encoded keys.
+export async function cleanupLegacyKeys() {
+  const s = store();
+  const { blobs } = await s.list({ prefix: "orders/" });
+  const old = blobs.filter((b: any) => b.key.includes("%"));
+  await Promise.all(old.map((b: any) => s.delete(b.key)));
+  return old.length;
 }
 
 // ---------- HTTP helpers ----------

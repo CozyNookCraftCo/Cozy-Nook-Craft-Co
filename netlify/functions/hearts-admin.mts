@@ -2,7 +2,7 @@
 import type { Config } from "@netlify/functions";
 import {
   addAdjustment, allCustomers, cardFor, deleteAdjustment, env, getCode, getSettings, isEmail, json,
-  newCode, normEmail, safeEqual, saveSettings, syncCustomer, syncSince,
+  cleanupLegacyKeys, newCode, normEmail, safeEqual, saveSettings, syncCustomer, syncSince,
 } from "../lib/hearts.mts";
 
 export default async (req: Request) => {
@@ -43,7 +43,8 @@ export default async (req: Request) => {
         return json({ settings: await getSettings() });
       case "sync": {
         const { startDate } = await getSettings();
-        return json({ synced: await syncSince(startDate) });
+        const cleaned = await cleanupLegacyKeys();
+        return json({ synced: await syncSince(startDate), cleaned });
       }
       default:
         return json({ error: "Unknown action" }, 400);
