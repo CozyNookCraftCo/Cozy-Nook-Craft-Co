@@ -227,6 +227,9 @@
   .nav-links{display:flex; gap:28px; font-size:13px; letter-spacing:0.1em; text-transform:uppercase;}
   .nav-cta-group{display:flex; align-items:center; gap:14px;}
   .nav-links a{position:relative; padding-bottom:4px;}
+  a.nav-hearts{color:var(--rose-deep); font-weight:500;}
+  a.nav-hearts span{display:inline-block; transition:transform .3s;}
+  a.nav-hearts:hover span{transform:scale(1.25);}
   .nav-links a::after{
     content:''; position:absolute; left:0; bottom:0; width:0; height:1px;
     background:var(--gold); transition:width .3s ease;
@@ -1441,6 +1444,7 @@
     </a>
     <div class="nav-links">
       <a href="story-shop.html">Story Shop</a>
+      <a href="hearts.html" class="nav-hearts">My Hearts <span aria-hidden="true">&hearts;</span></a>
       <a href="#custom">Custom Orders</a>
       <a href="#cozy-bear">Cozy Bears</a>
       <a href="https://docs.google.com/document/d/1u-9X7yYVMMQmjxPVmYeQ3whbqG_GQVCZvYZgP0ey7cM/edit?usp=sharing" target="_blank" rel="noopener">Book Club</a>
@@ -1453,7 +1457,6 @@
           <a href="#scentlist">Scent List</a>
           <a href="preference-sheet.html">Preference Sheet</a>
           <a href="#nook-book">Nook Book</a>
-          <a href="hearts.html">Cozy Hearts Card</a>
         </div>
       </div>
     </div>
@@ -1464,6 +1467,7 @@
     </button>
   </nav>
   <div class="mobile-nav-panel" id="mobileNavPanel">
+    <a href="hearts.html" class="nav-hearts">My Hearts &hearts;</a>
     <a href="story-shop.html">The Story Shop</a>
     <a href="preference-sheet.html">Preference Sheet</a>
     <a href="#booklist">Book List</a>
@@ -1473,7 +1477,6 @@
     <a href="https://docs.google.com/document/d/1u-9X7yYVMMQmjxPVmYeQ3whbqG_GQVCZvYZgP0ey7cM/edit?usp=sharing" target="_blank" rel="noopener">Book Club</a>
     <a href="#classes">Classes</a>
     <a href="#nook-book">Nook Book</a>
-    <a href="hearts.html">Cozy Hearts Card</a>
     <a href="#contact">Contact</a>
   </div>
 </header>
@@ -1765,6 +1768,42 @@
     </div>
     <div class="shop-more">
       <a href="story-shop.html" class="btn">View Full Shop</a>
+    </div>
+  </div>
+</section>
+
+<section class="cozy-hearts-promo" id="cozy-hearts" aria-labelledby="chTitle">
+  <style>
+    .cozy-hearts-promo{padding:70px 0;}
+    .ch-card{max-width:980px; margin:0 auto; display:grid; grid-template-columns:1.1fr 1fr; gap:40px; align-items:center;
+      background:linear-gradient(120deg,#FFF8F1 0%,#FCE9EC 100%); border:1px solid var(--line); border-radius:24px;
+      padding:44px 48px; box-shadow:0 12px 34px rgba(62,51,47,0.07); position:relative;}
+    .ch-card:before{content:""; position:absolute; inset:10px; border:1.5px dashed var(--gold-light); border-radius:18px; pointer-events:none;}
+    .ch-copy h2{font-size:clamp(30px,3.6vw,42px); line-height:1.1; margin:10px 0 14px;}
+    .ch-copy p{color:var(--ink-soft); margin:0 0 22px; font-size:16px;}
+    .ch-copy .btn{position:relative; z-index:1;}
+    .ch-hearts{display:grid; grid-template-columns:repeat(5,1fr); gap:12px; max-width:340px; margin:0 auto;}
+    .ch-hearts span{aspect-ratio:1; border-radius:50%; display:flex; align-items:center; justify-content:center;
+      background:#fff; border:1.5px solid var(--line); font-size:22px; color:#EBCFBF;}
+    .ch-hearts span.on{background:var(--blush); border-color:var(--rose); color:var(--rose-deep);}
+    .ch-note{text-align:center; font-size:13px; color:var(--ink-soft); margin-top:14px; letter-spacing:.04em;}
+    @media (max-width:760px){.ch-card{grid-template-columns:1fr; padding:34px 24px; gap:26px; text-align:center;}}
+  </style>
+  <div class="wrap">
+    <div class="ch-card">
+      <div class="ch-copy">
+        <span class="eyebrow">Cozy Hearts Punch Card</span>
+        <h2 id="chTitle">Every $20 earns a <span class="logo-accent">heart</span></h2>
+        <p>Fill all 10 hearts and you&rsquo;ll get a free altered composition notebook and pen, our little thank-you for shopping small. Your hearts add up on their own every time you order.</p>
+        <a href="hearts.html" class="btn solid">Check My Hearts &hearts;</a>
+      </div>
+      <div>
+        <div class="ch-hearts" aria-hidden="true">
+          <span class="on">&hearts;</span><span class="on">&hearts;</span><span class="on">&hearts;</span><span class="on">&hearts;</span><span class="on">&hearts;</span>
+          <span class="on">&hearts;</span><span class="on">&hearts;</span><span>&hearts;</span><span>&hearts;</span><span>&hearts;</span>
+        </div>
+        <p class="ch-note">10 hearts = free notebook + pen</p>
+      </div>
     </div>
   </div>
 </section>
