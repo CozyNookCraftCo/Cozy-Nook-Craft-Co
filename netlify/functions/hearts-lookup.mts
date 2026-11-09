@@ -21,7 +21,7 @@ export default async (req: Request) => {
   const code = await getCode(email);
   const ok = orders.some(o => o.name.replace(/^#/, "").toUpperCase() === proof) || (!!code && code === proof);
   if (!ok) {
-    return json({ error: "We couldn't match that email and order number. Check your order confirmation email, or message us and we'll help!" }, 404);
+    return json({ error: "I couldn't match that email and order number. Check your order confirmation email, or message me and I'll help!" }, 404);
   }
   const firstName = (orders.find(o => o.customerName)?.customerName || "").split(" ")[0];
   return json({

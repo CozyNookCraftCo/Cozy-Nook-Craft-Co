@@ -82,9 +82,9 @@
 </header>
 
 <main>
-  <p class="script">our thank-you to you</p>
+  <p class="script">my thank-you to you</p>
   <h1>Cozy Hearts Punch Card</h1>
-  <p class="lede">Every <b>$20</b> you spend earns a heart. Fill all <b>10 hearts</b> and you'll get a free gift from us!</p>
+  <p class="lede">Every <b>$20</b> you spend earns a heart. Fill all <b>10 hearts</b> and you'll get a free gift from me!</p>
 
   <section class="card" aria-live="polite">
     <p class="card-title" id="cardTitle">Your punch card</p>
@@ -121,7 +121,7 @@
     <div><div class="big">10</div><p>hearts fill your card. Hearts add up automatically.</p></div>
     <div><div class="big">&hearts;</div><p>A free gift, just for you!</p></div>
   </div>
-  <p class="fine">Hearts are based on your order subtotal after discounts, not including tax or shipping. They're added automatically for orders through our shop (new orders can take up to an hour to show up). Bought during a TikTok LIVE or in person? <a href="mailto:CozyNookCraftCo@yahoo.com?subject=Cozy%20Hearts%20question">Send us a note</a> and we'll make sure your hearts get added.</p>
+  <p class="fine">Hearts are based on your order subtotal after discounts, not including tax or shipping. They're added automatically for orders through my shop (new orders can take up to an hour to show up). Bought during a TikTok LIVE or in person? <a href="mailto:CozyNookCraftCo@yahoo.com?subject=Cozy%20Hearts%20question">Send me a note</a> and I'll make sure your hearts get added.</p>
 </main>
 
 <script>
@@ -164,7 +164,7 @@
         try { localStorage.setItem('cozyHearts', JSON.stringify({email: email, proof: proof})); } catch(e) {}
         show(res.j);
       })
-      .catch(function(){ go.disabled = false; msg.className = 'msg err'; msg.textContent = 'We couldn’t reach the card right now. Please try again soon.'; });
+      .catch(function(){ go.disabled = false; msg.className = 'msg err'; msg.textContent = 'I couldn’t reach the card right now. Please try again soon.'; });
   });
 
   function show(d){
@@ -178,7 +178,7 @@
       st.textContent = 'Your card is full!';
       sub.textContent = d.extraHearts > 0 ? 'Plus ' + d.extraHearts + ' heart' + (d.extraHearts === 1 ? '' : 's') + ' already toward your next card.' : 'Every heart counted. Thank you!';
       ready.hidden = false;
-      ready.innerHTML = '🎁 You’ve earned <b>' + (d.rewardsReady > 1 ? d.rewardsReady + ' free gifts' : 'a free gift') + '</b>! <a href="mailto:CozyNookCraftCo@yahoo.com?subject=Claiming%20my%20Cozy%20Hearts%20reward">Message us</a> to claim it, or we’ll tuck it into your next order.';
+      ready.innerHTML = '🎁 You’ve earned <b>' + (d.rewardsReady > 1 ? d.rewardsReady + ' free gifts' : 'a free gift') + '</b>! <a href="mailto:CozyNookCraftCo@yahoo.com?subject=Claiming%20my%20Cozy%20Hearts%20reward">Message me</a> to claim it, or I’ll tuck it into your next order.';
     } else {
       var left = 10 - d.onCard;
       st.textContent = d.onCard === 0 ? 'Your card is ready to fill!' : d.onCard + ' of 10 hearts';
