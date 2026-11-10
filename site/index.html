@@ -3134,9 +3134,25 @@ document.querySelectorAll('[data-show-until]').forEach(function(el){
     pop.classList.remove('visible'); pop.setAttribute('aria-hidden','true');
     if(showCart) openCart();
   }
+  // Shopify opens its cart right after "Add to cart". While the add-on pop-up is showing,
+  // keep the cart closed so it doesn't cover the pop-up; it opens once the shopper chooses.
+  function holdCartWhilePopShows(){
+    if(!shopUI || !shopUI.components || !shopUI.components.cart) return;
+    shopUI.components.cart.forEach(function(cart){
+      if(cart._cozyHeld) return;
+      var realOpen = cart.open;
+      cart.open = function(){
+        if(pop && pop.classList.contains('visible')) return;
+        return realOpen.apply(cart, arguments);
+      };
+      cart._cozyHeld = true;
+    });
+  }
   function offerAddon(){
     if(!pop || addonInCart){ openCart(); return; }
+    holdCartWhilePopShows();
     pop.classList.add('visible'); pop.setAttribute('aria-hidden','false');
+    setTimeout(function(){ if(pop.classList.contains('visible') && shopUI && shopUI.closeCart){ try{ shopUI.closeCart(); }catch(e){} } }, 0);
     var c = document.getElementById('addonPopClose'); if(c) c.focus();
   }
   function addonAdded(){ addonInCart = true; closePop(true); }
