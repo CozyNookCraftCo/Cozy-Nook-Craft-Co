@@ -813,6 +813,11 @@
   .foot-col h4{font-size:13px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:20px; color:var(--gold);}
   .foot-col a{display:block; margin-bottom:12px; color:var(--ink-soft); font-size:15px; transition:color .25s;}
   .foot-col a:hover{color:var(--rose-deep);}
+  .areas{padding-bottom:40px;}
+  .areas-lede{color:var(--ink-soft); max-width:760px; margin-bottom:18px;}
+  .areas-lede a{color:var(--rose-deep); text-decoration:underline; text-underline-offset:2px;}
+  .areas-list{list-style:none; display:flex; flex-wrap:wrap; gap:10px 12px; margin:0 0 22px; padding:0;}
+  .areas-list li{background:var(--paper); border:1px solid var(--line); border-radius:999px; padding:8px 18px; font-size:15px; color:var(--ink);}
   .faq-list{display:grid; grid-template-columns:1fr 1fr; gap:22px 48px; max-width:1000px;}
   .faq-item{background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:22px 26px;}
   .faq-item h3{font-size:22px; line-height:1.25; margin-bottom:8px;}
@@ -1183,7 +1188,7 @@
    "email": "CozyNookCraftCo@yahoo.com",
    "telephone": "+1-702-375-3571",
    "address": {"@type": "PostalAddress", "addressLocality": "North Las Vegas", "addressRegion": "NV", "addressCountry": "US"},
-   "areaServed": {"@type": "Country", "name": "United States"},
+   "areaServed": [{"@type": "City", "name": "North Las Vegas, NV"}, {"@type": "City", "name": "Las Vegas, NV"}, {"@type": "City", "name": "Henderson, NV"}, {"@type": "City", "name": "Summerlin, NV"}, {"@type": "City", "name": "Spring Valley, NV"}, {"@type": "City", "name": "Paradise, NV"}, {"@type": "Country", "name": "United States"}],
    "contactPoint": {"@type": "ContactPoint", "contactType": "customer service", "email": "CozyNookCraftCo@yahoo.com", "telephone": "+1-702-375-3571", "areaServed": "US", "availableLanguage": "English"},
    "founder": {
     "@type": "Person",
@@ -1297,6 +1302,14 @@
    "acceptedAnswer": {
     "@type": "Answer",
     "text": "Yes. We teach book page folding and altered composition notebook classes online via Zoom."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What areas do you serve?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "We're based in North Las Vegas, Nevada, and offer local pickup and local delivery by arrangement in North Las Vegas, Las Vegas, Henderson, Summerlin, Spring Valley and Paradise. We also ship anywhere in the United States."
    }
   },
   {
@@ -2527,6 +2540,18 @@
   <cite>— A Cozy Nook Customer</cite>
 </section>
 
+<section class="areas" id="areas-we-serve">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Local &amp; Nationwide</span>
+      <h2>Areas We <span class="logo-accent">Serve</span></h2>
+    </div>
+    <p class="areas-lede">Cozy Nook Craft Co. is based in North Las Vegas, Nevada. We offer local pickup and local delivery by arrangement in:</p>
+    <ul class="areas-list"><li>North Las Vegas</li><li>Las Vegas</li><li>Henderson</li><li>Summerlin</li><li>Spring Valley</li><li>Paradise</li></ul>
+    <p class="areas-lede">Everywhere else, we ship anywhere in the United States. To arrange pickup or delivery, email <a href="mailto:CozyNookCraftCo@yahoo.com">CozyNookCraftCo@yahoo.com</a> or message us on <a href="https://wa.me/17023753571" target="_blank" rel="noopener">WhatsApp</a>. <a href="areas-we-serve.html">More about the areas we serve</a>.</p>
+  </div>
+</section>
+
 <section class="faq" id="faq">
   <div class="wrap">
     <div class="section-head">
@@ -2571,6 +2596,10 @@
         <p>Yes. We teach book page folding and altered composition notebook classes online via Zoom.</p>
       </div>
       <div class="faq-item">
+        <h3>What areas do you serve?</h3>
+        <p>We're based in North Las Vegas, Nevada, and offer local pickup and local delivery by arrangement in North Las Vegas, Las Vegas, Henderson, Summerlin, Spring Valley and Paradise. We also ship anywhere in the United States.</p>
+      </div>
+      <div class="faq-item">
         <h3>Where do you ship?</h3>
         <p>We ship anywhere in the United States.</p>
       </div>
@@ -2604,7 +2633,7 @@
       <div class="foot-col foot-about">
         <h4>About Cozy Nook Craft Co.</h4>
         <p>Cozy Nook Craft Co. is a small handmade bookish gift shop in North Las Vegas, Nevada, run by Sheri Berg. We make custom folded book art, Blind Date with a Book, decorated clear book cases and bundles, holiday gift bundles, bookish soy wax melts, Cozy Bears, resin trinket trays and gift cards, and we teach book page folding and notebook crafting classes online via Zoom. Custom orders welcome.</p>
-        <p><strong>Based in:</strong> North Las Vegas, Nevada. <strong>Service area:</strong> We ship anywhere in the United States.</p>
+        <p><strong>Based in:</strong> North Las Vegas, Nevada. <strong>Areas we serve:</strong> local pickup and delivery in North Las Vegas, Las Vegas, Henderson, Summerlin, Spring Valley and Paradise; shipping anywhere in the United States.</p>
         <p><strong>Contact:</strong> <a href="mailto:CozyNookCraftCo@yahoo.com">CozyNookCraftCo@yahoo.com</a> &middot; WhatsApp <a href="https://wa.me/17023753571" target="_blank" rel="noopener">+1 (702) 375-3571</a> &middot; TikTok LIVE <a href="https://www.tiktok.com/@cozynookcraftco" target="_blank" rel="noopener">@cozynookcraftco</a></p>
       </div>
       <div class="foot-col">
@@ -2614,6 +2643,7 @@
         <a href="#classes">Classes</a>
         <a href="#nook-book">Nook Book</a>
         <a href="#faq">FAQ</a>
+        <a href="areas-we-serve.html">Areas We Serve</a>
         <a href="hearts.html">Cozy Hearts Punch Card</a>
         <a href="#about">Our Story</a>
       </div>
