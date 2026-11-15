@@ -479,7 +479,15 @@
   .product-modal h3{font-size:26px; margin:8px 0 4px;}
   /* ===== Wax Melts of the Month add-on pop-up ===== */
   .addon-pop-overlay{z-index:2147483000;}
+  .addon-pop{max-width:640px;}
   .addon-pop .product-modal-img{aspect-ratio:4/3;}
+  .addon-pop-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:18px; margin-top:18px;}
+  .addon-pop-item{border:1px solid var(--line); border-radius:2px; padding:14px; background:#fff;}
+  .addon-pop-item[hidden]{display:none;}
+  .addon-pop-item .product-modal-img{margin-bottom:12px;}
+  .addon-pop-item h4{font-family:'Cormorant Garamond',serif; font-size:19px; font-weight:600; margin:0; line-height:1.2;}
+  .addon-pop-item .addon-pop-price{margin:6px 0 0;}
+  .addon-pop-item .shopify-slot{margin-top:10px; padding-top:10px;}
   .addon-pop .addon-pop-lead{font-size:14px; color:var(--ink-soft); margin:4px 0 0;}
   .addon-pop .addon-pop-price{color:var(--gold); font-size:15px; margin:10px 0 14px;}
   .addon-pop-skip{display:block; width:100%; margin-top:14px; background:none; border:0; cursor:pointer;
@@ -1595,12 +1603,24 @@
 <div class="product-modal-overlay addon-pop-overlay" id="addonPopOverlay" aria-hidden="true">
   <div class="product-modal addon-pop" role="dialog" aria-modal="true" aria-labelledby="addonPopTitle">
     <button type="button" class="product-modal-close" id="addonPopClose" aria-label="Close">&times;</button>
-    <div class="product-modal-img"><img src="cozy-hot-cocoa-packs.jpg" alt="Cozy Hot Cocoa Pack in a reindeer mug" loading="lazy"></div>
     <span class="cat">Add On</span>
-    <h3 id="addonPopTitle">Cozy Hot Cocoa Packs</h3>
-    <p class="addon-pop-lead">Add a cozy hot cocoa treat to your order!</p>
-    <p class="addon-pop-price">$5.00</p>
-    <div class="shopify-slot" id="addonPopBuy"><div data-shopify-product="9632040845550" data-addon-product></div></div>
+    <h3 id="addonPopTitle">Make it extra cozy!</h3>
+    <p class="addon-pop-lead">Add a little treat to your order before you check out.</p>
+    <div class="addon-pop-grid">
+      <div class="addon-pop-item" data-addon-item="9632040845550">
+        <div class="product-modal-img"><img src="cozy-hot-cocoa-packs.jpg" alt="Cozy Hot Cocoa Pack in a reindeer mug" loading="lazy"></div>
+        <h4>Cozy Hot Cocoa Packs</h4>
+        <p class="addon-pop-price">$5.00</p>
+        <div class="shopify-slot"><div data-shopify-product="9632040845550" data-addon-product></div></div>
+      </div>
+      <div class="addon-pop-item" data-addon-item="9643860394222">
+        <div class="product-modal-img"><img src="https://cdn.shopify.com/s/files/1/0794/4070/7822/files/F751A032-2337-44E8-B9A3-61E0B85E1089.png?v=1794767302" alt="Handmade and hand decorated holiday candle melt with warmer plate" loading="lazy"></div>
+        <h4>Holiday Candle Melt</h4>
+        <p class="addon-pop-lead">Hand designed &amp; hand poured. Will be red or green. Comes with a warmer plate.</p>
+        <p class="addon-pop-price">$7.00</p>
+        <div class="shopify-slot"><div data-shopify-product="9643860394222" data-addon-product></div></div>
+      </div>
+    </div>
     <button type="button" class="addon-pop-skip" id="addonPopSkip">No thanks, view my cart</button>
   </div>
 </div>
@@ -3453,8 +3473,17 @@ document.querySelectorAll('[data-show-until]').forEach(function(el){
     ':focus': {'background-color': ROSE, 'color': INK}
   };
 
-  // Cozy Hot Cocoa Packs add-on: offered after every Add to cart until it's in the cart.
-  var shopUI = null, addonInCart = false;
+  // Add-on pop-up: offered after every Add to cart. Each add-on drops out once it's in the cart.
+  var shopUI = null, addonsInCart = {};
+  function addonsLeft(){
+    if(!pop) return 0;
+    var left=0;
+    Array.prototype.forEach.call(pop.querySelectorAll('[data-addon-item]'), function(el){
+      var done = !!addonsInCart[el.getAttribute('data-addon-item')];
+      el.hidden = done; if(!done) left++;
+    });
+    return left;
+  }
   var pop = document.getElementById('addonPopOverlay');
   function openCart(){ if(shopUI && shopUI.openCart){ try{ shopUI.openCart(); }catch(e){} } }
   function closePop(showCart){
@@ -3477,13 +3506,16 @@ document.querySelectorAll('[data-show-until]').forEach(function(el){
     });
   }
   function offerAddon(){
-    if(!pop || addonInCart){ openCart(); return; }
+    if(!pop || addonsLeft()===0){ openCart(); return; }
     holdCartWhilePopShows();
     pop.classList.add('visible'); pop.setAttribute('aria-hidden','false');
     setTimeout(function(){ if(pop.classList.contains('visible') && shopUI && shopUI.closeCart){ try{ shopUI.closeCart(); }catch(e){} } }, 0);
     var c = document.getElementById('addonPopClose'); if(c) c.focus();
   }
-  function addonAdded(){ addonInCart = true; closePop(true); }
+  function addonAdded(id){
+    addonsInCart[id] = true;
+    if(addonsLeft()===0) closePop(true);
+  }
   if(pop){
     document.getElementById('addonPopClose').addEventListener('click', function(){ closePop(true); });
     document.getElementById('addonPopSkip').addEventListener('click', function(){ closePop(true); });
@@ -3506,7 +3538,7 @@ document.querySelectorAll('[data-show-until]').forEach(function(el){
               contents: {img: false, title: false, description: false, price: true, buttonWithQuantity: true, button: false},
               text: {button: 'Add to cart'},
               events: {
-                addVariantToCart: function(){ isAddon ? addonAdded() : offerAddon(); }
+                addVariantToCart: function(){ isAddon ? addonAdded(node.getAttribute('data-shopify-product')) : offerAddon(); }
               },
               styles: {
                 product: {'max-width': '100%', 'margin-left': '0', 'margin-bottom': '0',
