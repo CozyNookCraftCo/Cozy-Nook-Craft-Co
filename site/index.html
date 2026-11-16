@@ -156,7 +156,7 @@
 
   /* ===== Book club deadline badge with a soft glow ripple (1.5 inches = 144px), top right below the header ===== */
   .deadline-badge{
-    position:fixed; right:20px; top:calc(var(--header-h, 155px) + 15px); z-index:40;
+    position:fixed; right:20px; top:calc(var(--header-h, 155px) + var(--cb-h, 0px) + 15px); z-index:40;
     width:144px; height:144px; border-radius:50%;
     background:#F9DBC2; color:var(--ink);
     display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
@@ -1707,7 +1707,8 @@
 
 <aside class="cozy-break" id="cozy-break" aria-label="The Cozy Break">
   <style>
-    .cozy-break{padding:22px 32px 6px; background:var(--cream); position:relative; z-index:5;}
+    .cozy-break{padding:22px 32px 6px; background:var(--cream); position:sticky; top:var(--header-h, 0px); z-index:45;}
+    .cozy-break.cb-stuck{padding-top:10px; padding-bottom:10px; box-shadow:0 6px 14px -10px rgba(62,51,47,0.35);}
     .cb-card{max-width:920px; margin:0 auto; display:flex; align-items:center; gap:20px;
       background:linear-gradient(120deg,#FFF8F1 0%,#FCE9EC 100%); border:1px solid var(--line); border-radius:999px;
       padding:12px 14px 12px 14px; box-shadow:0 6px 18px rgba(62,51,47,0.06);}
@@ -1731,6 +1732,16 @@
       .cb-body{order:3; flex-basis:100%;}
       .cb-nav{margin-left:auto;}
       .cb-text{font-size:18px;}
+    }
+    @media (max-width:860px){
+      .cozy-break.cb-stuck{padding-top:6px; padding-bottom:6px;}
+      .cozy-break.cb-stuck .cb-card{padding:8px 12px; gap:6px 10px;}
+      .cozy-break.cb-stuck .cb-kind{display:none;}
+      .cozy-break.cb-stuck .cb-text{font-size:16px; line-height:1.3;}
+      .cozy-break.cb-stuck .cb-badge{padding:5px 12px 5px 8px;}
+      .cozy-break.cb-stuck .cb-badge svg{width:24px; height:24px;}
+      .cozy-break.cb-stuck .cb-badge b{font-size:18px;}
+      .cozy-break.cb-stuck .cb-nav button{width:30px; height:30px;}
     }
     @media (prefers-reduced-motion: reduce){ .cb-body{transition:none;} }
   </style>
@@ -3463,8 +3474,21 @@ document.querySelectorAll('[data-show-until]').forEach(function(el){
   if(!header) return;
   function setHeaderHeight(){
     document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
+    // The Cozy Break bar stays pinned under the header, so keep the deadline badge below it too
+    var cb = document.getElementById('cozy-break');
+    if(cb) document.documentElement.style.setProperty('--cb-h', cb.offsetHeight + 'px');
   }
   setHeaderHeight();
+  // Tighten the Cozy Break bar a little once it is pinned
+  var cbEl = document.getElementById('cozy-break');
+  if(cbEl){
+    var onScroll = function(){
+      var stuck = cbEl.getBoundingClientRect().top <= header.offsetHeight + 1 && window.scrollY > 0;
+      cbEl.classList.toggle('cb-stuck', stuck);
+    };
+    window.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+  }
   window.addEventListener('load', setHeaderHeight);
   window.addEventListener('resize', setHeaderHeight);
 })();
