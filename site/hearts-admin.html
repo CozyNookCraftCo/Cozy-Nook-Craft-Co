@@ -99,7 +99,7 @@
     </div>
     <div class="hearts" id="dHearts" style="font-size:26px;margin-bottom:10px"></div>
     <p class="err" id="dSyncErr"></p>
-    <p id="dNotifyWrap" hidden><a class="btn-mail" id="dNotify" href="#">&#9993;&#65039; Email them: reward ready!</a> <span class="muted" style="font-size:13px">Opens a ready-to-send email in your mail app.</span></p>
+    <p id="dNotifyWrap" hidden><a class="btn-mail" id="dNotify" href="#" target="_blank" rel="noopener">&#9993;&#65039; Email them: reward ready!</a> <span class="muted" style="font-size:13px">Opens a ready-to-send email in Yahoo Mail (sign in as CozyNookCraftCo@yahoo.com). <a id="dNotifyApp" href="#">Use my mail app instead</a></span></p>
 
     <div class="grid">
       <div>
@@ -224,7 +224,9 @@
           'Just reply to this email with your pick (and your theme or size if you choose the notebook or tee), and I\'ll tuck it into your next order or local pickup. Your reward never expires, so redeem it whenever you\'re ready.\n\n' +
           (d.code ? 'You can check your card anytime with this code: ' + d.code + '\n\n' : '') +
           'Thank you so much for shopping small with me!\n\nWarmly,\nSheri\nCozy Nook Craft Co.';
-        $('dNotify').href = 'mailto:' + encodeURIComponent(email) + '?subject=' + encodeURIComponent('Your Cozy Hearts reward is ready! \u2665') + '&body=' + encodeURIComponent(body);
+        var subj = 'Your Cozy Hearts reward is ready! \u2665';
+        $('dNotify').href = 'https://compose.mail.yahoo.com/?to=' + encodeURIComponent(email) + '&subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
+        $('dNotifyApp').href = 'mailto:' + encodeURIComponent(email) + '?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
         nw.hidden = false;
       } else { nw.hidden = true; }
       var start = Date.parse(d.settings.startDate + 'T08:00:00Z');
