@@ -218,13 +218,17 @@
       if (c.rewardsReady > 0) {
         var first = (name || '').split(' ')[0];
         var gifts = c.rewardsReady > 1 ? c.rewardsReady + ' free gifts' : 'a free gift';
-        var body = 'Hi' + (first ? ' ' + first : '') + '!\n\n' +
-          'Your Cozy Hearts punch card is full, so you\'ve earned ' + gifts + ' from my Reward Shelf! \u2665\n\n' +
-          'Take a peek at the choices here: https://cozynookcraftco.com/hearts.html#reward-shelf\n\n' +
-          'Just reply to this email with your pick (and your theme, color or size if you choose the notebook, tray or tee), and I\'ll tuck it into your next order or local pickup. You can also share your favorite colors and choices on my Preference Sheet: https://docs.google.com/forms/d/1ofoIsqqmdLRcFrbQ7MoANNijgraOiVgLqk_qJuAQ75Q/viewform\n\n' +
-          'Your reward never expires, so redeem it whenever you\'re ready.\n\n' +
-          (d.code ? 'You can check your card anytime with this code: ' + d.code + '\n\n' : '') +
-          'Thank you so much for shopping small with me!\n\nWarmly,\nSheri\nCozy Nook Craft Co.';
+        var body = 'Hi' + (first ? ' ' + first : '') + '! ' +
+          'Your Cozy Hearts punch card is full, so you\'ve earned ' + gifts + ' from my Reward Shelf! \u2665 ' +
+          'Take a peek at the choices here: https://cozynookcraftco.com/hearts.html#reward-shelf ' +
+          'Just reply to this email with your pick (and your theme or size if you choose the notebook or tee), and I\'ll tuck it into your next order or local pickup. ' +
+          'Your reward never expires, so redeem it whenever you\'re ready. Thank you so much for shopping small with me!\n\n' +
+          'Scent list here!\n\n' +
+          'https://docs.google.com/spreadsheets/d/1AhGXYyJ_GTAfumRS0iCu1UaHM3pw9ktK6o8xREBgIz8/edit?usp=sharing\n\n' +
+          'Please make sure to complete the preference sheet for your selections on style, scent, etc. If you choose a tee for your reward you can also use the verbiage from the sweatshirt OR the images.\n\n' +
+          'https://docs.google.com/forms/d/1ofoIsqqmdLRcFrbQ7MoANNijgraOiVgLqk_qJuAQ75Q/viewform\n\n' +
+          'Let me know if you need any assistance!\n\n' +
+          'Warmly, Sheri\nCozy Nook Craft Co.';
         var subj = 'Your Cozy Hearts reward is ready! \u2665';
         $('dNotify').href = 'https://compose.mail.yahoo.com/?to=' + encodeURIComponent(email) + '&subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
         $('dNotifyApp').href = 'mailto:' + encodeURIComponent(email) + '?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
