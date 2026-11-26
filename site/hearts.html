@@ -216,7 +216,7 @@
   <section class="shelf" id="reward-shelf">
     <p class="script">fill your card, then choose</p>
     <h2>The Reward Shelf</h2>
-    <p class="shelf-lede">Ten hearts earns you one gift from my Reward Shelf, each worth up to $20. Pick the one that feels most like you.</p>
+    <p class="shelf-lede">Ten hearts earns you one gift from my Reward Shelf, each worth up to $20. Pick the one that feels most like you. Your hearts and rewards never expire, so redeem whenever you're ready.</p>
     <div class="shelf-grid">
       <div class="gift">
         <img src="once-upon-a-simmer.jpg" alt="Once Upon a Simmer stovetop simmering potpourri jar" loading="lazy" decoding="async">
@@ -242,7 +242,7 @@
     <p class="shelf-note">When your card is full, <a href="mailto:CozyNookCraftCo@yahoo.com?subject=Claiming%20my%20Cozy%20Hearts%20reward">message me</a> with your pick and I'll tuck it into your next order or local pickup. The shelf may change with the seasons and what's in stock.</p>
   </section>
 
-  <p class="fine">Hearts are based on your order subtotal after discounts, not including tax or shipping. They're added automatically for orders through my shop (new orders can take up to an hour to show up). Bought during a TikTok LIVE or in person? <a href="mailto:CozyNookCraftCo@yahoo.com?subject=Cozy%20Hearts%20question">Send me a note</a> and I'll make sure your hearts get added.</p>
+  <p class="fine">Hearts and rewards never expire and can be redeemed at any time. Hearts are based on your order subtotal after discounts, not including tax or shipping. They're added automatically for orders through my shop (new orders can take up to an hour to show up). Bought during a TikTok LIVE or in person? <a href="mailto:CozyNookCraftCo@yahoo.com?subject=Cozy%20Hearts%20question">Send me a note</a> and I'll make sure your hearts get added.</p>
 </main>
 
 <footer style="max-width:640px;margin:48px auto 32px;padding:0 24px;text-align:center;font-size:14px;line-height:1.65;color:#6B5D57;">
@@ -305,7 +305,7 @@
       st.textContent = 'Your card is full!';
       sub.textContent = d.extraHearts > 0 ? 'Plus ' + d.extraHearts + ' heart' + (d.extraHearts === 1 ? '' : 's') + ' already toward your next card.' : 'Every heart counted. Thank you!';
       ready.hidden = false;
-      ready.innerHTML = '🎁 You’ve earned <b>' + (d.rewardsReady > 1 ? d.rewardsReady + ' free gifts' : 'a free gift') + '</b>! Choose from the <a href="#reward-shelf">Reward Shelf</a>, then <a href="mailto:CozyNookCraftCo@yahoo.com?subject=Claiming%20my%20Cozy%20Hearts%20reward">message me</a> your pick and I’ll tuck it into your next order.';
+      ready.innerHTML = '🎁 You’ve earned <b>' + (d.rewardsReady > 1 ? d.rewardsReady + ' free gifts' : 'a free gift') + '</b>! Choose from the <a href="#reward-shelf">Reward Shelf</a>, then <a href="mailto:CozyNookCraftCo@yahoo.com?subject=Claiming%20my%20Cozy%20Hearts%20reward">message me</a> your pick and I’ll tuck it into your next order. Your reward never expires, so claim it whenever you like.';
     } else {
       var left = 10 - d.onCard;
       st.textContent = d.onCard === 0 ? 'Your card is ready to fill!' : d.onCard + ' of 10 hearts';

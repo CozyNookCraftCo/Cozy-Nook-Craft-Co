@@ -22,6 +22,8 @@
   input,select{padding:10px 12px;border:1px solid var(--line);border-radius:10px;font:inherit;background:#fff;color:var(--ink);min-width:0}
   button{background:var(--rose-deep);color:#fff;border:0;border-radius:999px;padding:10px 18px;font:500 14px 'Jost',sans-serif;cursor:pointer}
   button.ghost{background:#fff;color:var(--rose-deep);border:1px solid var(--rose)}
+  .btn-mail{display:inline-block;background:var(--rose-deep);color:#fff;border-radius:999px;padding:9px 16px;font:500 14px 'Jost',sans-serif;text-decoration:none;margin:4px 0 10px}
+  .btn-mail:hover{background:#B5677A}
   button.small{padding:5px 12px;font-size:13px}
   button:disabled{opacity:.6;cursor:wait}
   table{width:100%;border-collapse:collapse;font-size:14px}
@@ -97,6 +99,7 @@
     </div>
     <div class="hearts" id="dHearts" style="font-size:26px;margin-bottom:10px"></div>
     <p class="err" id="dSyncErr"></p>
+    <p id="dNotifyWrap" hidden><a class="btn-mail" id="dNotify" href="#">&#9993;&#65039; Email them: reward ready!</a> <span class="muted" style="font-size:13px">Opens a ready-to-send email in your mail app.</span></p>
 
     <div class="grid">
       <div>
@@ -208,6 +211,19 @@
       $('dHearts').innerHTML = heartsRow(c.onCard) + (c.extraHearts ? ' <span class="pill">+' + c.extraHearts + ' toward next card</span>' : '');
       $('dSyncErr').textContent = d.syncError ? 'Couldn’t refresh from Shopify: ' + d.syncError : '';
       $('dCode').textContent = d.code || 'none yet';
+      var nw = $('dNotifyWrap');
+      if (c.rewardsReady > 0) {
+        var first = (name || '').split(' ')[0];
+        var gifts = c.rewardsReady > 1 ? c.rewardsReady + ' free gifts' : 'a free gift';
+        var body = 'Hi' + (first ? ' ' + first : '') + '!\n\n' +
+          'Your Cozy Hearts punch card is full, so you\'ve earned ' + gifts + ' from my Reward Shelf! \u2665\n\n' +
+          'Take a peek at the choices here: https://cozynookcraftco.com/hearts.html#reward-shelf\n\n' +
+          'Just reply to this email with your pick (and your theme or size if you choose the notebook or tee), and I\'ll tuck it into your next order or local pickup. Your reward never expires, so redeem it whenever you\'re ready.\n\n' +
+          (d.code ? 'You can check your card anytime with this code: ' + d.code + '\n\n' : '') +
+          'Thank you so much for shopping small with me!\n\nWarmly,\nSheri\nCozy Nook Craft Co.';
+        $('dNotify').href = 'mailto:' + encodeURIComponent(email) + '?subject=' + encodeURIComponent('Your Cozy Hearts reward is ready! \u2665') + '&body=' + encodeURIComponent(body);
+        nw.hidden = false;
+      } else { nw.hidden = true; }
       var start = Date.parse(d.settings.startDate + 'T08:00:00Z');
       var hist = [];
       d.orders.forEach(function(o){
