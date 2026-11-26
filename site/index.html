@@ -936,6 +936,17 @@
   #shop .shopify-slot{margin-top:12px; padding-top:12px;}
   @media (max-width:860px){ #shop .shop-grid{gap:18px;} #shop .shop-grid .card{width:calc((100% - 18px) / 2);} }
   @media (max-width:560px){ #shop .shop-grid .card{width:100%; max-width:340px;} }
+
+  /* ===== Cozy Bear request form ===== */
+  .bear-hp{position:absolute; left:-9999px;}
+  .bear-form{display:flex; flex-direction:column; gap:10px; margin-top:22px;}
+  .bear-form h4{margin:0;}
+  .bear-form input[type=text], .bear-form input[type=email], .bear-form textarea{width:100%; font:inherit; font-size:15px; background:#fff; border:1px solid var(--line); border-radius:12px; padding:10px 12px; box-sizing:border-box;}
+  .bear-form textarea{min-height:80px; resize:vertical;}
+  .bear-form input:focus, .bear-form textarea:focus{outline:none; border-color:var(--gold);}
+  .bear-form-msg{margin:0; font-size:13px; color:var(--rose-deep); min-height:0;}
+  .bear-form .btn{align-self:flex-start;}
+  .bear-done{margin-top:22px; padding:14px 16px; border-radius:14px; background:var(--blush); font-size:15px;}
 </style>
 <style id="cartStyles">
   /* ===== Cart: card controls ===== */
@@ -1934,6 +1945,19 @@
           <div class="shopify-slot" onclick="event.stopPropagation()"><div data-shopify-product="9644337627374"></div></div>
         </div>
       </div>
+      <div class="card" id="anxiety-bookshelf" data-no-popup data-shopify data-options='[{"label":"Random Selection of Books","price":"$25.00"},{"label":"Pick Your Own Books","price":"$30.00"}]'>
+        <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
+          <img src="anxiety-bookshelf-mini-books.jpg" alt="Anxiety Bookshelf: a small lit wooden cabinet filled with tiny books" loading="lazy" decoding="async">
+        </div></div></div>
+        <div class="card-body">
+          <span class="cat">Anxiety Bookshelves</span>
+          <h3>Anxiety Bookshelf</h3>
+          <p class="desc">A tiny shelf full of mini books to slide out, flip and tuck back in. Perfect for fidgety fingers and calm-down corners.</p>
+          <p class="desc"><b>Random Selection of Books:</b> $25, a surprise mix of mini books.<br><b>Pick Your Own Books:</b> $30, you choose the titles!</p>
+          <p class="price">$25.00 &ndash; $30.00</p>
+          <div class="shopify-slot" onclick="event.stopPropagation()"><p class="shopify-label">Random Selection of Books</p><div data-shopify-product="9522853085422"></div><p class="shopify-label">Pick Your Own Books</p><div data-shopify-product="9522853282030"></div></div>
+        </div>
+      </div>
       <div class="card" data-no-popup data-shopify data-options='[{"label":"Ornament","price":"$18.00"}]'>
         <div class="card-stamp"><div class="card-img"><div class="stamp-photo">
           <img src="holiday-book-lovers-ornament.jpg" alt="Holiday Book Lovers Ornament: a clear ball ornament filled with tiny mini book covers and white pom-pom snowballs, topped with a green ribbon and red pom-poms" loading="lazy" decoding="async">
@@ -1957,7 +1981,8 @@
           <p class="desc" style="color:#C9A24B;"><strong>&#10052; Perfect when you add in an Advent Holiday Countdown book!</strong></p>
           <p class="desc"><strong>Please note:</strong> Not all books fit into the clear case. However, they are sold as a bundle or separately.</p>
           <p class="desc" style="font-style:italic; font-size:12px; opacity:.8;">Item shown is an example.</p>
-          <p class="price">$35.00 <span class="price-note">Case only $18</span></p>
+          <p class="price">$18.00 &ndash; $35.00</p>
+          <p class="desc"><b>Case only:</b> $18 &middot; <b>Case + a book:</b> $35</p>
           <p class="card-more"><a href="products/cozy-clearcase-bundle-with-a-book.html" onclick="event.stopPropagation()">See photos &amp; details &rarr;</a></p>
           <div class="shopify-slot" onclick="event.stopPropagation()">
             <p class="shopify-label">Bundle with a Book &middot; $35</p>
@@ -2327,6 +2352,18 @@
           </div>
 
           <div class="bear-summary" id="bearSummary">Your bear: <em>make a selection above to begin</em></div>
+            <form class="bear-form" id="bearForm" name="cozy-bear-request" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+              <input type="hidden" name="form-name" value="cozy-bear-request">
+              <input type="hidden" name="bear-choices" id="bearChoices" value="">
+              <div class="bear-hp"><label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></div>
+              <h4>Send Your Bear Request</h4>
+              <input type="text" name="name" placeholder="Your name" required autocomplete="name" aria-label="Your name">
+              <input type="email" name="email" placeholder="Your email" required autocomplete="email" aria-label="Your email">
+              <textarea name="details" placeholder="Names, birth info, theme or anything else you'd love on your bear (optional)" aria-label="Bear details"></textarea>
+              <p class="bear-form-msg" id="bearMsg" role="status"></p>
+              <button type="submit" class="btn solid" id="bearSend">Send My Bear Request</button>
+            </form>
+            <div class="bear-done" id="bearDone" hidden>Thank you! Your bear request is on its way to me &#128149; Now add your bear to the cart below to check out.</div>
         </div>
         <div class="shopify-slot bear-shopify">
           <p class="card-more"><a href="products/cozy-bear.html" onclick="event.stopPropagation()">See photos &amp; details &rarr;</a></p>
@@ -2379,7 +2416,7 @@
         <li>Personalized designs available upon request</li>
       </ul>
       <p class="gr-tagline">Handcrafted with love. Customized for your sweetest surprise.</p>
-      <a href="#contact" class="btn solid">Order Breakable Chocolates</a>
+      <a href="products/gender-reveal-smash-chocolate.html" class="btn solid">Order Breakable Chocolates</a>
       <div class="gr-order">
         <p class="gr-price">$25.00 each</p>
         <p class="gr-note">Please note: breakable chocolates are only sold in the cooler months or locally.</p>
@@ -4397,5 +4434,29 @@ document.querySelectorAll('.card').forEach(function(c){
 })();
 </script>
 <!-- ===== /Site polish ===== -->
+
+<script>
+/* Cozy Bear request: sends the chosen colors and accents with the customer's details */
+(function(){
+  var form=document.getElementById('bearForm'); if(!form) return;
+  var send=document.getElementById('bearSend'), msg=document.getElementById('bearMsg'), done=document.getElementById('bearDone');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var colors=document.querySelectorAll('#colorSwatches .swatch.selected');
+    if(!colors.length){ msg.textContent='Please pick at least one paint color above first.'; return; }
+    msg.textContent='';
+    var summary=document.getElementById('bearSummary').textContent.replace(/^Your bear:\s*/,'');
+    document.getElementById('bearChoices').value=summary;
+    send.disabled=true; send.textContent='Sending\u2026';
+    fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(form)).toString()})
+      .then(function(r){ if(!r.ok) throw new Error('fail'); form.hidden=true; done.hidden=false; })
+      .catch(function(){
+        send.disabled=false; send.textContent='Send My Bear Request';
+        var d=form.querySelector('textarea').value.trim();
+        location.href='mailto:CozyNookCraftCo@yahoo.com?subject='+encodeURIComponent('Cozy Bear request')+'&body='+encodeURIComponent('My bear: '+summary+(d?'\n\nDetails: '+d:''));
+      });
+  });
+})();
+</script>
 </body>
 </html>
