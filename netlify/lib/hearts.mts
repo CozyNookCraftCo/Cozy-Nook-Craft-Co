@@ -86,7 +86,8 @@ export function computeCard(orders: OrderRec[], adjs: AdjRec[], startDate: strin
   const toNextHeart = money(DOLLARS_PER_HEART - (spend % DOLLARS_PER_HEART || 0)) || DOLLARS_PER_HEART;
   return {
     spend, heartsFromSpend, bonusHearts: bonus, earned, rewardsRedeemed: redeemed,
-    available, rewardsReady, onCard, extraHearts: Math.max(0, available - HEARTS_PER_CARD),
+    // extraHearts = hearts beyond every full card that's ready (progress toward the next one)
+    available, rewardsReady, onCard, extraHearts: rewardsReady > 0 ? available - rewardsReady * HEARTS_PER_CARD : 0,
     toNextHeart, countedOrders: counted.map(o => o.name),
   };
 }
@@ -112,6 +113,10 @@ export async function addAdjustment(email: string, kind: AdjRec["kind"], amount:
   if (!Number.isFinite(amount) || amount === 0) throw new Error("Amount can't be zero");
   if (kind === "redeem" && !Number.isInteger(amount)) throw new Error("Redeem a whole number of cards");
   if (kind === "hearts" && !Number.isInteger(amount)) throw new Error("Hearts must be a whole number");
+  if (kind === "redeem" && amount > 0) {
+    const { card } = await cardFor(email);
+    if (amount > card.rewardsReady) throw new Error(card.rewardsReady === 0 ? "No gifts are ready to redeem yet" : `Only ${card.rewardsReady} gift${card.rewardsReady === 1 ? "" : "s"} ready to redeem`);
+  }
   const at = new Date().toISOString();
   const id = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
   const rec: AdjRec = { id, email: normEmail(email), kind, amount: money(amount), note: String(note || "").slice(0, 300), at };

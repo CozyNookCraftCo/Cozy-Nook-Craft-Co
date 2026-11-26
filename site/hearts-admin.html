@@ -108,6 +108,7 @@
           <button class="small" data-q="hearts:1">+1 heart</button>
           <button class="small ghost" data-q="hearts:-1">&minus;1 heart</button>
           <button class="small" data-q="redeem:1">&#127873; Gave free gift</button>
+          <button class="small" id="dRedeemAll" hidden></button>
         </div>
         <form id="adjForm" style="margin-top:8px">
           <div class="row">
@@ -148,7 +149,7 @@
 
 <script>
 (function(){
-  var KEY = '', current = null, customers = [];
+  var KEY = '', current = null, customers = [], readyNow = 0;
   var $ = function(id){ return document.getElementById(id); };
   function toast(t){ var e = $('toast'); e.textContent = t; e.classList.add('show'); clearTimeout(e._t); e._t = setTimeout(function(){ e.classList.remove('show'); }, 2600); }
   function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
@@ -211,6 +212,8 @@
       $('dHearts').innerHTML = heartsRow(c.onCard) + (c.extraHearts ? ' <span class="pill">+' + c.extraHearts + ' toward next card</span>' : '');
       $('dSyncErr').textContent = d.syncError ? 'Couldn’t refresh from Shopify: ' + d.syncError : '';
       $('dCode').textContent = d.code || 'none yet';
+      readyNow = c.rewardsReady;
+      var ra = $('dRedeemAll'); ra.hidden = c.rewardsReady < 2; ra.textContent = '\u{1F381} Gave all ' + c.rewardsReady + ' gifts';
       var nw = $('dNotifyWrap');
       if (c.rewardsReady > 0) {
         var first = (name || '').split(' ')[0];
@@ -253,9 +256,15 @@
       .then(function(){ toast('Saved ♥'); return Promise.all([openCustomer(current), loadList()]); })
       .catch(function(e){ toast(e.message); });
   }
+  $('dRedeemAll').addEventListener('click', function(){
+    if (readyNow < 2) return;
+    if (!confirm('Mark all ' + readyNow + ' free gifts as given? This takes ' + (readyNow * 10) + ' hearts off the card.')) return;
+    adjust('redeem', readyNow, readyNow + ' free gifts given');
+  });
   document.querySelectorAll('[data-q]').forEach(function(b){
     b.addEventListener('click', function(){
       var p = b.getAttribute('data-q').split(':');
+      if (p[0] === 'redeem' && readyNow < 1) { toast('No gifts are ready to redeem yet.'); return; }
       if (p[0] === 'redeem' && !confirm('Mark one free gift as given? This takes 10 hearts off the card.')) return;
       adjust(p[0], Number(p[1]), p[0] === 'redeem' ? 'Free gift given' : '');
     });
